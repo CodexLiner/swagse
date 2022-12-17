@@ -73,6 +73,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -114,7 +115,7 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
         progressDialog.setMessage("Please wait...");
         enablePermission();
 
-        getSupportActionBar().setTitle("Upload SwagTube Video");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Upload SwagTube Video");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         showVideo = findViewById(R.id.showVideo);
@@ -144,9 +145,13 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
                     startActivity(new Intent(UploadSwagTubeVideoActivity.this, LoginActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
-                    if (isValid()) {
-                        OwnerGlobal.toast(UploadSwagTubeVideoActivity.this, "Video is Uploading in Background");
-                        UpdateProfileService(uploadSwagTubePost(), getImg());
+                    try {
+                        if (isValid()) {
+                            OwnerGlobal.toast(UploadSwagTubeVideoActivity.this, "Video is Uploading in Background");
+                            UpdateProfileService(uploadSwagTubePost(), getImg());
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -325,9 +330,7 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(UploadSwagTubeVideoActivity.this, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
                     } else if (response.code() == Constants.UNAUTHORIZED) {
@@ -346,7 +349,7 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
         }
     }
 
-    private boolean isValid() {
+    private boolean isValid() throws IOException {
         if (addSwagTubeTitle.getText().toString().isEmpty()) {
             addSwagTubeTitle.setError("Enter Video Title");
             return false;
@@ -480,7 +483,7 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
         FileUploadNotification.updateNotification("100", selectedVideoPath, "Uploaded");
     }
 
-    public long durationTime() {
+    public long durationTime() throws IOException {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
 //use one of overloaded setDataSource() functions to set your data source
         retriever.setDataSource(UploadSwagTubeVideoActivity.this, Uri.fromFile(new File(selectedVideoPath)));

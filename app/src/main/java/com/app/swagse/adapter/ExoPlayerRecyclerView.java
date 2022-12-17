@@ -171,10 +171,7 @@ public class  ExoPlayerRecyclerView extends RecyclerView {
         });
 
         videoPlayer.addListener(new Player.EventListener() {
-            @Override
-            public void onTimelineChanged(Timeline timeline, @Nullable Object manifest, int reason) {
 
-            }
 
             @Override
             public void onTracksChanged(TrackGroupArray trackGroups,
@@ -229,10 +226,6 @@ public class  ExoPlayerRecyclerView extends RecyclerView {
 
             }
 
-            @Override
-            public void onPlayerError(ExoPlaybackException error) {
-
-            }
 
             @Override
             public void onPositionDiscontinuity(int reason) {

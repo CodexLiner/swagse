@@ -23,6 +23,7 @@ import com.daasuu.gpuv.egl.filter.GlFilterGroup;
 import com.daasuu.gpuv.player.GPUPlayerView;
 import com.daasuu.gpuv.player.PlayerScaleType;
 import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -34,7 +35,6 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.google.android.exoplayer2.video.VideoListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class Preview_Video_A extends AppCompatActivity implements Player.EventLi
 
 
     String video_url;
-    GPUPlayerView gpuPlayerView;
+//    GPUPlayerView gpuPlayerView;
     public static int select_postion = 0;
     final List<FilterType> filterTypes = FilterType.createFilterList();
     Filter_Adapter adapter;
@@ -105,7 +105,8 @@ public class Preview_Video_A extends AppCompatActivity implements Player.EventLi
             @Override
             public void onItemClick(View view, int postion, FilterType item) {
                 select_postion = postion;
-                gpuPlayerView.setGlFilter(FilterType.createGlFilter(filterTypes.get(postion), getApplicationContext()));
+//                Todo:Uncomment
+//                gpuPlayerView.setGlFilter(FilterType.createGlFilter(filterTypes.get(postion), getApplicationContext()));
 
                 adapter.notifyDataSetChanged();
             }
@@ -212,25 +213,25 @@ public class Preview_Video_A extends AppCompatActivity implements Player.EventLi
         player.addListener(this);
         player.setPlayWhenReady(true);
 
-        gpuPlayerView = new GPUPlayerView(this);
+//        gpuPlayerView = new GPUPlayerView(this);
 
-        player.addVideoListener(new VideoListener() {
-            @Override
-            public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees, float pixelWidthHeightRatio) {
-                Log.d(Variables.tag, width + " " + height);
-                if (width > height) {
-                    gpuPlayerView.setPlayerScaleType(PlayerScaleType.RESIZE_FIT_WIDTH);
-                } else
-                    gpuPlayerView.setPlayerScaleType(PlayerScaleType.RESIZE_NONE);
-            }
+        player.addListener(new Player.Listener() {
+
+//            public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees, float pixelWidthHeightRatio) {
+//                Log.d(Variables.tag, width + " " + height);
+//                if (width > height) {
+//                    gpuPlayerView.setPlayerScaleType(PlayerScaleType.RESIZE_FIT_WIDTH);
+//                } else
+//                    gpuPlayerView.setPlayerScaleType(PlayerScaleType.RESIZE_NONE);
+//            }
         });
 
-        gpuPlayerView.setSimpleExoPlayer(player);
-        gpuPlayerView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        ((MovieWrapperView) findViewById(R.id.layout_movie_wrapper)).addView(gpuPlayerView);
-
-        gpuPlayerView.onResume();
+//        gpuPlayerView.setSimpleExoPlayer(player);
+//        gpuPlayerView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//
+//        ((MovieWrapperView) findViewById(R.id.layout_movie_wrapper)).addView(gpuPlayerView);
+//
+//        gpuPlayerView.onResume();
 
     }
 
@@ -374,10 +375,6 @@ public class Preview_Video_A extends AppCompatActivity implements Player.EventLi
     }
 
 
-    @Override
-    public void onPlayerError(ExoPlaybackException error) {
-
-    }
 
     @Override
     public void onPositionDiscontinuity(int reason) {

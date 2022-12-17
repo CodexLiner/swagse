@@ -155,9 +155,7 @@ public class ExoPlayerRecyclerView1 extends RecyclerView {
             }
         });
         videoPlayer.addListener(new Player.EventListener() {
-            @Override
-            public void onTimelineChanged(Timeline timeline, @Nullable Object manifest, int reason) {
-            }
+
 
             @Override
             public void onTracksChanged(TrackGroupArray trackGroups,
@@ -206,10 +204,6 @@ public class ExoPlayerRecyclerView1 extends RecyclerView {
                 Log.d(TAG, "onShuffleModeEnabledChanged: ");
             }
 
-            @Override
-            public void onPlayerError(ExoPlaybackException error) {
-                Log.d(TAG, "onPlayerError: ");
-            }
 
             @Override
             public void onPositionDiscontinuity(int reason) {

@@ -383,10 +383,7 @@ public class GallerySelectedVideo_A extends AppCompatActivity implements View.On
 
     }
 
-    @Override
-    public void onPlayerError(ExoPlaybackException error) {
 
-    }
 
     @Override
     public void onPositionDiscontinuity(int reason) {

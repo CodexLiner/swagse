@@ -147,7 +147,6 @@
         <item name="alert_camera_delete_video">@null</item>
         <item name="alert_camera_save">@null</item>
         <item name="alert_camera_reset_all">@null</item>
-        <item name="alert_editor_delete_voice_record">@null</item>
         <item name="alert_editor_reset_all">@null</item>
         <item name="alert_editor_reset_effects">@null</item>
         <item name="alert_draft_remove_icon_res">@null</item>
@@ -213,7 +212,7 @@
         <item name="galleryNextButtonStyle">@style/CustomGalleryNextButtonStyle</item>
         <item name="gallerySelectionDescriptionStyle">@style/CustomGallerySelectionDescriptionStyle
         </item>
-        <item name="galleryDraftsButtonStyle">@style/CustomGalleryDraftsButtonStyle</item>
+
         <item name="galleryItemRadioButtonStyle">@style/CustomGalleryItemRadioButtonStyle</item>
         <item name="galleryItemTextStyle">@style/CustomGalleryItemTextStyle</item>
         <item name="galleryEmptyTextStyle">@style/CustomGalleryEmptyTextStyle</item>
@@ -233,27 +232,12 @@
 
         <!--Video Trimmer-->
         <item name="trimmerStyle">@style/CustomTrimmerViewStyle</item>
-        <item name="trimmerBackButtonStyle">@style/CustomTrimmerBackButtonStyle</item>
-        <item name="trimmerNextButtonStyle">@style/CustomTrimmerNextButtonStyle</item>
-        <item name="trimmerDurationSumTextStyle">@style/CustomTrimmerDurationSumTextStyle</item>
-        <item name="trimmerContentViewStyle">@style/CustomTrimmerContentViewStyle</item>
-        <item name="trimmerContentLabelStyle">@style/CustomTrimmerContentLabelStyle</item>
-        <item name="trimmerRecyclerStyle">@style/CustomTrimmerRecyclerStyle</item>
-        <item name="trimmerThumbImageStyle">@style/CustomTrimmerThumbImageStyle</item>
-        <item name="trimmerThumbTextStyle">@style/CustomTrimmerThumbTextStyle</item>
-        <item name="trimmerDeleteLabelStyle">@style/CustomTrimmerDeleteLabelStyle</item>
-        <item name="trimmerDeleteCrossStyle">@style/CustomTrimmerDeleteCrossStyle</item>
-        <item name="trimmerCancelButtonStyle">@style/CustomTrimmerCancelButtonStyle</item>
-        <item name="trimmerDurationTimelineStyle">@style/CustomTrimmerDurationTimelineStyle</item>
-        <item name="trimmerContentHintStyle">@style/CustomTrimmerContentHintStyle</item>
-        <item name="trimmerRotateButtonStyle">@style/CustomTrimmerRotateButton</item>
-        <item name="trimmerThumbHintIconStyle">@style/CustomTrimmerThumbHintIconStyle</item>
+
 
         <item name="trimmer_play_control_visible">true</item>
         <item name="trimmer_icon_play">@drawable/ic_play</item>
         <item name="trimmer_icon_pause">@drawable/ic_pause</item>
-        <item name="trimmer_icon_add_video">@drawable/ic_trimmer_add_video</item>
-        <item name="trimmer_bg_color_add_video">@color/transparent</item>
+
         <item name="trimmer_time_visible">true</item>
         <!---->
 
@@ -261,10 +245,7 @@
         <item name="musicEditorPlaybackControllerParentStyle">
             @style/CustomMusicEditorPlaybackControllerParentStyle
         </item>
-        <item name="musicEditorTimelineStyle">@style/CustomMusicEditorTimelineStyle</item>
-        <item name="musicEditorTimelineTimeTextStyle">
-            @style/CustomMusicEditorTimelineTimeTextStyle
-        </item>
+
         <item name="musicEditorActionButtonParentStyle">
             @style/CustomMusicEditorActionButtonParentStyle
         </item>
@@ -450,12 +431,10 @@
 
         <!--Hands free-->
         <item name="handsFreeBottomSheetStyle">@style/CustomHandsFreeBottomSheetStyle</item>
-        <item name="handsFreeTimerLabelStyle">@style/CustomHandsFreeTimerLabelStyle</item>
+
         <item name="handsFreeTimerPickerStyle">@style/CustomHandsFreeTimerPickerStyle</item>
         <item name="handsFreeTimerItemStyle">@style/CustomHandsFreeTimerItemStyle</item>
-        <item name="handsFreeTimerDividerStyle">@style/CustomHandsFreeTimerDividerStyle</item>
-        <item name="handsFreeTimelineLabelStyle">@style/CustomHandsFreeTimelineLabelStyle</item>
-        <item name="handsFreeTimelineSwitchStyle">@style/CustomHandsFreeTimelineSwitchStyle</item>
+
         <item name="handsFreeTimelineHintStyle">@style/CustomHandsFreeTimelineHintStyle</item>
         <item name="handsFreeTimelineRangeDurationStyle">
             @style/CustomHandsFreeTimelineRangeDurationStyle
@@ -505,18 +484,9 @@
         <item name="draftItemThumbnailStyle">@style/CustomDraftItemThumbnailStyle</item>
         <item name="draftItemOptionsButtonStyle">@style/CustomDraftItemOptionsButtonStyle</item>
         <item name="draftItemNameStyle">@style/CustomDraftItemNameStyle</item>
-        <item name="draftOptionsParentStyle">@style/CustomDraftOptionsParentStyle</item>
-        <item name="draftOptionsPreviewStyle">@style/CustomDraftOptionsPreviewStyle</item>
-        <item name="draftOptionsNameStyle">@style/CustomDraftOptionsNameStyle</item>
-        <item name="draftOptionsSubtitleStyle">@style/CustomDraftOptionsSubtitleStyle</item>
-        <item name="draftOptionsBackButtonStyle">@style/CustomDraftOptionsBackButtonStyle</item>
-        <item name="draftOptionsDividerStyle">@style/CustomDraftOptionsDividerStyle</item>
-        <item name="draftOptionsRemoveButtonStyle">@style/CustomDraftOptionsRemoveButtonStyle</item>
+
         <!---->
 
-        <!-- Record button -->
-        <item name="recordButtonStyle">@style/CustomRecordButtonStyle</item>
-        <!---->
     </style>
 
     <!-- CameraOverlayStyle setup icons for Camera screen.
@@ -556,7 +526,7 @@
         <item name="icon_recording_speed_x2">@drawable/ic_speed_2x</item>
         <item name="icon_recording_speed_x3">@drawable/ic_speed_3x</item>
 
-        <item name="icon_close">@drawable/ic_nav_close</item>
+
         <item name="icon_back">@drawable/ic_nav_back_arrow</item>
 
         <item name="icon_pip_on">@drawable/ic_pip_on</item>
@@ -575,7 +545,7 @@
              If you setup "icon_gallery_background" as an oval, you should add radius here -->
         <item name="icon_gallery_radius">24dp</item>
 
-        <item name="camera_margin_to_record_button">64dp</item>
+
 
         <item name="camera_gradient_top">@android:color/transparent</item>
         <item name="camera_gradient_bottom">@android:color/transparent</item>
@@ -851,7 +821,7 @@
         <item name="overlay_color">@color/big_stone_a90</item>
     </style>
 
-    <style name="CustomGalleryDraftsButtonStyle" parent="GalleryDraftsButtonStyle" />
+
 
     <style name="CustomGalleryItemRadioButtonStyle" parent="GalleryItemRadioButtonStyle">
         <item name="checked_color">@color/egg_blue</item>
@@ -904,16 +874,7 @@
     <!---->
 
 
-    <!--Trimmer styles-->
-    <style name="CustomTrimmerRotateButton" parent="TrimmerRotateButtonStyle">
-        <item name="android:src">@drawable/ic_trimmer_rotate</item>
-    </style>
 
-    <style name="CustomTrimmerThumbHintIconStyle" parent="TrimmerThumbHintIconStyle" />
-
-    <style name="CustomTrimmerContentHintStyle" parent="TrimmerContentHintStyle">
-        <item name="android:visibility">visible</item>
-    </style>
 
     <style name="CustomTrimmerViewStyle" parent="TrimmerViewStyle">
         <item name="trimmer_default_color">@color/violet_red</item>
@@ -924,74 +885,6 @@
         <item name="trimmer_pointer_center_line_color">@color/white</item>
         <item name="video_trimmer_player_pointer_color">@color/white</item>
     </style>
-
-    <style name="CustomTrimmerRecyclerStyle" parent="TrimmerRecyclerStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="CustomTrimmerBackButtonStyle" parent="TrimmerBackButtonStyle">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:src">@drawable/ic_nav_back_arrow</item>
-    </style>
-
-    <style name="CustomTrimmerNextButtonStyle" parent="TrimmerNextButtonStyle">
-        <item name="android:textColor">@color/egg_blue</item>
-    </style>
-
-    <style name="CustomTrimmerCancelButtonStyle" parent="TrimmerCancelButtonStyle">
-        <item name="android:textColor">@color/egg_blue</item>
-    </style>
-
-    <style name="CustomTrimmerDurationTimelineStyle" parent="TrimmerDurationTimelineStyle">
-        <item name="timeline_duration_background_color">@color/bg_trimmer_duration_timeline</item>
-        <item name="timeline_duration_divider_color">@color/black</item>
-        <item name="timeline_duration_stable_color">@color/white</item>
-        <item name="timeline_duration_fit_color">@color/egg_blue</item>
-        <item name="timeline_duration_limit_color">@color/violet_red</item>
-    </style>
-
-    <style name="CustomTrimmerDurationSumTextStyle" parent="TrimmerDurationSumTextStyle">
-        <item name="android:background">@drawable/bg_selector_trimmer_duration_sum</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:padding">8dp</item>
-    </style>
-
-    <style name="CustomTrimmerDeleteCrossStyle" parent="TrimmerDeleteCrossStyle">
-        <item name="android:layout_width">@dimen/icon_size_32</item>
-        <item name="android:layout_height">@dimen/icon_size_32</item>
-        <item name="android:src">@drawable/ic_delete_cross</item>
-    </style>
-
-    <style name="CustomTrimmerDeleteLabelStyle" parent="TrimmerDeleteLabelStyle">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="CustomTrimmerContentViewStyle" parent="TrimmerContentViewStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="CustomTrimmerContentLabelStyle" parent="TrimmerContentLabelStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="CustomTrimmerThumbImageStyle" parent="TrimmerThumbImageStyle">
-        <item name="android:layout_width">@dimen/gallery_thumb_size</item>
-        <item name="android:layout_height">@dimen/gallery_thumb_size</item>
-        <item name="bordered_image_corner_radius">4dp</item>
-        <item name="bordered_image_border_drawable">@drawable/bg_bordered_image</item>
-    </style>
-
-    <style name="CustomTrimmerThumbTextStyle" parent="TrimmerThumbTextStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-    <!---->
 
 
     <!--Music Editor Styles-->
@@ -1020,15 +913,6 @@
         <item name="voice_recording_btn_bg_stop">@drawable/bg_audio_recording_button</item>
         <item name="android:layout_width">64dp</item>
         <item name="android:layout_height">64dp</item>
-    </style>
-
-    <style name="CustomMusicEditorTimelineStyle" parent="MusicEditorTimelineStyle">
-        <item name="applying_effect_color">@color/violet_red_20</item>
-        <item name="video_timeline_volume_icon">@drawable/ic_volume_up</item>
-    </style>
-
-    <style name="CustomMusicEditorTimelineTimeTextStyle" parent="MusicEditorTimelineTimeTextStyle">
-        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="CustomTimelineEditorBoardStyle" parent="TimelineEditorBoardStyle">
@@ -1225,7 +1109,7 @@
         <item name="android:background">@drawable/bg_hands_free_dialog</item>
     </style>
 
-    <style name="CustomHandsFreeTimerLabelStyle" parent="HandsFreeTimerLabelStyle" />
+
 
     <style name="CustomHandsFreeTimerPickerStyle" parent="HandsFreeTimerPickerStyle">
         <item name="android:background">@drawable/bg_hands_free_timer_parent</item>
@@ -1236,14 +1120,7 @@
         <item name="android:textColor">@color/color_selector_timer_entry_text</item>
     </style>
 
-    <style name="CustomHandsFreeTimerDividerStyle" parent="HandsFreeTimerDividerStyle" />
 
-    <style name="CustomHandsFreeTimelineLabelStyle" parent="HandsFreeTimelineLabelStyle" />
-
-    <style name="CustomHandsFreeTimelineSwitchStyle" parent="HandsFreeTimelineSwitchStyle">
-        <item name="thumbTint">@color/color_selector_switch_thumb</item>
-        <item name="trackTint">@color/color_selector_switch_track</item>
-    </style>
 
     <style name="CustomHandsFreeTimelineHintStyle" parent="HandsFreeTimelineHintStyle" />
 
@@ -1302,28 +1179,11 @@
 
     <style name="CustomDraftItemNameStyle" parent="DraftItemNameStyle" />
 
-    <style name="CustomDraftOptionsParentStyle" parent="DraftOptionsParentStyle" />
 
-    <style name="CustomDraftOptionsPreviewStyle" parent="DraftOptionsPreviewStyle" />
-
-    <style name="CustomDraftOptionsNameStyle" parent="DraftOptionsNameStyle" />
-
-    <style name="CustomDraftOptionsSubtitleStyle" parent="DraftOptionsSubtitleStyle" />
-
-    <style name="CustomDraftOptionsBackButtonStyle" parent="DraftOptionsBackButtonStyle" />
-
-    <style name="CustomDraftOptionsDividerStyle" parent="DraftOptionsDividerStyle" />
-
-    <style name="CustomDraftOptionsRemoveButtonStyle" parent="DraftOptionsRemoveButtonStyle" />
     <!---->
 
     <!-- Record button -->
-    <style name="CustomRecordButtonStyle" parent="RecordButtonStyle">
-        <item name="recordButtonInnerIdleDrawable">@drawable/ic_record_button_inner_oval</item>
-        <item name="recordButtonInnerRecordingDrawable">@drawable/ic_record_button_inner_square
-        </item>
-        <item name="recordButtonCircleGradientColors">@array/progress_gradient_colors</item>
-    </style>
+
     <!---->
 
 </resources>

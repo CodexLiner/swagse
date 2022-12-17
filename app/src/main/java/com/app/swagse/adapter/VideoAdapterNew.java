@@ -44,7 +44,8 @@ import com.app.swagse.model.swaggerData.SwaggerdataItem;
 import com.app.swagse.network.Api;
 import com.app.swagse.network.RetrofitClient;
 import com.app.swagse.sharedpreferences.PrefConnect;
-import com.banuba.sdk.cameraui.domain.CameraUIType;
+
+import com.banuba.sdk.cameraui.data.PipConfig;
 import com.banuba.sdk.ve.flow.VideoCreationActivity;
 import com.bumptech.glide.Glide;
 
@@ -53,6 +54,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -490,12 +492,12 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
 //                    context.startActivity(new Intent(context, MakeVideoActivity.class));
 //                    Intent buildIntent = new Intent(context, VideoCreationActivity.class);
 //                    context.startActivity(buildIntent);
+                    Uri []  list = new Uri[0];
                     Intent videoCreationIntent = new Intent(
-                            VideoCreationActivity.buildIntent(context,
+                            VideoCreationActivity.startFromCamera(context,
+                                  new PipConfig(Uri.EMPTY  , false , 0.5F),
                                     null,
-                                    null,
-                                    R.style.AppTheme,
-                                    CameraUIType.TYPE_1));
+                                    null));
                     context.startActivity(videoCreationIntent);
                 }
             });

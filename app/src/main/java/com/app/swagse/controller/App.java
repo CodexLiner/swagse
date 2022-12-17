@@ -1,7 +1,7 @@
 package com.app.swagse.controller;
 
 import static org.koin.android.ext.koin.KoinExtKt.androidContext;
-import static org.koin.core.context.GlobalContextExtKt.startKoin;
+import static org.koin.core.context.DefaultContextExtKt.startKoin;
 
 import android.app.Application;
 import android.content.Context;
@@ -18,14 +18,16 @@ import com.app.swagse.LiveStreaming.utils.FileUtil;
 import com.app.swagse.LiveStreaming.utils.PrefManager;
 import com.app.swagse.R;
 import com.app.swagse.helper.AppSignatureHashHelper;
-import com.app.swagse.videoeditor.di.VideoEditorKoinModule;
 import com.banuba.sdk.arcloud.di.ArCloudKoinModule;
 import com.banuba.sdk.audiobrowser.di.AudioBrowserKoinModule;
 import com.banuba.sdk.effectplayer.adapter.BanubaEffectPlayerKoinModule;
 import com.banuba.sdk.export.di.VeExportKoinModule;
 import com.banuba.sdk.gallery.di.GalleryKoinModule;
+import com.banuba.sdk.playback.di.VePlaybackSdkKoinModule;
 import com.banuba.sdk.token.storage.di.TokenStorageKoinModule;
 import com.banuba.sdk.ve.di.VeSdkKoinModule;
+import com.banuba.sdk.ve.flow.di.VeFlowKoinModule;
+import com.banuba.sdk.veui.di.VeUiSdkKoinModule;
 import com.danikula.videocache.HttpProxyCacheServer;
 
 import org.koin.core.context.GlobalContext;
@@ -55,22 +57,41 @@ public class App extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        startKoin(GlobalContext.INSTANCE, koinApplication -> {
+        startKoin(koinApplication -> {
             androidContext(koinApplication, this);
             // pass the customized Koin module that implements required dependencies. Keep order of modules
             koinApplication.modules(
                     new VeSdkKoinModule().getModule(),
                     new VeExportKoinModule().getModule(),
+                    new VePlaybackSdkKoinModule().getModule(),
                     new AudioBrowserKoinModule().getModule(), // use this module only if you bought it
                     new ArCloudKoinModule().getModule(),
                     new TokenStorageKoinModule().getModule(),
-                    new VideoEditorKoinModule().getModule(),
+                    new VeUiSdkKoinModule().getModule(),
+                    new VeFlowKoinModule().getModule(),
+//                    new IntegrationKoinModule().getModule(),
                     new GalleryKoinModule().getModule(),
                     new BanubaEffectPlayerKoinModule().getModule()
-            );
+    ).allowOverride(true);
             return null;
         });
+
+
+//        startKoin(GlobalContext.INSTANCE, koinApplication -> {
+//            androidContext(koinApplication, this);
+//            // pass the customized Koin module that implements required dependencies. Keep order of modules
+//            koinApplication.modules(
+//                    new VeSdkKoinModule().getModule(),
+//                    new VeExportKoinModule().getModule(),
+//                    new AudioBrowserKoinModule().getModule(), // use this module only if you bought it
+//                    new ArCloudKoinModule().getModule(),
+//                    new TokenStorageKoinModule().getModule(),
+////                    new VideoEditorKoinModule().getModule(),
+//                    new GalleryKoinModule().getModule(),
+//                    new BanubaEffectPlayerKoinModule().getModule()
+//            );
+//            return null;
+//        });
 
         initConfig();
     }
