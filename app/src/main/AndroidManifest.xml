@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.app.swagse">
 
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -33,7 +32,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SwagSe"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".TEST.AwesomeAudioContentActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".LiveStreaming.Fragment.Live_Users_F"
             android:theme="@style/Theme.SwagSe.NoActionBar" />
@@ -54,14 +59,12 @@
             android:name=".LiveStreaming.activities.SettingsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-
         <activity
             android:name=".Chat.Inbox.Inbox_F"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SwagSe.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustPan"
             tools:ignore="LockedOrientationActivity" />
-
         <activity
             android:name=".activity.ContactUsActivity"
             android:theme="@style/Theme.SwagSe" />
@@ -322,15 +325,12 @@
         <activity
             android:name=".Post_Video_A"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name="com.banuba.sdk.ve.flow.VideoCreationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomIntegrationAppTheme"
             android:windowSoftInputMode="adjustResize"
             tools:replace="android:theme" />
-
         <activity
             android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
             android:exported="true" />
@@ -339,8 +339,7 @@
             android:exported="true" />
         <activity
             android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
-            android:exported="true" />
-        <!-- Allows to share exported video -->
+            android:exported="true" /> <!-- Allows to share exported video -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -350,7 +349,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
     </application>
 
 </manifest>

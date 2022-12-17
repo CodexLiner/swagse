@@ -5,6 +5,7 @@ import android.app.Activity
 import android.net.Uri
 import androidx.fragment.app.Fragment
 import com.app.swagse.LiveStreaming.activities.MainActivity
+import com.app.swagse.TEST.AwesomeActivityMusicProvider
 import com.app.swagse.videoeditor.export.ExportVideoResolutionProvider
 import com.app.swagse.videoeditor.export.IntegrationAppExportParamsProvider
 import com.app.swagse.videoeditor.impl.*
@@ -88,7 +89,7 @@ class IntegrationKoinModule {
         single<ContentFeatureProvider<TrackData, Fragment>>(
             named("musicTrackProvider")
         ) {
-            AudioBrowserMusicProvider()
+            AwesomeActivityMusicProvider()
         }
 
         single<CoverProvider> {

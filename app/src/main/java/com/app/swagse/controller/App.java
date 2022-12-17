@@ -67,12 +67,12 @@ public class App extends Application {
                     new VePlaybackSdkKoinModule().getModule(),
                     new AudioBrowserKoinModule().getModule(), // use this module only if you bought it
                     new ArCloudKoinModule().getModule(),
-
                     new TokenStorageKoinModule().getModule(),
                     new VeUiSdkKoinModule().getModule(),
                     new VeUiSdkKoinModule().getModule(),
                     new VeFlowKoinModule().getModule(),
                     new IntegrationKoinModule().getModule(),
+//                    new musicKOIN().getMusicProviderModule(),
                     new GalleryKoinModule().getModule(),
                     new BanubaEffectPlayerKoinModule().getModule()
     ).allowOverride(true);
@@ -89,7 +89,7 @@ public class App extends Application {
 //                    new AudioBrowserKoinModule().getModule(), // use this module only if you bought it
 //                    new ArCloudKoinModule().getModule(),
 //                    new TokenStorageKoinModule().getModule(),
-////                    new VideoEditorKoinModule().getModule(),
+//                    new VideoEditorKoinModule().getModule(),
 //                    new GalleryKoinModule().getModule(),
 //                    new BanubaEffectPlayerKoinModule().getModule()
 //            );
