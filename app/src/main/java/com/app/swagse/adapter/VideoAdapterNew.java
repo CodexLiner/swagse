@@ -494,8 +494,11 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
 //                    context.startActivity(buildIntent);
                     Uri []  list = new Uri[0];
                     Intent videoCreationIntent = new Intent(
-                            VideoCreationActivity.startFromCamera(context,
-                                  new PipConfig(Uri.EMPTY  , false , 0.5F),
+                            VideoCreationActivity.startFromCamera(
+                                    context,
+                                    new PipConfig(Uri.EMPTY,
+                                            false ,
+                                            0.9F),
                                     null,
                                     null));
                     context.startActivity(videoCreationIntent);

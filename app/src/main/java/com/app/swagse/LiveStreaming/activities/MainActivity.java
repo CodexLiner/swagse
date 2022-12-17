@@ -335,4 +335,5 @@ public class MainActivity extends BaseActivity {
         View view = getWindow().getDecorView().getRootView();
         view.getViewTreeObserver().removeOnGlobalLayoutListener(mLayoutObserverListener);
     }
+
 }

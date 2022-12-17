@@ -67,6 +67,7 @@ public class App extends Application {
                     new VePlaybackSdkKoinModule().getModule(),
                     new AudioBrowserKoinModule().getModule(), // use this module only if you bought it
                     new ArCloudKoinModule().getModule(),
+
                     new TokenStorageKoinModule().getModule(),
                     new VeUiSdkKoinModule().getModule(),
                     new VeUiSdkKoinModule().getModule(),

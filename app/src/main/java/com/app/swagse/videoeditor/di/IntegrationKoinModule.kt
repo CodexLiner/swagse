@@ -58,15 +58,6 @@ class IntegrationKoinModule {
                 exportBundleProvider = get()
             )
         }
-        single<MediaNavigationProcessor> {
-            object : MediaNavigationProcessor {
-                override fun process(mediaList: List<Uri>): Boolean {
-                    val context = androidContext()
-                    // Process media content and start your flow
-                    return false // means you want to leave video editor
-                }
-            }
-        }
 
         /**
          * Provides params for export

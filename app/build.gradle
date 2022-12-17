@@ -199,11 +199,10 @@ dependencies {
     implementation 'com.razorpay:checkout:1.6.26'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.21"
     // Banuba Video Editor SDK dependencies
     def banubaSdkVersion = '1.26.2'
     implementation "com.banuba.sdk:ffmpeg:4.4"
-    implementation "com.banuba.sdk:ve-playback-sdk:${banubaSdkVersion}"
     implementation "com.banuba.sdk:camera-sdk:${banubaSdkVersion}"
     implementation "com.banuba.sdk:camera-ui-sdk:${banubaSdkVersion}"
     implementation "com.banuba.sdk:core-sdk:${banubaSdkVersion}"
@@ -219,7 +218,8 @@ dependencies {
     implementation "com.banuba.sdk:ve-audio-browser-sdk:${banubaSdkVersion}"
     implementation "com.banuba.sdk:banuba-token-storage-sdk:${banubaSdkVersion}"
     implementation "com.banuba.sdk:ve-export-sdk:${banubaSdkVersion}"
+    implementation "com.banuba.sdk:ve-playback-sdk:${banubaSdkVersion}"
 
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.21"
+
 
 }
