@@ -115,9 +115,28 @@
  <!-- To customize video editor according to your app style you should
             create your own theme inherited from VideoCreationTheme and apply it
             to VideoCreationActivity in AndroidManifest.xml file -->
-    <style name="CustomIntegrationAppTheme" parent="VideoCreationTheme">
 
+    <style name="CustomAudioBrowserConnectionErrorTitleStyle" parent="AudioBrowserConnectionErrorTitleStyle" />
+    <style name="CustomAudioBrowserConnectionErrorMessageStyle" parent="AudioBrowserConnectionErrorMessageStyle" />
+    <style name="CustomAudioBrowserConnectionErrorBtnStyle" parent="AudioBrowserConnectionErrorBtnStyle" />
+    <style name="CustomAudioBrowserConnectionErrorSpinner" parent="AudioBrowserConnectionErrorSpinner" />
+
+    <style name="CustomIntegrationAppTheme" parent="VideoCreationTheme">
+<!--        audio connection-->
+        <item name="audioBrowserConnectionErrorTitle">
+            @style/CustomAudioBrowserConnectionErrorTitleStyle
+        </item>
+        <item name="audioBrowserConnectionErrorMessage">
+            @style/CustomAudioBrowserConnectionErrorMessageStyle
+        </item>
+        <item name="audioBrowserConnectionErrorBtn">
+            @style/CustomAudioBrowserConnectionErrorBtnStyle
+        </item>
+        <item name="audioBrowserConnectionErrorSpinner">
+            @style/CustomAudioBrowserConnectionErrorSpinner
+        </item>
         <!-- Camera screen styles -->
+        <item name="subtitleAvailable">true</item>
         <item name="cameraOverlayStyle">@style/CustomCameraOverlayStyle</item>
         <item name="cameraActionButtonStyle">@style/CustomCameraActionButtonStyle</item>
         <item name="cameraMusicTopIconStyle">@style/CustomCameraMusicTopIconStyle</item>
@@ -1116,6 +1135,7 @@
     </style>
 
     <style name="CustomHandsFreeTimerItemStyle" parent="HandsFreeTimerItemStyle">
+        <item name="icon_timer">@drawable/ic_stopwatch_off</item>
         <item name="android:background">@drawable/bg_item_timer_entry</item>
         <item name="android:textColor">@color/color_selector_timer_entry_text</item>
     </style>

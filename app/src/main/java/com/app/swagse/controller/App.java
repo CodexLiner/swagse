@@ -18,6 +18,7 @@ import com.app.swagse.LiveStreaming.utils.FileUtil;
 import com.app.swagse.LiveStreaming.utils.PrefManager;
 import com.app.swagse.R;
 import com.app.swagse.helper.AppSignatureHashHelper;
+import com.app.swagse.videoeditor.di.IntegrationKoinModule;
 import com.banuba.sdk.arcloud.di.ArCloudKoinModule;
 import com.banuba.sdk.audiobrowser.di.AudioBrowserKoinModule;
 import com.banuba.sdk.effectplayer.adapter.BanubaEffectPlayerKoinModule;
@@ -68,8 +69,9 @@ public class App extends Application {
                     new ArCloudKoinModule().getModule(),
                     new TokenStorageKoinModule().getModule(),
                     new VeUiSdkKoinModule().getModule(),
+                    new VeUiSdkKoinModule().getModule(),
                     new VeFlowKoinModule().getModule(),
-//                    new IntegrationKoinModule().getModule(),
+                    new IntegrationKoinModule().getModule(),
                     new GalleryKoinModule().getModule(),
                     new BanubaEffectPlayerKoinModule().getModule()
     ).allowOverride(true);

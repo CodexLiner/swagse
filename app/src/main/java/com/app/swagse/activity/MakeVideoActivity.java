@@ -40,6 +40,8 @@ import com.googlecode.mp4parser.authoring.Movie;
 import com.googlecode.mp4parser.authoring.tracks.CroppedTrack;
 import com.googlecode.mp4parser.util.Matrix;
 import com.googlecode.mp4parser.util.Path;
+import com.trinity.camera.TrinityPreviewView;
+import com.trinity.record.TrinityRecord;
 import com.wonderkiln.camerakit.CameraKit;
 import com.wonderkiln.camerakit.CameraView;
 
@@ -90,8 +92,8 @@ public class MakeVideoActivity extends AppCompatActivity implements View.OnClick
     boolean is_recording_timer_enable;
     int recording_time = 3;
 
-//    TrinityPreviewView preview;
-//    TrinityRecord mRecord;
+    TrinityPreviewView preview;
+    TrinityRecord mRecord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +151,7 @@ public class MakeVideoActivity extends AppCompatActivity implements View.OnClick
             setSoundTxtWidthHeight(add_sound_txt);
 
             Variables.selected_sound_id = intent.getStringExtra("sound_id");
-//            preparedAudio(audioFileUri);
+            preparedAudio(Uri.parse("http://webaudioapi.com/samples/audio-tag/chrono.mp3"));
         }
 
 
