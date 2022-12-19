@@ -1,13 +1,17 @@
 package com.app.swagse.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.swagse.Chat.Inbox.Inbox_F;
 import com.app.swagse.LiveStreaming.Fragment.Live_Users_F;
@@ -36,6 +40,7 @@ import com.app.swagse.network.RetrofitClient;
 import com.app.swagse.sharedpreferences.PrefConnect;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -406,5 +411,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setMenuCounter(@IdRes int itemId, int count) {
         TextView view = (TextView) navigationView.getMenu().findItem(itemId).getActionView();
         view.setText(count > 0 ? String.valueOf(count) : null);
+    }
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        FragmentManager fn = getSupportFragmentManager();
+        if (fn.getBackStackEntryCount()==0){
+            if (doubleBackToExitPressedOnce) {
+                finishAffinity();
+                super.onBackPressed();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Snackbar snackbar  =  Snackbar.make(findViewById(R.id.drawer_layout) , "0", Snackbar.LENGTH_SHORT);
+            View customSnackView = getLayoutInflater().inflate(R.layout.snackbar, null);
+            snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+            Snackbar.SnackbarLayout snackLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+            snackLayout.addView(customSnackView);
+            snackbar.show();
+
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        }else{ super.onBackPressed();}
+
+
     }
 }

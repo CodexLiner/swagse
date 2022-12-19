@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -152,7 +153,7 @@ public class VerifyOTPActivity extends AppCompatActivity implements SMSReceiver.
     @OnClick(R.id.verifyOTP)
     public void onClickViewed(View view) {
         OwnerGlobal.hideKeyboard(VerifyOTPActivity.this);
-        if (App.getInstance().isOnline()) {
+        if (App.isOnline()) {
             if (enterOTP.getValue().isEmpty()) {
                 toast(VerifyOTPActivity.this, "Enter OTP");
             } else {
@@ -190,9 +191,8 @@ public class VerifyOTPActivity extends AppCompatActivity implements SMSReceiver.
                             try {
                                 JSONObject jObjError = new JSONObject(response.errorBody().string());
                                 toast(VerifyOTPActivity.this, jObjError.getString("response_msg"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
+                            } catch (JSONException | IOException e) {
+                                Log.d("TAG", "VerifyOtp: "+e);
                                 e.printStackTrace();
                             }
 

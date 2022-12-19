@@ -219,6 +219,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQ_CODE) {
             boolean granted = true;
             for (int result : grantResults) {
@@ -335,5 +336,6 @@ public class MainActivity extends BaseActivity {
         View view = getWindow().getDecorView().getRootView();
         view.getViewTreeObserver().removeOnGlobalLayoutListener(mLayoutObserverListener);
     }
+
 
 }

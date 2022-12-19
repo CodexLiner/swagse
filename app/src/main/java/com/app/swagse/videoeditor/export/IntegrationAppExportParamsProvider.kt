@@ -5,6 +5,7 @@ package com.app.swagse.videoeditor.export
 
 
 import android.net.Uri
+import android.util.Log
 import androidx.core.net.toFile
 import com.banuba.sdk.core.MediaResolutionProvider
 import com.banuba.sdk.core.VideoResolution
@@ -23,9 +24,6 @@ import com.banuba.sdk.ve.ext.withWatermark
 
 
 
-
-
-
 class IntegrationAppExportParamsProvider(
     private val exportDir: Uri,
     private val sizeProvider: ExportVideoResolutionProvider,
@@ -39,6 +37,7 @@ class IntegrationAppExportParamsProvider(
         videoVolume: Float
     ): List<ExportParams> {
         val exportSessionDir = exportDir.toFile().apply {
+            Log.d("TAG", "provideExportParams: "+this.path)
             deleteRecursively()
             mkdirs()
         }
@@ -48,7 +47,7 @@ class IntegrationAppExportParamsProvider(
 
         return listOf(
             ExportParams.Builder(sizeProvider.videoResolution)
-                .effects(effects.withWatermark(watermarkBuilder, WatermarkAlignment.BottomRight(marginRightPx = 16.toPx)))
+                .effects(effects.withWatermark(watermarkBuilder, WatermarkAlignment.BottomRight(marginBottomPx = 10.toPx)))
                 .fileName("export_default_watermark")
                 .videoRangeList(videoRangeList)
                 .destDir(exportSessionDir)
@@ -65,7 +64,7 @@ class IntegrationAppExportParamsProvider(
                 .volumeVideo(videoVolume)
                 .build(),
             ExportParams.Builder(VideoResolution.Exact.VGA360)
-                .effects(effects.withWatermark(watermarkBuilder, WatermarkAlignment.BottomRight(marginRightPx = 16.toPx)))
+                .effects(effects.withWatermark(watermarkBuilder, WatermarkAlignment.BottomRight(marginRightPx = 10.toPx)))
                 .fileName("export_360_watermark")
                 .videoRangeList(videoRangeList)
                 .destDir(exportSessionDir)

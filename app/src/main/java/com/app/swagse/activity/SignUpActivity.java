@@ -454,7 +454,7 @@ public class SignUpActivity extends BaseActivity {
     }
 
     public void UpdateProfileService(Map<String, RequestBody> stringRequestBodyMap, MultipartBody.Part img) {
-        if (App.getInstance().isOnline()) {
+        if (App.isOnline()) {
             // if (isValid()) {
             progressDialog.show();
             Call<UserDetailResponse> call = apiInterface.signupProfile(stringRequestBodyMap, img);
@@ -481,22 +481,18 @@ public class SignUpActivity extends BaseActivity {
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(SignUpActivity.this, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
                     } else if (response.code() == Constants.UNAUTHORIZED) {
                         OwnerGlobal.LoginRedirect(SignUpActivity.this);
                     }
                 }
-
                 @Override
                 public void onFailure(Call<UserDetailResponse> call, Throwable t) {
-                    Log.d(TAG, "onFailure: " + t);
+                    Log.d(TAG, "onFailure: here " + t);
                 }
             });
-            //}
         } else {
             OwnerGlobal.networkToast(SignUpActivity.this);
         }
@@ -598,19 +594,16 @@ public class SignUpActivity extends BaseActivity {
                         Log.d(TAG, "FileSize After Crop: " + getFileSize(_filePath));
                         if (_filePath != null) {
                             String filePath = SiliCompressor.with(SignUpActivity.this).compress(_filePath);
-                            Log.d(TAG, "FileSize After Compress: " + getFileSize(filePath));
-                            file = new File(filePath);
+                            Log.d(TAG, "FileSize After Compress: " + getFileSize(_filePath) +"  path = "+_filePath);
+                            file = new File(_filePath);
                             if (file.exists()) {
                                 from = "";
                                 Log.d(TAG, "FilePath: " + file.getAbsolutePath());
                                 Glide.with(SignUpActivity.this).load(file.getAbsoluteFile()).into(userImage);
                             }
                         }
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (URISyntaxException e) {
+                    } catch (IOException | URISyntaxException e) {
+                        Log.d(TAG, "onActivityResult: gallery "+e);
                         e.printStackTrace();
                     }
                 } else {

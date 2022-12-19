@@ -73,27 +73,25 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public boolean checkpermission() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
-            ArrayList<String> permissionList = new ArrayList<>();
-            if (checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
-                permissionList.add(Manifest.permission.INTERNET);
-            }
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-            }
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            }
-            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
-                permissionList.add(Manifest.permission.CAMERA);
-            }
+        ArrayList<String> permissionList = new ArrayList<>();
+        if (checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
+            permissionList.add(Manifest.permission.INTERNET);
+        }
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+            permissionList.add(Manifest.permission.CAMERA);
+        }
 
-            if (permissionList.size() > 0) {
-                String[] permissionArray = new String[permissionList.size()];
-                permissionList.toArray(permissionArray);
-                requestPermissions(permissionArray, PERMISSION_REQUEST);
-                return false;
-            }
+        if (permissionList.size() > 0) {
+            String[] permissionArray = new String[permissionList.size()];
+            permissionList.toArray(permissionArray);
+            requestPermissions(permissionArray, PERMISSION_REQUEST);
+            return false;
         }
         return true;
     }
@@ -138,8 +136,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public boolean checkInternetConnection(Context paramContext) {
-        NetworkInfo activeNetworkInfo = ((ConnectivityManager) getSystemService(paramContext.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-        return (activeNetworkInfo != null) && (activeNetworkInfo.isConnected() == true);
+        NetworkInfo activeNetworkInfo = ((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        return (activeNetworkInfo != null) && (activeNetworkInfo.isConnected());
     }
 
    /* public void hideKeyboard()

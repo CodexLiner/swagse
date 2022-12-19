@@ -35,6 +35,7 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -56,6 +57,7 @@ import com.app.swagse.adapter.TrendingViewHolder;
 import com.app.swagse.constants.Constants;
 import com.app.swagse.constants.Variables;
 import com.app.swagse.controller.App;
+import com.app.swagse.databinding.ActivitySwagTubeDetailsBinding;
 import com.app.swagse.deeplinking.DLinkingActivity;
 import com.app.swagse.helper.OwnerGlobal;
 import com.app.swagse.model.swagTube.SwagTubeResponse;
@@ -78,6 +80,7 @@ import com.downloader.Progress;
 import com.downloader.request.DownloadRequest;
 import com.google.android.exoplayer2.ExoPlayer;
 
+import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
@@ -118,7 +121,7 @@ import retrofit2.Response;
 
 import static com.app.swagse.helper.OwnerGlobal.toast;
 
-public class SwagTubeDetailsActivity extends AppCompatActivity implements Player.EventListener, View.OnClickListener {
+public class SwagTubeDetailsActivity extends AppCompatActivity implements Player.Listener, View.OnClickListener {
 
     public static final String PROGRESS_UPDATE = "progress_update";
     private static final String TAG = SwagTubeDetailsActivity.class.getSimpleName();
@@ -146,11 +149,13 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
     ProgressBar swagTubeDetailProgress;
     private ProgressDialog progressDialog;
 
+    private ActivitySwagTubeDetailsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_swag_tube_details);
+        binding = ActivitySwagTubeDetailsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait...");
@@ -242,7 +247,7 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
         // This is the MediaSource representing the media to be played.
         Uri videoUri = Uri.parse(url);
             MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(videoUri.toString()));
+                    .createMediaSource(MediaItem.fromUri(Uri.parse(videoUri.toString())));
 //        MediaSource videoSource = new ProgressiveMediaSource(videoUri, dataSourceFactory, extractorsFactory, null, null,null);
         // Prepare the player with the source.
         player.prepare(videoSource);
@@ -264,48 +269,50 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
                 playPlayer(player);
             }
         });
-        fullscreenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (fullscreen) {
-                    fullscreenButton.setImageDrawable(ContextCompat.getDrawable(SwagTubeDetailsActivity.this, R.drawable.ic_fullscreen_open));
+       if (fullscreenButton!=null){
+           fullscreenButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   if (fullscreen) {
+                       fullscreenButton.setImageDrawable(ContextCompat.getDrawable(SwagTubeDetailsActivity.this, R.drawable.ic_fullscreen_open));
 
-                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                       getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
-                    if (getSupportActionBar() != null) {
-                        getSupportActionBar().show();
-                    }
+                       if (getSupportActionBar() != null) {
+                           getSupportActionBar().show();
+                       }
 
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                       setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) simpleExoPlayerView.getLayoutParams();
-                    params.width = params.MATCH_PARENT;
-                    params.height = (int) (250 * getApplicationContext().getResources().getDisplayMetrics().density);
-                    simpleExoPlayerView.setLayoutParams(params);
+                       RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) simpleExoPlayerView.getLayoutParams();
+                       params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                       params.height = (int) (250 * getApplicationContext().getResources().getDisplayMetrics().density);
+                       simpleExoPlayerView.setLayoutParams(params);
 
-                    fullscreen = false;
-                } else {
-                    fullscreenButton.setImageDrawable(ContextCompat.getDrawable(SwagTubeDetailsActivity.this, R.drawable.ic_fullscreen_close));
+                       fullscreen = false;
+                   } else {
+                       fullscreenButton.setImageDrawable(ContextCompat.getDrawable(SwagTubeDetailsActivity.this, R.drawable.ic_fullscreen_close));
 
-                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                       getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+                               | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                               | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-                    if (getSupportActionBar() != null) {
-                        getSupportActionBar().hide();
-                    }
+                       if (getSupportActionBar() != null) {
+                           getSupportActionBar().hide();
+                       }
 
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                       setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) simpleExoPlayerView.getLayoutParams();
-                    params.width = params.MATCH_PARENT;
-                    params.height = params.MATCH_PARENT;
-                    simpleExoPlayerView.setLayoutParams(params);
+                       RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) simpleExoPlayerView.getLayoutParams();
+                       params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                       params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                       simpleExoPlayerView.setLayoutParams(params);
 
-                    fullscreen = true;
-                }
-            }
-        });
+                       fullscreen = true;
+                   }
+               }
+           });
+       }
 
         exo_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -351,6 +358,26 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
         if (player != null) {
             player.seekTo(positionInMS);
         }
+    }
+    private void replay(){
+        if (player != null) {
+            player.seekTo(0);
+            update_player_ui();
+        }
+    }
+
+    private void update_player_ui() {
+        exo_pause.setVisibility(View.GONE);
+        exo_play .setVisibility(View.GONE);
+        if (exo_play.getVisibility()==View.VISIBLE){
+            exo_pause.setVisibility(View.INVISIBLE);
+            exo_play .setVisibility(View.INVISIBLE);
+        }else {
+//            exo_pause.setVisibility(View.VISIBLE);
+//            exo_play .setVisibility(View.VISIBLE);
+        }
+
+
     }
 
     @Override
@@ -414,7 +441,7 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
     }
 
     @Override
-    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+    public void onPlaybackStateChanged(int playbackState) {
         if (playbackState == ExoPlayer.STATE_READY) {
             Log.i("TEST", "ExoPlayer State is: READY");
             progressBar.setVisibility(View.GONE);
@@ -422,7 +449,7 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
             Log.i("TEST", "ExoPlayer State is: BUFFERING");
             progressBar.setVisibility(View.VISIBLE);
         } else if (playbackState == ExoPlayer.STATE_ENDED) {
-            Log.i("TEST", "ExoPlayer State is: ENDED");
+            replay();
         } else if (playbackState == ExoPlayer.STATE_IDLE) {
             Log.i("TEST", "ExoPlayer State is: IDLE");
         }
@@ -445,9 +472,7 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(SwagTubeDetailsActivity.this, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 

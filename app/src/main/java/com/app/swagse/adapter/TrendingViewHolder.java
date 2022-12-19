@@ -1,5 +1,6 @@
 package com.app.swagse.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -76,20 +77,21 @@ public class TrendingViewHolder extends RecyclerView.ViewHolder {
 
     }
 
+    @SuppressLint("SetTextI18n")
     public void onBind(List<SwagtubedataItem> mediaObjects, RequestManager requestManager, TrendingRecyclerViewAdapter trendingRecyclerViewAdapter) {
         this.requestManager = requestManager;
         this.mediaObjects = mediaObjects;
         parent.setTag(this);
-        this.requestManager.load(mediaObjects.get(getAdapterPosition()).getThmubnal()).into(mediaCoverImage);
-        swagTubeName.setText(mediaObjects.get(getAdapterPosition()).getTitle());
-        trendingTimeago.setText(mediaObjects.get(getAdapterPosition()).getTimeago());
-        trendingViews.setText(mediaObjects.get(getAdapterPosition()).getViewscount() + " views");
-        trendingChanelName.setText(mediaObjects.get(getAdapterPosition()).getName());
+        this.requestManager.load(mediaObjects.get(getBindingAdapterPosition()).getThmubnal()).into(mediaCoverImage);
+        swagTubeName.setText(mediaObjects.get(getBindingAdapterPosition()).getTitle());
+        trendingTimeago.setText(mediaObjects.get(getBindingAdapterPosition()).getTimeago());
+        trendingViews.setText(mediaObjects.get(getBindingAdapterPosition()).getViewscount() + " views");
+        trendingChanelName.setText(mediaObjects.get(getBindingAdapterPosition()).getName());
 
-        parent.setOnClickListener(new View.OnClickListener() {
+        mediaContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parent.getContext().startActivity(new Intent(parent.getContext(), SwagTubeDetailsActivity.class).putExtra(TrendingViewHolder.class.getSimpleName(), mediaObjects.get(getAdapterPosition()).getId()));
+                parent.getContext().startActivity(new Intent(parent.getContext(), SwagTubeDetailsActivity.class).putExtra(TrendingViewHolder.class.getSimpleName(), mediaObjects.get(getBindingAdapterPosition()).getId()));
             }
         });
 

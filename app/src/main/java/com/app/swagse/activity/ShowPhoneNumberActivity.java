@@ -124,7 +124,7 @@ public class ShowPhoneNumberActivity extends AppCompatActivity implements Google
 
     @OnClick(R.id.verify_number)
     public void onClickViewed(View view) {
-        if (App.getInstance().isOnline()) {
+        if (App.isOnline()) {
             if (isValid()) {
                 progressDialog.show();
                 //input_number.getText().toString()
@@ -145,9 +145,7 @@ public class ShowPhoneNumberActivity extends AppCompatActivity implements Google
                             try {
                                 JSONObject jObjError = new JSONObject(response.errorBody().string());
                                 toast(ShowPhoneNumberActivity.this, jObjError.getString("response_msg"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
+                            } catch (JSONException | IOException e) {
                                 e.printStackTrace();
                             }
 

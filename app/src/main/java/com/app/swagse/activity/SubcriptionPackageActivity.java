@@ -157,7 +157,7 @@ public class SubcriptionPackageActivity extends AppCompatActivity implements Pay
     }
 
     private void requestForPackage(String razorpayPaymentID, String packageId) {
-        if (App.getInstance().isOnline()) {
+        if (App.isOnline()) {
 //            if (isValid()) {
 //                progressDialog.show();
             //input_number.getText().toString()
@@ -185,7 +185,7 @@ public class SubcriptionPackageActivity extends AppCompatActivity implements Pay
 //                            startActivity(new Intent(context, VerifyOTPActivity.class).putExtra(ShowPhoneNumberActivity.class.getSimpleName(), input_mobileNumber.getText().toString()));
 //                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         } else {
-//                            toast(context, response.body().getMessage());
+                            toast(SubcriptionPackageActivity.this, response.body().getMessage());
                         }
                     } else if (response.code() == Constants.FAILED) {
                         try {

@@ -16,6 +16,7 @@
 
     <supports-screens
         android:anyDensity="true"
+        android:extractNativeLibs="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
@@ -32,6 +33,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SwagSe"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".SwagTubeDetailsActivityNew"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".TEST.AwesomeAudioContentActivity"
             android:exported="false">
@@ -234,8 +242,11 @@
             android:turnScreenOn="true" />
         <activity
             android:name=".activity.MainActivity"
+            android:exported="true"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.SwagSe.NoActionBar" />
+            android:theme="@style/Theme.SwagSe.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.ShowPhoneNumberActivity"
             android:theme="@style/Theme.SwagSe.NoActionBar" />

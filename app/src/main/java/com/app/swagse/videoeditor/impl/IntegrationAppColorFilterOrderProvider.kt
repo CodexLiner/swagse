@@ -4,7 +4,6 @@ import com.banuba.sdk.core.data.OrderProvider
 
 
 class IntegrationAppColorFilterOrderProvider : OrderProvider {
-
     override fun provide() = listOf(
         "egypt",
         "byers",

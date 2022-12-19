@@ -1,5 +1,6 @@
 package com.app.swagse.adapter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -57,6 +58,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import codex.CodexPerms;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -269,9 +271,7 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast((Activity) context, jObjError.getString("message"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 
@@ -489,19 +489,15 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
             createVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    context.startActivity(new Intent(context, MakeVideoActivity.class));
-//                    Intent buildIntent = new Intent(context, VideoCreationActivity.class);
-//                    context.startActivity(buildIntent);
-                    Uri []  list = new Uri[0];
-                    Intent videoCreationIntent = new Intent(
-                            VideoCreationActivity.startFromCamera(
-                                    context,
-                                    new PipConfig(Uri.EMPTY,
-                                            false ,
-                                            0.9F),
-                                    null,
-                                    null));
-                    context.startActivity(videoCreationIntent);
+                    Activity activity = (Activity) context;
+                    if (new CodexPerms(activity).hasPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})){
+                        Uri []  list = new Uri[0];
+                        Intent videoCreationIntent = new Intent(
+                                VideoCreationActivity.startFromCamera(context,
+                                        new PipConfig(Uri.EMPTY,false , 0.9F), null, null));
+                        context.startActivity(videoCreationIntent);
+                    } else { new CodexPerms(activity).requestPerms(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}); }
+
                 }
             });
 

@@ -158,7 +158,7 @@ public class TrendingFragment extends Fragment implements View.OnClickListener {
                     if (response.code() == Constants.SUCCESS) {
                         if (response.body().getStatus().equals("1")) {
                             List<SwagtubedataItem> swagTubeDataList = response.body().getSwagtubedata();
-                            if (swagTubeDataList.size() != 0 && swagTubeDataList != null && !swagTubeDataList.isEmpty()) {
+                            if (swagTubeDataList.size() != 0) {
                                 mRecyclerView.setMediaObjects(swagTubeDataList);
                                 mAdapter = new TrendingRecyclerViewAdapter(swagTubeDataList, initGlide());
                                 //Set Adapter
@@ -169,9 +169,7 @@ public class TrendingFragment extends Fragment implements View.OnClickListener {
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(mActivity, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 

@@ -23,6 +23,7 @@ import com.app.swagse.SimpleClasses.Functions;
 import com.app.swagse.constants.Variables;
 import com.coremedia.iso.boxes.Container;
 import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -49,7 +50,7 @@ import java.util.List;
 
 import static com.app.swagse.activity.MakeVideoActivity.Sounds_list_Request_code;
 
-public class GallerySelectedVideo_A extends AppCompatActivity implements View.OnClickListener, Player.EventListener {
+public class GallerySelectedVideo_A extends AppCompatActivity implements View.OnClickListener, Player.Listener {
 
     private Context context = this;
     String path;
@@ -92,7 +93,7 @@ public class GallerySelectedVideo_A extends AppCompatActivity implements View.On
                 Util.getUserAgent(this, "TikTok"));
 
         MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(Uri.parse(path));
+                .createMediaSource(MediaItem.fromUri(Uri.parse(path)));
 
         video_player.prepare(videoSource);
 
@@ -340,21 +341,6 @@ public class GallerySelectedVideo_A extends AppCompatActivity implements View.On
         }
     }
 
-    // Bottom all the function and the Call back listener of the Expo player
-
-
-    @Override
-    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
-    }
-
-
-    @Override
-    public void onLoadingChanged(boolean isLoading) {
-
-    }
-
-
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 
@@ -371,36 +357,6 @@ public class GallerySelectedVideo_A extends AppCompatActivity implements View.On
 
     }
 
-    @Override
-    public void onRepeatModeChanged(int repeatMode) {
-
-        Toast.makeText(this, "Repeat mode change", Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
-
-    }
-
-
-
-    @Override
-    public void onPositionDiscontinuity(int reason) {
-
-    }
-
-    @Override
-    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-
-    }
-
-
-    @Override
-    public void onSeekProcessed() {
-
-        Log.d("resp", "smmdsmd");
-    }
 
 
     // this will hide the bottom mobile navigation controll

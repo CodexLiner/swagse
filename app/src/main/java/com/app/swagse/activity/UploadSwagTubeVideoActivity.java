@@ -7,6 +7,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -95,7 +96,6 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
     AppCompatButton chooseVideo;
     VideoView showVideo;
     AppCompatImageView showVideoThumbnail;
-    private ProgressDialog progressDialog;
     private Api apiInterface;
     AppCompatSpinner categorySpinner;
     private List<CategoryItem> categoryList;
@@ -111,7 +111,7 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_swag_tube_video);
         apiInterface = RetrofitClient.getInstance().getApi();
-        progressDialog = new ProgressDialog(this);
+        ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait...");
         enablePermission();
 
@@ -175,8 +175,8 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
 
         Log.d("result", "" + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == this.RESULT_CANCELED) {
-            Log.d("what", "cancle");
+        if (resultCode == RESULT_CANCELED) {
+            Log.d("what", "cancel");
             return;
         }
         if (requestCode == GALLERY) {
@@ -217,17 +217,17 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
     }
 
     private void saveVideoToInternalStorage(String filePath) {
-        File newfile;
+        File saved_file;
         try {
             File currentFile = new File(filePath);
             File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + VIDEO_DIRECTORY);
-            newfile = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".mp4");
+            saved_file = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".mp4");
             if (!wallpaperDirectory.exists()) {
                 wallpaperDirectory.mkdirs();
             }
             if (currentFile.exists()) {
                 InputStream in = new FileInputStream(currentFile);
-                OutputStream out = new FileOutputStream(newfile);
+                OutputStream out = new FileOutputStream(saved_file);
                 // Copy the bits from instream to outstream
                 byte[] buf = new byte[1024];
                 int len;
@@ -240,9 +240,7 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
             } else {
                 Log.v("vii", "Video saving failed. Source file missing.");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { e.printStackTrace();}
     }
 
     public String getPath(Uri uri) {
@@ -277,9 +275,7 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(UploadSwagTubeVideoActivity.this, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 
@@ -313,7 +309,7 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
     }
 
     public void UpdateProfileService(Map<String, RequestBody> stringRequestBodyMap, MultipartBody.Part img) {
-        if (App.getInstance().isOnline()) {
+        if (App.isOnline()) {
             // if (isValid()) {
 //            progressDialog.show();
             fileUploadNotification = new FileUploadNotification(UploadSwagTubeVideoActivity.this);
@@ -373,7 +369,10 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
 //        long seconds = videoDurationTime / 60;
         Log.d(TAG, "isValid: " + seconds);
         String videoDurationValue = PrefConnect.readString(UploadSwagTubeVideoActivity.this, Constants.VIDEO_DURATION, "");
-        int videoDurationValuesInt = Integer.parseInt(videoDurationValue);
+        int videoDurationValuesInt = 10000;
+        try {
+            videoDurationValuesInt   = Integer.parseInt(videoDurationValue);
+        }catch (Exception ignored){}
         if (seconds > videoDurationValuesInt) {
 //            Toast.makeText(this, "Show Subscription Module", Toast.LENGTH_SHORT).show();
             AlertDialog.Builder builder = new AlertDialog.Builder(UploadSwagTubeVideoActivity.this);
@@ -458,9 +457,7 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
 
         byte[] imageBytes = baos.toByteArray();
 
-        String base64String = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
-
-        return base64String;
+        return Base64.encodeToString(imageBytes, Base64.NO_WRAP);
     }
 
     @Override

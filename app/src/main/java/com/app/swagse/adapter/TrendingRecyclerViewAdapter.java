@@ -1,5 +1,6 @@
 package com.app.swagse.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -14,8 +15,8 @@ import java.util.List;
 
 public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter {
 
-    private List<SwagtubedataItem> mediaObjects;
-    private RequestManager requestManager;
+    private final List<SwagtubedataItem> mediaObjects;
+    private final RequestManager requestManager;
 
     public TrendingRecyclerViewAdapter(List<SwagtubedataItem> mediaObjects, RequestManager requestManager) {
         this.mediaObjects = mediaObjects;
@@ -41,6 +42,7 @@ public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter {
         return mediaObjects.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void removeItem(int position) {
         mediaObjects.remove(position);
         notifyItemRemoved(position);

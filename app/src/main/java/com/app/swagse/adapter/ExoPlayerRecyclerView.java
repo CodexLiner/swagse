@@ -23,6 +23,7 @@ import com.app.swagse.adapter.PlayerViewHolder;
 import com.app.swagse.model.swagTube.SwagtubedataItem;
 import com.bumptech.glide.RequestManager;
 import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -170,14 +171,9 @@ public class  ExoPlayerRecyclerView extends RecyclerView {
             }
         });
 
-        videoPlayer.addListener(new Player.EventListener() {
+        videoPlayer.addListener(new Player.Listener() {
 
 
-            @Override
-            public void onTracksChanged(TrackGroupArray trackGroups,
-                                        TrackSelectionArray trackSelections) {
-
-            }
 
             @Override
             public void onLoadingChanged(boolean isLoading) {
@@ -324,7 +320,7 @@ public class  ExoPlayerRecyclerView extends RecyclerView {
         String mediaUrl = mediaObjects.get(targetPosition).getVideourl();
         if (mediaUrl != null) {
             MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(mediaUrl));
+                    .createMediaSource(MediaItem.fromUri(Uri.parse(mediaUrl)));
             videoPlayer.prepare(videoSource);
             videoPlayer.setPlayWhenReady(true);
         }

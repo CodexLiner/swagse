@@ -3,6 +3,7 @@ package com.app.swagse.videoeditor.di
 
 import android.app.Activity
 import android.net.Uri
+import android.util.Log
 import androidx.fragment.app.Fragment
 import com.app.swagse.LiveStreaming.activities.MainActivity
 import com.app.swagse.TEST.AwesomeActivityMusicProvider

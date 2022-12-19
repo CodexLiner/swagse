@@ -7,13 +7,13 @@ function Effect() {
         Api.meshfxMsg("spawn", 2, 0, "eyelash.bsm2");
         Api.meshfxMsg("spawn", 3, 0, "quad.bsm2");
 
-        //Api.meshfxMsg("spawn", 4, 0, "GlosE.bsm2");
+        Api.meshfxMsg("spawn", 4, 0, "GlosE.bsm2");
 
         Api.meshfxMsg("shaderVec4", 0, 1, "0.81 0.48 0.48 0.3");
-        // [0] sCoef -- color saturation
-        // [1] vCoef -- shine brightness (intensity)
-        // [2] sCoef1 -- shine saturation (color bleeding)
-        // [3] bCoef -- darkness (more is less)
+         [0] sCoef -- color saturation
+         [1] vCoef -- shine brightness (intensity)
+         [2] sCoef1 -- shine saturation (color bleeding)
+         [3] bCoef -- darkness (more is less)
         Api.meshfxMsg("shaderVec4", 0, 2, "1.0 0.2 0.2 1.0");
 
         //Brows color

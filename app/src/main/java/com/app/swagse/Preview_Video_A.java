@@ -24,6 +24,7 @@ import com.daasuu.gpuv.player.GPUPlayerView;
 import com.daasuu.gpuv.player.PlayerScaleType;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -40,7 +41,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class Preview_Video_A extends AppCompatActivity implements Player.EventListener {
+public class Preview_Video_A extends AppCompatActivity implements Player.Listener {
 
 
     String video_url;
@@ -206,7 +207,7 @@ public class Preview_Video_A extends AppCompatActivity implements Player.EventLi
                 Util.getUserAgent(this, "TikTok"));
 
         MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(Uri.parse(path));
+                .createMediaSource(MediaItem.fromUri(Uri.parse(path)));
 
         player.prepare(videoSource);
         player.setRepeatMode(Player.REPEAT_MODE_ALL);
@@ -348,48 +349,6 @@ public class Preview_Video_A extends AppCompatActivity implements Player.EventLi
 
 
     // Bottom all the function and the Call back listener of the Expo player
-
-    @Override
-    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
-    }
-
-    @Override
-    public void onLoadingChanged(boolean isLoading) {
-
-    }
-
-    @Override
-    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-
-    }
-
-    @Override
-    public void onRepeatModeChanged(int repeatMode) {
-
-    }
-
-    @Override
-    public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
-
-    }
-
-
-
-    @Override
-    public void onPositionDiscontinuity(int reason) {
-
-    }
-
-    @Override
-    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-
-    }
-
-    @Override
-    public void onSeekProcessed() {
-
-    }
 
 
     @Override
