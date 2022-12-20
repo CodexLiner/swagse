@@ -34,7 +34,7 @@ public class SwagtubedataItem implements Serializable {
     @SerializedName("commentcount")
     private int commentcount;
 
-    @SerializedName("views_count")
+    @SerializedName("viewscount")
     private int viewscount;
 
     @SerializedName("timeago")
@@ -181,5 +181,27 @@ public class SwagtubedataItem implements Serializable {
 
     public void setViewscount(int viewscount) {
         this.viewscount = viewscount;
+    }
+
+    @Override
+    public String toString() {
+        return "SwagtubedataItem{" +
+                "likedata=" + likedata +
+                ", commentdata=" + commentdata +
+                ", userlikestatus=" + userlikestatus +
+                ", title='" + title + '\'' +
+                ", userid='" + userid + '\'' +
+                ", likecount=" + likecount +
+                ", usercommentstatus=" + usercommentstatus +
+                ", userfollowstatus=" + userfollowstatus +
+                ", commentcount=" + commentcount +
+                ", viewscount=" + viewscount +
+                ", timeago='" + timeago + '\'' +
+                ", videourl='" + videourl + '\'' +
+                ", name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", category='" + category + '\'' +
+                ", thmubnal='" + thmubnal + '\'' +
+                '}';
     }
 }

@@ -7,9 +7,11 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -61,6 +63,7 @@ public class SwagTubeCommentActivity extends AppCompatActivity {
     SwagtubedataItem swagtubedataItem;
     String id;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +145,7 @@ public class SwagTubeCommentActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
                     progressDialog.dismiss();
+                    Log.d("TAG", "Comment: ss"+response.toString());
                     if (response.code() == Constants.SUCCESS) {
                         if (response.body().getStatus().equals("1")) {
                             List<com.app.swagse.model.commentData.CommentdataItem> commentdata = response.body().getCommentdata();
@@ -157,9 +161,7 @@ public class SwagTubeCommentActivity extends AppCompatActivity {
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(SwagTubeCommentActivity.this, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 

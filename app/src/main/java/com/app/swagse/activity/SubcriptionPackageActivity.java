@@ -82,11 +82,12 @@ public class SubcriptionPackageActivity extends AppCompatActivity implements Pay
         responseCall.enqueue(new Callback<PackageResponse>() {
             @Override
             public void onResponse(Call<PackageResponse> call, Response<PackageResponse> response) {
+                Log.d(TAG, "Subscription : "+response.toString());
                 progress_bar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     if (response.body().getStatus().equals("1")) {
                         List<SubscriptionItem> subscriptionItemList = response.body().getSubscription();
-                        if (subscriptionItemList.size() != 0 && subscriptionItemList != null) {
+                        if (subscriptionItemList.size() != 0) {
                             PackageRecyclerViewAdapter packageRecyclerViewAdapter = new PackageRecyclerViewAdapter(SubcriptionPackageActivity.this, subscriptionItemList);
                             packageRecyclerVew.setAdapter(packageRecyclerViewAdapter);
                             nothing_main_layout.setVisibility(View.GONE);
@@ -191,9 +192,7 @@ public class SubcriptionPackageActivity extends AppCompatActivity implements Pay
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(SubcriptionPackageActivity.this, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 

@@ -54,6 +54,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -159,6 +160,7 @@ public class TrendingFragment extends Fragment implements View.OnClickListener {
                         if (response.body().getStatus().equals("1")) {
                             List<SwagtubedataItem> swagTubeDataList = response.body().getSwagtubedata();
                             if (swagTubeDataList.size() != 0) {
+                                Collections.reverse(swagTubeDataList);
                                 mRecyclerView.setMediaObjects(swagTubeDataList);
                                 mAdapter = new TrendingRecyclerViewAdapter(swagTubeDataList, initGlide());
                                 //Set Adapter

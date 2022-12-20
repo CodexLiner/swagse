@@ -122,9 +122,7 @@ public class FollowerUserActivity extends AppCompatActivity {
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(FollowerUserActivity.this, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 
@@ -151,7 +149,7 @@ public class FollowerUserActivity extends AppCompatActivity {
     }
 
     private void getuserprofile(String userId) {
-        if (App.getInstance().isOnline()) {
+        if (App.isOnline()) {
             Call<UserDetailResponse> userResponseCall = apiInterface.getUserProfile(userId);
             userResponseCall.enqueue(new Callback<UserDetailResponse>() {
                 @Override

@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +55,7 @@ public class NavFeedbackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_feedback);
         ButterKnife.bind(this);
-        getSupportActionBar().setTitle("Feedback");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Feedback");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait...");
@@ -81,9 +82,7 @@ public class NavFeedbackActivity extends AppCompatActivity {
                             try {
                                 JSONObject jObjError = new JSONObject(response.errorBody().string());
                                 toast(NavFeedbackActivity.this, jObjError.getString("response_msg"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
+                            } catch (JSONException | IOException e) {
                                 e.printStackTrace();
                             }
 
