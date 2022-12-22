@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -25,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.swagse.LoginActivity;
 import com.app.swagse.R;
+import com.app.swagse.activity.SearchActivity;
 import com.app.swagse.activity.SwagTubeCommentActivity;
 import com.app.swagse.activity.SwagTubeDetailsActivity;
 import com.app.swagse.constants.Constants;
@@ -199,7 +201,15 @@ public class SwagTubeAdapter extends RecyclerView.Adapter<SwagTubeAdapter.SwagTu
                 }
             });
         }
-
+        holder.hashtag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(context , SearchActivity.class);
+//                intent.putExtra("hashtag" , "hashtag");
+//                context.startActivity(intent);
+                Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
         holder.swagTube_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,9 +271,7 @@ public class SwagTubeAdapter extends RecyclerView.Adapter<SwagTubeAdapter.SwagTu
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
 //                            toast(context, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 
@@ -297,9 +305,7 @@ public class SwagTubeAdapter extends RecyclerView.Adapter<SwagTubeAdapter.SwagTu
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
 //                            toast(context, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 
@@ -333,12 +339,14 @@ public class SwagTubeAdapter extends RecyclerView.Adapter<SwagTubeAdapter.SwagTu
         AppCompatImageView postImage;
         CircleImageView swagTubePic;
         AppCompatTextView swagTube_follow, swagTubeName, swagTubeDays, swagTubeCommentCount, swagTubeOptions, swagTube_share, swagTube_comment, swagTube_like, swagTubeLikeCount;
-        LinearLayout main_social_layout_linear;
+        RelativeLayout main_social_layout_linear;
         RelativeLayout main_count_layout;
+        TextView hashtag;
 
         public SwagTubeViewHolder(@NonNull View itemView) {
             super(itemView);
 //            postImage = itemView.findViewById(R.id.postImage);
+            hashtag = itemView.findViewById(R.id.hashtag);
             swagTubePic = itemView.findViewById(R.id.swagTubePic);
             swagTubeName = itemView.findViewById(R.id.swagTubeName);
             swagTubeDays = itemView.findViewById(R.id.swagTubeDays);
@@ -349,7 +357,7 @@ public class SwagTubeAdapter extends RecyclerView.Adapter<SwagTubeAdapter.SwagTu
             swagTube_like = itemView.findViewById(R.id.swagTube_like);
             swagTubeOptions = itemView.findViewById(R.id.swagTubeOptions);
             swagTube_follow = itemView.findViewById(R.id.swagTube_follow);
-            main_social_layout_linear = itemView.findViewById(R.id.main_social_layout_linear);
+            main_social_layout_linear = itemView.findViewById(R.id.main_social_layout);
             main_count_layout = itemView.findViewById(R.id.main_count_layout);
         }
     }

@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -28,6 +29,7 @@ import com.app.swagse.LoginActivity;
 import com.app.swagse.R;
 import com.app.swagse.activity.ChatActivity;
 import com.app.swagse.activity.MainActivity;
+import com.app.swagse.activity.SearchActivity;
 import com.app.swagse.activity.SwagTubeCommentActivity;
 import com.app.swagse.activity.SwagTubeDetailsActivity;
 import com.app.swagse.constants.Constants;
@@ -76,6 +78,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
     private RelativeLayout main_count_layout;
     private RelativeLayout main_social_layout;
     private Api apiInterface;
+    private TextView hashtag;
     List<SwagtubedataItem> mediaObjectsData;
     OnItemClickListener mItemClickListener;
     public MediaRecyclerAdapter adapter;
@@ -83,6 +86,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
     public PlayerViewHolder(@NonNull View itemView) {
         super(itemView);
         parent = itemView;
+        hashtag = itemView.findViewById(R.id.hashtag);
         mediaContainer = itemView.findViewById(R.id.mediaContainer);
         mediaCoverImage = itemView.findViewById(R.id.ivMediaCoverImage);
         title = itemView.findViewById(R.id.swagTubeName);
@@ -145,8 +149,11 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
         } else {
             swagTubeOptions.setVisibility(View.VISIBLE);
         }
-
-
+        this.hashtag.setOnClickListener(v->{
+            Intent intent = new Intent(hashtag.getContext() , SearchActivity.class);
+            intent.putExtra("hashtag" , "this");
+            hashtag.getContext().startActivity(intent);
+        });
         swagTube_like.setOnClickListener(this);
         swagTube_comment.setOnClickListener(this);
         swagTube_share.setOnClickListener(this);

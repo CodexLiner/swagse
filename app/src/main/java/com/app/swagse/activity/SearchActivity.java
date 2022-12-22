@@ -7,12 +7,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -61,10 +64,17 @@ public class SearchActivity extends AppCompatActivity {
         searchRecyclerView = findViewById(R.id.searchRecyclerView);
         searchRecyclerView.setHasFixedSize(true);
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this, LinearLayoutManager.VERTICAL, false));
+        String hashtag = getIntent().getStringExtra("hashtag");
+        if (hashtag!=null){
+            place_search.setText(hashtag);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { place_search.setFocusedByDefault(false); }
+            getSearchData(hashtag);
+        }else {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        }
         place_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     if (v.getText().toString().length() >= 3) {
                         getSearchData(v.getText().toString().toString());
@@ -104,7 +114,6 @@ public class SearchActivity extends AppCompatActivity {
 //            }
 //        });
 //        getVideoHistory();
-
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -186,7 +186,6 @@ public class TrendingFragment extends Fragment implements View.OnClickListener {
             });
         }
     }
-
     private RequestManager initGlide() {
         if (mActivity == null){
             return null;

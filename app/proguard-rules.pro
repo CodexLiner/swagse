@@ -22,3 +22,4 @@
 #-keep class io.agora.**{*;}
 #-keep class org.webrtc.** { *; }
 #-dontwarn org.webrtc.**
+#-keep public class * implements com.ixuea.android.downloader.db.DownloadDBController

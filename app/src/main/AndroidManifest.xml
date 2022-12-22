@@ -24,6 +24,7 @@
         android:xlargeScreens="true" />
 
     <application
+        android:requestLegacyExternalStorage="true"
         android:name="com.app.swagse.controller.App"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
@@ -186,6 +187,7 @@
         <activity android:name=".activity.CategoryActivity" />
         <activity android:name=".activity.CategoryListActivity" />
         <activity
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:name=".activity.SearchActivity"
             android:theme="@style/Theme.SwagSe.NoActionBar" />
         <activity android:name=".activity.menu.ProfileActivity" />

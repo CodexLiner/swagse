@@ -6,12 +6,14 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -67,6 +69,8 @@ import com.app.swagse.network.Api;
 import com.app.swagse.network.RetrofitClient;
 import com.app.swagse.receiver.BackgroundNotificationService;
 import com.app.swagse.sharedpreferences.PrefConnect;
+import com.banuba.sdk.cameraui.data.PipConfig;
+import com.banuba.sdk.ve.flow.VideoCreationActivity;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.downloader.Error;
@@ -98,6 +102,11 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.tonyodev.fetch2.Fetch;
+import com.tonyodev.fetch2.FetchConfiguration;
+import com.tonyodev.fetch2.NetworkType;
+import com.tonyodev.fetch2.Priority;
+import com.tonyodev.fetch2.Request;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -114,6 +123,7 @@ import java.util.List;
 import java.util.UUID;
 
 import butterknife.BindView;
+import codex.CodexPerms;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -148,7 +158,7 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
     RelativeLayout swagTubeDetailLayout;
     ProgressBar swagTubeDetailProgress;
     private ProgressDialog progressDialog;
-
+    private final Activity activity = SwagTubeDetailsActivity.this;
     private ActivitySwagTubeDetailsBinding binding;
 
     @Override
@@ -624,55 +634,55 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
     }
 
     private void downloadVideo(String urlString) {
-        Functions.show_determinent_loader(this, false, false);
-        PRDownloader.initialize(this);
-        DownloadRequest prDownloader = PRDownloader.download(url, Variables.app_folder, swagtubedata.get(0).getId() + "no_watermark" + ".mp4")
-                .build()
-                .setOnStartOrResumeListener(new OnStartOrResumeListener() {
-                    @Override
-                    public void onStartOrResume() {
+        if (new CodexPerms(activity).hasPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})){
+            File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS +"/ SwagSe");
+            Functions.show_determinent_loader(this, false, false);
+            PRDownloader.initialize(this);
+            DownloadRequest prDownloader = PRDownloader.download(url, file.getPath(), swagtubedata.get(0).getId() + "no_watermark" + ".mp4")
+                    .build()
+                    .setOnStartOrResumeListener(new OnStartOrResumeListener() {
+                        @Override
+                        public void onStartOrResume() {
 
-                    }
-                })
-                .setOnPauseListener(new OnPauseListener() {
-                    @Override
-                    public void onPause() {
+                        }
+                    })
+                    .setOnPauseListener(new OnPauseListener() {
+                        @Override
+                        public void onPause() {
 
-                    }
-                })
-                .setOnCancelListener(new OnCancelListener() {
-                    @Override
-                    public void onCancel() {
+                        }
+                    })
+                    .setOnCancelListener(new OnCancelListener() {
+                        @Override
+                        public void onCancel() {
 
-                    }
-                })
-                .setOnProgressListener(new OnProgressListener() {
-                    @Override
-                    public void onProgress(Progress progress) {
-                        int prog = (int) ((progress.currentBytes * 100) / progress.totalBytes);
-                        Functions.show_loading_progress(prog);
-                    }
-                });
+                        }
+                    })
+                    .setOnProgressListener(new OnProgressListener() {
+                        @Override
+                        public void onProgress(Progress progress) {
+                            int prog = (int) ((progress.currentBytes * 100) / progress.totalBytes);
+                            Functions.show_loading_progress(prog);
+                        }
+                    });
 
-
-        prDownloader.start(new OnDownloadListener() {
-            @Override
-            public void onDownloadComplete() {
-                Functions.cancel_determinent_loader();
-                Toast.makeText(SwagTubeDetailsActivity.this, "Video downloaded", Toast.LENGTH_SHORT).show();
+            prDownloader.start(new OnDownloadListener() {
+                @Override
+                public void onDownloadComplete() {
+                    Functions.cancel_determinent_loader();
+                    Toast.makeText(SwagTubeDetailsActivity.this, "Video downloaded", Toast.LENGTH_SHORT).show();
 //                scan_file(swagtubedata.get(0));
 //                applywatermark(item);
-            }
-
-            @Override
-            public void onError(Error error) {
+                }
+                @Override
+                public void onError(Error error) {
 //                delete_file_no_watermark(item);
-                Toast.makeText(SwagTubeDetailsActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                Functions.cancel_determinent_loader();
-            }
-
-
-        });
+                    Log.d(TAG, "downloadVideo: "+error.getServerErrorMessage());
+                    Toast.makeText(SwagTubeDetailsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    Functions.cancel_determinent_loader();
+                }
+            });
+        } else { new CodexPerms(activity).requestPerms(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}); }
 
     }
 

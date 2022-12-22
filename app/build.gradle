@@ -117,6 +117,7 @@ dependencies {
     //Number Progress Bar
     implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
     //Download File Libaray
+    implementation "com.tonyodev.fetch2:fetch2:3.0.12"
     implementation 'com.mindorks.android:prdownloader:0.6.0'
 
     // reactive

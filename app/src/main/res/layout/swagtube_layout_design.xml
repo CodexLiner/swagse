@@ -253,7 +253,13 @@
                     android:text="10"
                     android:textSize="12sp" />
             </LinearLayout>
-
+            <TextView
+                android:gravity="center"
+                android:textColor="@color/blue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="#trending"
+                android:layout_toEndOf="@+id/show_like"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/swagTubeWatchlater"
