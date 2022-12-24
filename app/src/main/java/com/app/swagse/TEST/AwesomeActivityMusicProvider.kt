@@ -19,8 +19,8 @@ class AwesomeActivityMusicProvider : ContentFeatureProvider<TrackData, Fragment>
     }
     private var activityResultCallbackInternal: (TrackData?) -> Unit = {}
 
-    override fun init(hostFragment: WeakReference<Fragment>) {
-        activityResultLauncher = hostFragment.get()?.registerForActivityResult(
+    override fun init(hostComponent: WeakReference<Fragment>) {
+        activityResultLauncher = hostComponent.get()?.registerForActivityResult(
             ProvideTrackContract(),
             activityResultCallback
         )

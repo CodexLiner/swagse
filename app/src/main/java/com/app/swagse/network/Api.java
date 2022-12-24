@@ -3,6 +3,7 @@ package com.app.swagse.network;
 import com.app.swagse.model.CountDataResponse;
 import com.app.swagse.model.GetOTPResponse;
 import com.app.swagse.model.RemoveDataResponse;
+import com.app.swagse.model.SongsResponse;
 import com.app.swagse.model.SubPackageResponse;
 import com.app.swagse.model.category.CategoryResponse;
 import com.app.swagse.model.cityData.CityDataResponse;
@@ -248,6 +249,10 @@ public interface Api {
     //GET SUBSCRIPTION PACKAGES
     @GET("swagtubeapi/getsubscription")
     Call<PackageResponse> getSubscriptionPackage();
+
+    //GET Songs List
+    @GET("beautindia/api/songs")
+    Call<SongsResponse> getSongs();
 
     //REQUEST FOR SUBSCRIPTION PACKAGES
     @FormUrlEncoded

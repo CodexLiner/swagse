@@ -5,14 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
+    android:orientation="vertical"
     tools:context=".TEST.AwesomeAudioContentActivity">
-
-    <TextView
-        android:id="@+id/btn"
-        android:textColor="@color/purple_200"
-        android:layout_gravity="center"
-        android:gravity="center"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Click me to Add Default Sound"/>
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
+        android:id="@+id/music_rec"/>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"/>
+
 </LinearLayout>

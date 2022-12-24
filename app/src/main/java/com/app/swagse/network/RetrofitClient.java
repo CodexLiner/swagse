@@ -19,7 +19,6 @@ public class RetrofitClient {
     private static final String BASE_URL = "http://simplifiedlabs.xyz/MyApi/public/";
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
-    private OkHttpClient.Builder okHttpClientBuilder;
 
 
     private RetrofitClient() {
@@ -40,7 +39,7 @@ public class RetrofitClient {
                         }
                 ).build();
 */
-        okHttpClientBuilder = new OkHttpClient.Builder();
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder.connectTimeout(60, TimeUnit.SECONDS);
         okHttpClientBuilder.writeTimeout(60, TimeUnit.SECONDS);
         okHttpClientBuilder.readTimeout(60, TimeUnit.SECONDS);

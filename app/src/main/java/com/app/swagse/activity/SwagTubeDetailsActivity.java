@@ -635,7 +635,7 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
 
     private void downloadVideo(String urlString) {
         if (new CodexPerms(activity).hasPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})){
-            File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS +"/ SwagSe");
+            File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS +"/SwagSe");
             Functions.show_determinent_loader(this, false, false);
             PRDownloader.initialize(this);
             DownloadRequest prDownloader = PRDownloader.download(url, file.getPath(), swagtubedata.get(0).getId() + "no_watermark" + ".mp4")
