@@ -102,7 +102,7 @@ public class LiveActivity extends RtcBaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_room);
 
-        context=LiveActivity.this;
+        context =LiveActivity.this;
         rootref= FirebaseDatabase.getInstance().getReference();
         initM();
         Intent bundle=getIntent();
@@ -122,8 +122,8 @@ public class LiveActivity extends RtcBaseActivity implements View.OnClickListene
             findViewById(R.id.live_btn_mute_video).setOnClickListener(this);
 
             count=-1;
-//            listener_node("add");
-            //StartTimer();
+//listener_node("add");
+//StartTimer();
             StartTimerLiveStream();
         }else {
   //          listener_node("add");
@@ -586,6 +586,7 @@ public class LiveActivity extends RtcBaseActivity implements View.OnClickListene
 
     CountDownTimer countDownTimerForLiveStatus;
     public void StartTimerLiveStream(){
+        Log.d(TAG, "StartTimerLiveStream: start in");
         countDownTimerForLiveStatus= new CountDownTimer(300000, 1000) {
 
             public void onTick(long millisUntilFinished) {

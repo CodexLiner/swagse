@@ -27,6 +27,7 @@ import com.app.swagse.Chat.Chat_Fragment;
 import com.app.swagse.Chat.Inbox.Inbox_F;
 import com.app.swagse.LoginActivity;
 import com.app.swagse.R;
+import com.app.swagse.SubscriberUserProfileActivity;
 import com.app.swagse.activity.ChatActivity;
 import com.app.swagse.activity.MainActivity;
 import com.app.swagse.activity.SearchActivity;
@@ -76,7 +77,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
     private AppCompatTextView swagTubeWatchlater, swagTubeViewsCount, swagTube_follow, swagTubeName, swagTubeDays, swagTubeCommentCount, swagTubeOptions, swagTube_share, swagTube_comment, swagTube_like, swagTubeLikeCount;
     private LinearLayout main_social_layout_linear;
     private RelativeLayout main_count_layout;
-    private RelativeLayout main_social_layout;
+    private LinearLayout main_social_layout;
     private Api apiInterface;
     private TextView hashtag;
     List<SwagtubedataItem> mediaObjectsData;
@@ -93,6 +94,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
         userHandle = itemView.findViewById(R.id.swagTubeDays);
         progressBar = itemView.findViewById(R.id.progressBar);
         volumeControl = itemView.findViewById(R.id.ivVolumeControl);
+        swagTubePic = itemView.findViewById(R.id.swagTubePic);
 
         swagTubeLikeCount = itemView.findViewById(R.id.swagTubeLikeCount);
         swagTubeCommentCount = itemView.findViewById(R.id.swagTubeCommentCount);
@@ -153,6 +155,9 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
             Intent intent = new Intent(hashtag.getContext() , SearchActivity.class);
             intent.putExtra("hashtag" , "this");
             hashtag.getContext().startActivity(intent);
+        });
+        this.swagTubePic.setOnClickListener(v->{
+            this.swagTubePic.getContext().startActivity(new Intent(swagTube_comment.getContext(), SubscriberUserProfileActivity.class).putExtra(PlayerViewHolder.class.getSimpleName(), mediaObjectsData.get(getBindingAdapterPosition()).getUserid()));
         });
         swagTube_like.setOnClickListener(this);
         swagTube_comment.setOnClickListener(this);

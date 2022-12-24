@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.app.swagse.LiveStreaming.Constants;
 import com.app.swagse.LiveStreaming.rtc.AgoraEventHandler;
@@ -30,6 +31,7 @@ import com.banuba.sdk.ve.di.VeSdkKoinModule;
 import com.banuba.sdk.ve.flow.di.VeFlowKoinModule;
 import com.banuba.sdk.veui.di.VeUiSdkKoinModule;
 import com.danikula.videocache.HttpProxyCacheServer;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import org.koin.core.context.GlobalContext;
 
@@ -48,6 +50,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         AppSignatureHashHelper appSignatureHelper = new AppSignatureHashHelper(this);
+        Fresco.initialize(this);
         appSignatureHelper.getAppSignatures();
         mInstance = this;
         try {
@@ -56,6 +59,7 @@ public class App extends Application {
             mRtcEngine.enableVideo();
             mRtcEngine.setLogFile(FileUtil.initializeLogFile(this));
         } catch (Exception e) {
+            Log.d("TAG", "StartTimerLiveStream: "+e);
             e.printStackTrace();
         }
         startKoin(koinApplication -> {

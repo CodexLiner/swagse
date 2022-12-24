@@ -166,7 +166,7 @@ dependencies {
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
-    implementation 'com.facebook.fresco:fresco:2.1.0'
+    implementation 'com.facebook.fresco:fresco:2.2.0'
 
     implementation 'com.appyvet:materialrangebar:1.4.6'
 

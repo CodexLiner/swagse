@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.app.swagse.adapter.FollowVideoRecyclerViewAdapter;
 import com.app.swagse.adapter.NotificationRecyclerViewAdapter;
+import com.app.swagse.adapter.PlayerViewHolder;
 import com.app.swagse.adapter.SubscriptionRecyclerViewAdapter;
 import com.app.swagse.constants.Constants;
 import com.app.swagse.controller.App;
@@ -84,6 +86,11 @@ public class SubscriberUserProfileActivity extends AppCompatActivity {
         if (intent.hasExtra(NotificationRecyclerViewAdapter.class.getSimpleName())) {
             userId = intent.getExtras().getString(NotificationRecyclerViewAdapter.class.getSimpleName());
         }
+        if (intent.hasExtra(PlayerViewHolder.class.getSimpleName())) {
+            userId = intent.getExtras().getString(PlayerViewHolder.class.getSimpleName());
+        }
+        Log.d("TAG", "profilede: "+userId);
+
         getSwagTubeData();
         getuserprofile();
 

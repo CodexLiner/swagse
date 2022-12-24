@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.swagse.LoginActivity;
 import com.app.swagse.R;
+import com.app.swagse.SubscriberUserProfileActivity;
 import com.app.swagse.activity.SwagTubeDetailsActivity;
 import com.app.swagse.constants.Constants;
 import com.app.swagse.controller.App;
@@ -73,6 +74,7 @@ public class TrendingViewHolder extends RecyclerView.ViewHolder {
         swagTubeOptions = itemView.findViewById(R.id.swagTubeOptions);
         progressBar = itemView.findViewById(R.id.progressBar);
         volumeControl = itemView.findViewById(R.id.ivVolumeControl);
+        swagTubePic = itemView.findViewById(R.id.swagTubePic);
 
 
     }
@@ -94,7 +96,9 @@ public class TrendingViewHolder extends RecyclerView.ViewHolder {
                 parent.getContext().startActivity(new Intent(parent.getContext(), SwagTubeDetailsActivity.class).putExtra(TrendingViewHolder.class.getSimpleName(), mediaObjects.get(getBindingAdapterPosition()).getId()));
             }
         });
-
+        this.swagTubePic.setOnClickListener(v->{
+            this.swagTubePic.getContext().startActivity(new Intent(swagTubePic.getContext(), SubscriberUserProfileActivity.class).putExtra(PlayerViewHolder.class.getSimpleName(), mediaObjects.get(getBindingAdapterPosition()).getUserid()));
+        });
         swagTubeOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

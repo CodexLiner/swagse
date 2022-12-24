@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.swagse.LoginActivity;
 import com.app.swagse.R;
+import com.app.swagse.SubscriberUserProfileActivity;
 import com.app.swagse.activity.SearchActivity;
 import com.app.swagse.activity.SwagTubeCommentActivity;
 import com.app.swagse.activity.SwagTubeDetailsActivity;
@@ -76,7 +78,7 @@ public class SwagTubeAdapter extends RecyclerView.Adapter<SwagTubeAdapter.SwagTu
     @Override
     public void onBindViewHolder(@NonNull SwagTubeViewHolder holder, int position) {
         SwagtubedataItem swagtubedataItem = swagTubeDataList.get(position);
-//        Glide.with(context).load(swagtubedataItem.getThmubnal()).centerCrop().into(holder.postImage);
+        Glide.with(context).load(swagtubedataItem.getThmubnal()).centerCrop().into(holder.ivMediaCoverImage);
         Glide.with(context).load(swagtubedataItem.getThmubnal()).centerCrop().into(holder.swagTubePic);
         holder.swagTubeName.setText(swagtubedataItem.getName());
         holder.swagTubeDays.setText(swagtubedataItem.getTimeago());
@@ -112,6 +114,9 @@ public class SwagTubeAdapter extends RecyclerView.Adapter<SwagTubeAdapter.SwagTu
             public void onClick(View v) {
                 context.startActivity(new Intent(context, SwagTubeDetailsActivity.class).putExtra(SwagTubeAdapter.class.getSimpleName(), swagTubeDataList.get(position).getId()));
             }
+        });
+        holder.swagTubePic.setOnClickListener(v->{
+            holder.swagTubePic.getContext().startActivity(new Intent(holder.swagTubePic.getContext(), SubscriberUserProfileActivity.class).putExtra(PlayerViewHolder.class.getSimpleName(), swagtubedataItem.getUserid()));
         });
 
         if (PrefConnect.readBoolean(context, Constants.GUEST_USER, false)) {
@@ -338,8 +343,9 @@ public class SwagTubeAdapter extends RecyclerView.Adapter<SwagTubeAdapter.SwagTu
 
         AppCompatImageView postImage;
         CircleImageView swagTubePic;
+        ImageView ivMediaCoverImage;
         AppCompatTextView swagTube_follow, swagTubeName, swagTubeDays, swagTubeCommentCount, swagTubeOptions, swagTube_share, swagTube_comment, swagTube_like, swagTubeLikeCount;
-        RelativeLayout main_social_layout_linear;
+        LinearLayout main_social_layout_linear;
         RelativeLayout main_count_layout;
         TextView hashtag;
 
@@ -359,6 +365,7 @@ public class SwagTubeAdapter extends RecyclerView.Adapter<SwagTubeAdapter.SwagTu
             swagTube_follow = itemView.findViewById(R.id.swagTube_follow);
             main_social_layout_linear = itemView.findViewById(R.id.main_social_layout);
             main_count_layout = itemView.findViewById(R.id.main_count_layout);
+            ivMediaCoverImage = itemView.findViewById(R.id.ivMediaCoverImage);
         }
     }
 }

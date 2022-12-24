@@ -1,6 +1,7 @@
 package com.app.swagse.adapter;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -33,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.swagse.LoginActivity;
 import com.app.swagse.R;
+import com.app.swagse.SubscriberUserProfileActivity;
 import com.app.swagse.activity.MakeVideoActivity;
 import com.app.swagse.activity.SwagTubeDetailsActivity;
 import com.app.swagse.activity.SwaggerCommentActivity;
@@ -49,6 +51,7 @@ import com.app.swagse.sharedpreferences.PrefConnect;
 import com.banuba.sdk.cameraui.data.PipConfig;
 import com.banuba.sdk.ve.flow.VideoCreationActivity;
 import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -91,15 +94,19 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VideoViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VideoViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setVideoData(mVideoItems.get(position));
         if (PrefConnect.readBoolean(context, Constants.GUEST_USER, false)) {
             holder.album_view.setVisibility(View.GONE);
         } else {
             holder.album_view.setVisibility(View.VISIBLE);
         }
+        if (mVideoItems.get(position).getUserfollowstatus() == 1){
+            holder.follow_btn.setText("Unfollow");
+        }
 
         Glide.with(context).load(PrefConnect.readString(context, Constants.USERPIC, "")).placeholder(R.drawable.ic_user).into(holder.userImage);
+        Glide.with(context).load(mVideoItems.get(position).getThmubnal()).placeholder(R.drawable.ic_user).into(holder.image_view_profile_pic);
 
         holder.image_view_option_like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,9 +154,7 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
                     String shareMessage = "\nHi! I found this Post on SwagSe App - check it out now \n\n" + Constants.BASE_URL + "watch/" + OwnerGlobal.getMd5(mVideoItems.get(position).getId());
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     context.startActivity(Intent.createChooser(shareIntent, "Send To"));
-                } catch (Exception e) {
-                    e.toString();
-                }
+                } catch (Exception ignored) {}
             }
         });
 
@@ -232,21 +237,21 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
             }
         });
 
-        holder.container_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (PrefConnect.readBoolean(context, Constants.GUEST_USER, false)) {
-                    context.startActivity(new Intent(context, LoginActivity.class));
-                } else {
-                    if (mVideoItems.get(position).getUserfollowstatus() == 1) {
-                        mVideoItems.get(position).setUserfollowstatus(0);
-                        holder.image_view_follow_option.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_follow_avatar_bottom_icon));
-                    } else if (mVideoItems.get(position).getUserfollowstatus() == 0) {
-                        mVideoItems.get(position).setUserfollowstatus(1);
-                        holder.image_view_follow_option.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_done));
-                    }
-                    swagTubeFollow(mVideoItems.get(0).getUserid());
+        holder.container_profile.setOnClickListener(v -> {
+            this.context.startActivity(new Intent(context, SubscriberUserProfileActivity.class).putExtra(PlayerViewHolder.class.getSimpleName(),  mVideoItems.get(position).getUserid()));
+        });
+        holder.follow_btn.setOnClickListener(v -> {
+            if (PrefConnect.readBoolean(context, Constants.GUEST_USER, false)) {
+                context.startActivity(new Intent(context, LoginActivity.class));
+            } else {
+                if (mVideoItems.get(position).getUserfollowstatus() == 1) {
+                    mVideoItems.get(position).setUserfollowstatus(0);
+                    holder.follow_btn.setText("Follow");
+                } else if (mVideoItems.get(position).getUserfollowstatus() == 0) {
+                    mVideoItems.get(position).setUserfollowstatus(1);
+                    holder.follow_btn.setText("Unfollow");
                 }
+                swagTubeFollow(mVideoItems.get(0).getUserid());
             }
         });
 
@@ -362,7 +367,7 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
 
     class VideoViewHolder extends RecyclerView.ViewHolder {
         VideoView mVideoView;
-        TextView txtTitle, txtDesc, createVideo;
+        TextView txtTitle, txtDesc, createVideo, follow_btn;
         ProgressBar mProgressBar;
         AppCompatImageView image_view_option_like, image_view_option_share, image_view_option_comment, image_view_follow_option;
         AppCompatTextView image_view_option_like_title, image_view_option_share_title, image_view_option_comment_title;
@@ -371,6 +376,7 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
         ImageView ivVolumeControl, volumeControl;
         CircleImageView userImage;
         ConstraintLayout container_profile;
+        ShapeableImageView image_view_profile_pic;
 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -392,6 +398,8 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
             album_view = itemView.findViewById(R.id.album_view);
             container_profile = itemView.findViewById(R.id.container_profile);
             image_view_follow_option = itemView.findViewById(R.id.image_view_follow_option);
+            follow_btn = itemView.findViewById(R.id.follow_btn);
+            image_view_profile_pic = itemView.findViewById(R.id.image_view_profile_pic);
         }
 
         void setVideoData(SwaggerdataItem videoItem) {
@@ -490,13 +498,15 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
                 @Override
                 public void onClick(View view) {
                     Activity activity = (Activity) context;
-                    if (new CodexPerms(activity).hasPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})){
-                        Uri []  list = new Uri[0];
+                    if (new CodexPerms(activity).hasPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})) {
+                        Uri[] list = new Uri[0];
                         Intent videoCreationIntent = new Intent(
                                 VideoCreationActivity.startFromCamera(context,
-                                        new PipConfig(Uri.EMPTY,false , 0.9F), null, null));
+                                        new PipConfig(Uri.EMPTY, false, 0.9F), null, null));
                         context.startActivity(videoCreationIntent);
-                    } else { new CodexPerms(activity).requestPerms(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}); }
+                    } else {
+                        new CodexPerms(activity).requestPerms(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
+                    }
 
                 }
             });
@@ -516,8 +526,10 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
         final int max = 100;
         final double numerator = max - amount > 0 ? Math.log(max - amount) : 0;
         final float volume = (float) (1 - (numerator / Math.log(max)));
-
-        this.mediaPlayer.setVolume(volume, volume);
+        try {
+            this.mediaPlayer.setVolume(volume, volume);
+        } catch (Exception ignored) {
+        }
     }
 
 }

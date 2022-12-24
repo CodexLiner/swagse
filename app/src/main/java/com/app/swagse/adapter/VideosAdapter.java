@@ -1,5 +1,6 @@
 package com.app.swagse.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -61,6 +62,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewH
         return new VideoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_videos_container, parent, false));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull VideoViewHolder holder, int position) {
         holder.setVideoData(mVideoItems.get(position));
@@ -125,7 +127,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewH
 
     class VideoViewHolder extends RecyclerView.ViewHolder {
         VideoView mVideoView;
-        TextView txtTitle, txtDesc, createVideo;
+        TextView txtTitle, txtDesc, createVideo ,follow_btn;
         ProgressBar mProgressBar;
         AppCompatImageView image_view_option_like, image_view_option_share, image_view_option_comment;
         AppCompatTextView image_view_option_like_title, image_view_option_share_title, image_view_option_comment_title,album_view;
@@ -150,6 +152,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewH
             image_view_option_comment_title = itemView.findViewById(R.id.image_view_option_comment_title);
             image_view_option_share_title = itemView.findViewById(R.id.image_view_option_share_title);
             album_view = itemView.findViewById(R.id.album_view);
+            follow_btn = itemView.findViewById(R.id.follow_btn);
         }
 
         void setVideoData(VideoItem videoItem) {

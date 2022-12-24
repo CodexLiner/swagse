@@ -2,6 +2,7 @@ package com.app.swagse.LiveStreaming.activities;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.SurfaceView;
 
 
@@ -44,6 +45,7 @@ public abstract class RtcBaseActivity extends BaseActivity implements EventHandl
         if (TextUtils.isEmpty(token) || TextUtils.equals(token, "#YOUR ACCESS TOKEN#")) {
             token = null; // default, no token
         }
+        Log.d("TAG", "StartTimerLiveStream channel name: "+config().getChannelName());
         rtcEngine().joinChannel(token, config().getChannelName(), "", 0);
     }
 

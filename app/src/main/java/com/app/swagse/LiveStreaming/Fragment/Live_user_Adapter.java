@@ -79,7 +79,6 @@ public class Live_user_Adapter extends RecyclerView.Adapter<Live_user_Adapter.Cu
 
         }
 
-
     }
 
 

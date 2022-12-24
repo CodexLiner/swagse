@@ -72,7 +72,6 @@ public class Live_Users_F extends AppCompatActivity implements View.OnClickListe
         recyclerView.setHasFixedSize(true);
 
         adapter = new Live_user_Adapter(context, data_list, new Adapter_ClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void On_Item_Click(int postion, Object Model, View view) {
                 Live_user_Model live_user_model = (Live_user_Model) Model;
@@ -96,46 +95,45 @@ public class Live_Users_F extends AppCompatActivity implements View.OnClickListe
         no_data_found = findViewById(R.id.no_data_found);
     }
 
-    /*@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_live_users, container, false);
-        context=getContext();
-        initM(view);
-        rootref= FirebaseDatabase.getInstance().getReference();
-
-        data_list=new ArrayList<>();
-
-        recyclerView = (RecyclerView) view.findViewById(R.id.recylerview);
-        recyclerView.setLayoutManager(new GridLayoutManager(context,2));
-
-        recyclerView.setHasFixedSize(true);
-
-        adapter=new Live_user_Adapter(context, data_list, new Adapter_ClickListener() {
-            @Override
-            public void On_Item_Click(int postion, Object Model, View view) {
-                Live_user_Model live_user_model=(Live_user_Model) Model;
-                Open_hugme_live(live_user_model.getUser_id(),
-                        live_user_model.getUser_name(),live_user_model.getUser_picture(),Constants.CLIENT_ROLE_AUDIENCE);
-            }
-
-            @Override
-            public void On_Long_Item_Click(int postion, Object Model, View view) {
-
-            }
-        });
-
-        recyclerView.setAdapter(adapter);
-
-
-        view.findViewById(R.id.go_live_layout).setOnClickListener(this::onClick);
-        relative_layout_no_live_users.setOnClickListener(this::onClick);
-        Get_Data();
-
-        no_data_found=view.findViewById(R.id.no_data_found);
-        return  view;
-    }*/
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        View view = inflater.inflate(R.layout.fragment_live_users, container, false);
+//        context=getBaseContext();
+//        initM();
+//        rootref= FirebaseDatabase.getInstance().getReference();
+//
+//        data_list=new ArrayList<>();
+//
+//        recyclerView = (RecyclerView) view.findViewById(R.id.recylerview);
+//        recyclerView.setLayoutManager(new GridLayoutManager(context,2));
+//
+//        recyclerView.setHasFixedSize(true);
+//
+//        adapter=new Live_user_Adapter(context, data_list, new Adapter_ClickListener() {
+//            @Override
+//            public void On_Item_Click(int postion, Object Model, View view) {
+//                Live_user_Model live_user_model=(Live_user_Model) Model;
+//                Open_hugme_live(live_user_model.getUser_id(),
+//                        live_user_model.getUser_name(),live_user_model.getUser_picture(),Constants.CLIENT_ROLE_AUDIENCE);
+//            }
+//
+//            @Override
+//            public void On_Long_Item_Click(int postion, Object Model, View view) {
+//
+//            }
+//        });
+//
+//        recyclerView.setAdapter(adapter);
+//
+//
+//        view.findViewById(R.id.go_live_layout).setOnClickListener(this::onClick);
+//        relative_layout_no_live_users.setOnClickListener(this::onClick);
+//        Get_Data();
+//
+//        no_data_found=view.findViewById(R.id.no_data_found);
+//        return  view;
+//    }
 
     private void initM() {
         relative_layout_live_users = findViewById(R.id.relative_layout_live_users);
@@ -213,7 +211,6 @@ public class Live_Users_F extends AppCompatActivity implements View.OnClickListe
             rootref.child("LiveUsers").removeEventListener(valueEventListener);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public void Open_hugme_live(String user_id, String user_name, String user_image, int role) {
 
         if (check_permissions()) {
@@ -229,7 +226,6 @@ public class Live_Users_F extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public boolean check_permissions() {
         String[] PERMISSIONS = {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -256,7 +252,6 @@ public class Live_Users_F extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

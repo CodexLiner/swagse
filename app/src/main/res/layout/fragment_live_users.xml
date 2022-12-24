@@ -31,7 +31,7 @@
           android:gravity="center"
           android:id="@+id/no_data_found"
           android:layout_centerInParent="true"
-          android:text="No other user is live at that time.\n click of 'Go Live' for live video streaming."></TextView>
+          android:text="No other user is live at that time.\n click of 'Go Live' for live video streaming." />
       <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
           android:layout_width="wrap_content"
           android:layout_height="45dp"

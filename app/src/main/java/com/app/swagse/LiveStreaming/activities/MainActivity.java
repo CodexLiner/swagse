@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
@@ -130,6 +131,7 @@ public class MainActivity extends BaseActivity {
             user_name=bundle.getStringExtra("user_name");
             user_picture=bundle.getStringExtra("user_picture");
             user_role=bundle.getIntExtra("user_role", io.agora.rtc.Constants.CLIENT_ROLE_BROADCASTER);
+
         }
         initUI();
     }

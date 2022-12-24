@@ -2,7 +2,19 @@ package com.app.swagse.LiveStreaming.Fragment;
 
 public class Live_user_Model {
 
-    String user_id,user_name,user_picture;
+    String user_id;
+    String user_name;
+    String user_picture;
+
+    public String getTotal_users() {
+        return total_users;
+    }
+
+    public void setTotal_users(String total_users) {
+        this.total_users = total_users;
+    }
+
+    String total_users;
 
     public String getUser_id() {
         return user_id;

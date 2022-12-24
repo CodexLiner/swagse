@@ -54,20 +54,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtTitle"
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/colorStoryUserName"
-            android:textSize="14sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txtDesc"
             app:layout_constraintEnd_toStartOf="@+id/recycler_view_options"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Baljeet Singh" />
+            android:layout_height="50dp">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:gravity="center|start"
+                android:layout_gravity="center"
+                android:id="@+id/txtTitle"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="match_parent"
+                android:textColor="@color/blue"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tools:text="Baljeet Singh" />
+            <TextView
+                android:id="@+id/follow_btn"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/_10dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:textSize="17sp"
+                android:text="Follow"
+                android:textColor="@color/blue"
+                android:background="@drawable/follow_btn_bg"/>
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtDesc"
@@ -78,7 +96,7 @@
             android:ellipsize="end"
             android:lines="5"
             android:maxLines="5"
-            android:textColor="@color/colorStoryDescription"
+            android:textColor="@color/blue"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/text_view_music_title"
             app:layout_constraintEnd_toStartOf="@+id/recycler_view_options"
@@ -154,6 +172,7 @@
                     app:strokeWidth="1dp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:visibility="invisible"
                     android:id="@+id/image_view_follow_option"
                     android:layout_width="20dp"
                     android:layout_height="20dp"

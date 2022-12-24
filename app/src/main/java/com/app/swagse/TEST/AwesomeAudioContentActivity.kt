@@ -65,29 +65,7 @@ class AwesomeAudioContentActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-
-
         getSongs()
-
-
-//        val btn = findViewById<TextView>(com.app.swagse.R.id.btn);
-//        btn.setOnClickListener {
-//            Toast.makeText(this , "working" , Toast.LENGTH_LONG).show()
-//            val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "file_example_mp3_700KB.mp3")
-//            val uri = Uri.fromFile(file)
-//            val trackData = TrackData(
-//                UUID.randomUUID(),
-//                "My awesome track",
-//                 uri,
-//                "Awesome Artist"
-//            )
-//
-//            val trackToApply: TrackData = trackData
-//            val resultIntent = Intent().apply { putExtra( ProvideTrackContract.EXTRA_RESULT_TRACK_DATA, trackToApply)}
-//            setResult(Activity.RESULT_OK, resultIntent)
-//            finish()
-//        }
-
 
     }
 
@@ -113,7 +91,6 @@ class AwesomeAudioContentActivity : AppCompatActivity() {
                     }
 
                     override fun onError(error: Error) {
-                        Log.d("TAG", "checkmusicfile: err " + error.serverErrorMessage)
                         Functions.cancel_determinent_loader()
                     }
                 })
@@ -152,12 +129,10 @@ class AwesomeAudioContentActivity : AppCompatActivity() {
                 GlobalScope.launch {
                     withContext(Dispatchers.Main) {
                         progress_bar?.setVisibility(View.GONE)
-                        Log.d("TAG", "songsresponse: " + e)
+
                     }
                 }
-
             }
-
             override fun onResponse(response: com.squareup.okhttp.Response?) {
                 if (response != null) {
                     try {
@@ -174,9 +149,7 @@ class AwesomeAudioContentActivity : AppCompatActivity() {
                                 progress_bar?.setVisibility(View.GONE)
                             }
                         }
-                    } catch (e: Exception) {
-
-                    }
+                    } catch (_: Exception) { }
                 }
             }
 
