@@ -261,6 +261,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="#trending"
+                android:autoSizeTextType="uniform"
+                android:autoSizePresetSizes="@array/autosize_text_sizes"
                 android:layout_toEndOf="@+id/show_like"/>
 
             <androidx.appcompat.widget.AppCompatTextView
