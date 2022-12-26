@@ -34,7 +34,7 @@ public class SwagtubedataItem implements Serializable {
     @SerializedName("commentcount")
     private int commentcount;
 
-    @SerializedName("viewscount")
+    @SerializedName("views_count")
     private int viewscount;
 
     @SerializedName("timeago")

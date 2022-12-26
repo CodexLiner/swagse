@@ -43,6 +43,7 @@ import codex.CodexPerms;
 public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.AudioListHolder>{
     Context context;
     private ArrayList<SongsData> list;
+    private boolean clicked = false;
 
     public AudioListAdapter(Context context, ArrayList<SongsData> list) {
         this.context = context;
@@ -73,8 +74,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
             setTrack(list.get(position).getSong() , list.get(position).getTitle() );
         });
         holder.play.setOnClickListener(v->{
-          MediaPlayer  mediaPlayer = MediaPlayer.create(context, Uri.parse(list.get(0).getSong()));
-          mediaPlayer.start();
+//            ((AwesomeAudioContentActivity)context).playAudio(list.get(0).getSong());
         });
     }
 
@@ -84,6 +84,11 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
     }
     // to call back for music
     public void setTrack(String url , String title){
+        if (clicked){
+            return;
+        }
+        clicked= true;
+        Toast.makeText(context, "Please wait while adding music", Toast.LENGTH_SHORT).show();
         ((AwesomeAudioContentActivity) context).TrackDataSetter(url , title);
     }
     static class AudioListHolder extends RecyclerView.ViewHolder {

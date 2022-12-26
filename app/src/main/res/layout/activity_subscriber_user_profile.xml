@@ -38,7 +38,7 @@
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Aanand"
+                    android:text="@string/loading"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -62,7 +62,7 @@
                         android:id="@+id/postCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2"
+                        android:text="@string/loading"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -87,7 +87,7 @@
                         android:id="@+id/followerCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2"
+                        android:text="@string/loading"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 

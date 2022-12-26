@@ -1,5 +1,6 @@
 package com.app.swagse.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -76,7 +77,7 @@ public class SwagTubeAdapter extends RecyclerView.Adapter<SwagTubeAdapter.SwagTu
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SwagTubeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SwagTubeViewHolder holder, @SuppressLint("RecyclerView") int position) {
         SwagtubedataItem swagtubedataItem = swagTubeDataList.get(position);
         Glide.with(context).load(swagtubedataItem.getThmubnal()).centerCrop().into(holder.ivMediaCoverImage);
         Glide.with(context).load(swagtubedataItem.getThmubnal()).centerCrop().into(holder.swagTubePic);

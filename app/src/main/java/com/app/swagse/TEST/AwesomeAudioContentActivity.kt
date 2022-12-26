@@ -4,13 +4,12 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +43,7 @@ class AwesomeAudioContentActivity : AppCompatActivity() {
     var apiInterface: Api? = null
     var progress_bar: ProgressBar? = null
     private var itemsList = ArrayList<SongsData>()
+    lateinit var mediaPlayer : MediaPlayer;
 
     companion object {
         fun buildPickMusicResourceIntent(
@@ -175,5 +175,17 @@ class AwesomeAudioContentActivity : AppCompatActivity() {
 //                Log.d("TAG", "songsresponse: $t")
 //            }
 //        })
+    }
+    public fun playAudio( uri: String){
+        mediaPlayer = MediaPlayer.create(applicationContext, Uri.parse(uri))
+        if (mediaPlayer.isPlaying){
+            mediaPlayer.stop()
+        }else{
+            mediaPlayer.start()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

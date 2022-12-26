@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/downloadV"
+        android:title="Download Video" />
+    <item
         android:id="@+id/report_post"
         android:title="Report video" />
 

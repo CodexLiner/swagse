@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -15,6 +16,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -66,9 +68,11 @@ import com.app.swagse.model.swagTube.SwagTubeResponse;
 import com.app.swagse.model.swagTube.SwagtubedataItem;
 import com.app.swagse.model.swaggerData.SwaggerdataItem;
 import com.app.swagse.network.Api;
+import com.app.swagse.network.Notify;
 import com.app.swagse.network.RetrofitClient;
 import com.app.swagse.receiver.BackgroundNotificationService;
 import com.app.swagse.sharedpreferences.PrefConnect;
+
 import com.banuba.sdk.cameraui.data.PipConfig;
 import com.banuba.sdk.ve.flow.VideoCreationActivity;
 import com.daimajia.numberprogressbar.NumberProgressBar;
@@ -161,11 +165,29 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
     private final Activity activity = SwagTubeDetailsActivity.this;
     private ActivitySwagTubeDetailsBinding binding;
 
+    private NotificationManager mNotifyManager;
+    private NotificationCompat.Builder mBuilder;
+    int id = 1;
+    Notify n;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySwagTubeDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+          n = Notify.build(getApplicationContext())
+
+                .setTitle("Downloading Video")
+
+                .setSmallIcon(R.drawable.ic_download)
+                .setColor(R.color.colorBlack);
+
+        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(SwagTubeDetailsActivity.this, "hello");
+        mBuilder.setContentTitle("File Download")
+                .setContentText("Download in progress")
+                .setSmallIcon(R.drawable.ic_download);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait...");
@@ -182,8 +204,8 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
 
         DefaultTrackSelector trackSelector = new DefaultTrackSelector(SwagTubeDetailsActivity.this);
         player = new SimpleExoPlayer.Builder(SwagTubeDetailsActivity.this)
-                        .setTrackSelector(trackSelector)
-                        .build();
+                .setTrackSelector(trackSelector)
+                .build();
 
         //Initialize simpleExoPlayerView
         simpleExoPlayerView = findViewById(R.id.exoplayer);
@@ -203,7 +225,7 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
                 postId = intent.getExtras().getString(FollowVideoRecyclerViewAdapter.class.getSimpleName());
             } else if (intent.hasExtra(SearchRecyclerViewAdapter.class.getSimpleName())) {
                 postId = intent.getExtras().getString(SearchRecyclerViewAdapter.class.getSimpleName());
-            }else if (intent.hasExtra(NotificationRecyclerViewAdapter.class.getSimpleName())) {
+            } else if (intent.hasExtra(NotificationRecyclerViewAdapter.class.getSimpleName())) {
                 postId = intent.getExtras().getString(NotificationRecyclerViewAdapter.class.getSimpleName());
             }
         }
@@ -256,8 +278,8 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
         // This is the MediaSource representing the media to be played.
         Uri videoUri = Uri.parse(url);
-            MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(MediaItem.fromUri(Uri.parse(videoUri.toString())));
+        MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(MediaItem.fromUri(Uri.parse(videoUri.toString())));
 //        MediaSource videoSource = new ProgressiveMediaSource(videoUri, dataSourceFactory, extractorsFactory, null, null,null);
         // Prepare the player with the source.
         player.prepare(videoSource);
@@ -279,50 +301,50 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
                 playPlayer(player);
             }
         });
-       if (fullscreenButton!=null){
-           fullscreenButton.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   if (fullscreen) {
-                       fullscreenButton.setImageDrawable(ContextCompat.getDrawable(SwagTubeDetailsActivity.this, R.drawable.ic_fullscreen_open));
+        if (fullscreenButton != null) {
+            fullscreenButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (fullscreen) {
+                        fullscreenButton.setImageDrawable(ContextCompat.getDrawable(SwagTubeDetailsActivity.this, R.drawable.ic_fullscreen_open));
 
-                       getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
-                       if (getSupportActionBar() != null) {
-                           getSupportActionBar().show();
-                       }
+                        if (getSupportActionBar() != null) {
+                            getSupportActionBar().show();
+                        }
 
-                       setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-                       RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) simpleExoPlayerView.getLayoutParams();
-                       params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                       params.height = (int) (250 * getApplicationContext().getResources().getDisplayMetrics().density);
-                       simpleExoPlayerView.setLayoutParams(params);
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) simpleExoPlayerView.getLayoutParams();
+                        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                        params.height = (int) (250 * getApplicationContext().getResources().getDisplayMetrics().density);
+                        simpleExoPlayerView.setLayoutParams(params);
 
-                       fullscreen = false;
-                   } else {
-                       fullscreenButton.setImageDrawable(ContextCompat.getDrawable(SwagTubeDetailsActivity.this, R.drawable.ic_fullscreen_close));
+                        fullscreen = false;
+                    } else {
+                        fullscreenButton.setImageDrawable(ContextCompat.getDrawable(SwagTubeDetailsActivity.this, R.drawable.ic_fullscreen_close));
 
-                       getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
-                               | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                               | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-                       if (getSupportActionBar() != null) {
-                           getSupportActionBar().hide();
-                       }
+                        if (getSupportActionBar() != null) {
+                            getSupportActionBar().hide();
+                        }
 
-                       setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-                       RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) simpleExoPlayerView.getLayoutParams();
-                       params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                       params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-                       simpleExoPlayerView.setLayoutParams(params);
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) simpleExoPlayerView.getLayoutParams();
+                        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                        simpleExoPlayerView.setLayoutParams(params);
 
-                       fullscreen = true;
-                   }
-               }
-           });
-       }
+                        fullscreen = true;
+                    }
+                }
+            });
+        }
 
         exo_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -369,7 +391,8 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
             player.seekTo(positionInMS);
         }
     }
-    private void replay(){
+
+    private void replay() {
         if (player != null) {
             player.seekTo(0);
             update_player_ui();
@@ -378,11 +401,11 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
 
     private void update_player_ui() {
         exo_pause.setVisibility(View.GONE);
-        exo_play .setVisibility(View.GONE);
-        if (exo_play.getVisibility()==View.VISIBLE){
+        exo_play.setVisibility(View.GONE);
+        if (exo_play.getVisibility() == View.VISIBLE) {
             exo_pause.setVisibility(View.INVISIBLE);
-            exo_play .setVisibility(View.INVISIBLE);
-        }else {
+            exo_play.setVisibility(View.INVISIBLE);
+        } else {
 //            exo_pause.setVisibility(View.VISIBLE);
 //            exo_play .setVisibility(View.VISIBLE);
         }
@@ -431,9 +454,7 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(SwagTubeDetailsActivity.this, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 
@@ -634,11 +655,17 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
     }
 
     private void downloadVideo(String urlString) {
-        if (new CodexPerms(activity).hasPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})){
-            File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS +"/SwagSe");
-            Functions.show_determinent_loader(this, false, false);
+        swagDetailDownload.setEnabled(false);
+        n.show();
+        n.setProgress(1);
+        n.enableVibration(false);
+        if (new CodexPerms(activity).hasPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})) {
+            File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/SwagSe");
+//            Functions.show_determinent_loader(this, false, false);
             PRDownloader.initialize(this);
-            DownloadRequest prDownloader = PRDownloader.download(url, file.getPath(), swagtubedata.get(0).getId() + "no_watermark" + ".mp4")
+
+
+            DownloadRequest prDownloader = PRDownloader.download(url, file.getPath(), swagtubedata.get(0).getTitle() + "_no_watermark" + ".mp4")
                     .build()
                     .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                         @Override
@@ -662,27 +689,37 @@ public class SwagTubeDetailsActivity extends AppCompatActivity implements Player
                         @Override
                         public void onProgress(Progress progress) {
                             int prog = (int) ((progress.currentBytes * 100) / progress.totalBytes);
-                            Functions.show_loading_progress(prog);
+//                            Functions.show_loading_progress(prog);
+                            n.setProgress(prog);
+
                         }
                     });
 
             prDownloader.start(new OnDownloadListener() {
                 @Override
                 public void onDownloadComplete() {
+                    swagDetailDownload.setEnabled(true);
                     Functions.cancel_determinent_loader();
                     Toast.makeText(SwagTubeDetailsActivity.this, "Video downloaded", Toast.LENGTH_SHORT).show();
-//                scan_file(swagtubedata.get(0));
-//                applywatermark(item);
+                    Notify.cancelAll(getApplicationContext());
+                    n.setTitle("Download Complete");
+                    n.show();
+
                 }
+
                 @Override
                 public void onError(Error error) {
-//                delete_file_no_watermark(item);
-                    Log.d(TAG, "downloadVideo: "+error.getServerErrorMessage());
-                    Toast.makeText(SwagTubeDetailsActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                    Functions.cancel_determinent_loader();
+                    swagDetailDownload.setEnabled(true);
+                    Notify.cancelAll(getApplicationContext());
+                    n.setTitle("Download Failed");
+                    n.show();
+                    Toast.makeText(SwagTubeDetailsActivity.this, "Downloading Error", Toast.LENGTH_SHORT).show();
+
                 }
             });
-        } else { new CodexPerms(activity).requestPerms(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}); }
+        } else {
+            new CodexPerms(activity).requestPerms(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
+        }
 
     }
 

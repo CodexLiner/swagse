@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,10 +22,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -34,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.swagse.LoginActivity;
 import com.app.swagse.R;
+import com.app.swagse.SimpleClasses.Functions;
 import com.app.swagse.SubscriberUserProfileActivity;
 import com.app.swagse.activity.MakeVideoActivity;
 import com.app.swagse.activity.SwagTubeDetailsActivity;
@@ -45,17 +49,28 @@ import com.app.swagse.model.swagTube.SwagTubeResponse;
 import com.app.swagse.model.swagTube.SwagtubedataItem;
 import com.app.swagse.model.swaggerData.SwaggerdataItem;
 import com.app.swagse.network.Api;
+import com.app.swagse.network.Notify;
 import com.app.swagse.network.RetrofitClient;
 import com.app.swagse.sharedpreferences.PrefConnect;
 
 import com.banuba.sdk.cameraui.data.PipConfig;
 import com.banuba.sdk.ve.flow.VideoCreationActivity;
 import com.bumptech.glide.Glide;
+import com.downloader.Error;
+import com.downloader.OnCancelListener;
+import com.downloader.OnDownloadListener;
+import com.downloader.OnPauseListener;
+import com.downloader.OnProgressListener;
+import com.downloader.OnStartOrResumeListener;
+import com.downloader.PRDownloader;
+import com.downloader.Progress;
+import com.downloader.request.DownloadRequest;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -102,6 +117,7 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
             holder.album_view.setVisibility(View.VISIBLE);
         }
         if (mVideoItems.get(position).getUserfollowstatus() == 1){
+            holder.image_view_follow_option.setImageDrawable(AppCompatResources.getDrawable(context , R.drawable.unfollow_layer));
             holder.follow_btn.setText("Unfollow");
         }
 
@@ -164,12 +180,18 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
                 View view1 = LayoutInflater.from(context).inflate(R.layout.swagger_menu_layout, null);
                 AppCompatTextView reportVideo = view1.findViewById(R.id.reportVideo);
                 AppCompatTextView copy_video_url = view1.findViewById(R.id.copy_video_url);
+                AppCompatTextView Download = view1.findViewById(R.id.downloadV);
                 final Dialog mBottomSheetDialog = new Dialog(context, R.style.MaterialDialogSheet);
                 mBottomSheetDialog.setContentView(view1);
                 mBottomSheetDialog.setCancelable(true);
                 mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
                 mBottomSheetDialog.show();
+
+                Download.setOnClickListener(v->{
+                    downloadVideo(mVideoItems.get(position).getVideourl());
+                    mBottomSheetDialog.dismiss();
+                });
 
                 reportVideo.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -237,9 +259,28 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
             }
         });
 
-        holder.container_profile.setOnClickListener(v -> {
+        holder.image_view_profile_pic.setOnClickListener(v -> {
             this.context.startActivity(new Intent(context, SubscriberUserProfileActivity.class).putExtra(PlayerViewHolder.class.getSimpleName(),  mVideoItems.get(position).getUserid()));
         });
+        holder.image_view_follow_option.setOnClickListener(v->{
+            if (PrefConnect.readBoolean(context, Constants.GUEST_USER, false)) {
+                context.startActivity(new Intent(context, LoginActivity.class));
+            } else {
+                if (mVideoItems.get(position).getUserfollowstatus() == 1) {
+                    mVideoItems.get(position).setUserfollowstatus(0);
+                    holder.image_view_follow_option.setImageDrawable(AppCompatResources.getDrawable(context , R.drawable.follow_layer));
+                } else if (mVideoItems.get(position).getUserfollowstatus() == 0) {
+                    mVideoItems.get(position).setUserfollowstatus(1);
+                    holder.image_view_follow_option.setImageDrawable(AppCompatResources.getDrawable(context , R.drawable.unfollow_layer));
+                }
+                swagTubeFollow(mVideoItems.get(0).getUserid());
+            }
+        });
+
+
+
+
+
         holder.follow_btn.setOnClickListener(v -> {
             if (PrefConnect.readBoolean(context, Constants.GUEST_USER, false)) {
                 context.startActivity(new Intent(context, LoginActivity.class));
@@ -254,6 +295,78 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
                 swagTubeFollow(mVideoItems.get(0).getUserid());
             }
         });
+
+    }
+    private void downloadVideo(String urlString) {
+       Notify n = Notify.build(context)
+
+                .setTitle("Downloading Video")
+
+                .setSmallIcon(R.drawable.ic_download)
+                .setColor(R.color.colorBlack);
+        n.show();
+        n.setProgress(1);
+        n.enableVibration(false);
+        if (new CodexPerms((Activity) context).hasPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})) {
+            File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/SwagSe");
+//            Functions.show_determinent_loader(this, false, false);
+            PRDownloader.initialize(context);
+
+
+            DownloadRequest prDownloader = PRDownloader.download(urlString, file.getPath(), mVideoItems.get(0).getTitle() + "_no_watermark" + ".mp4")
+                    .build()
+                    .setOnStartOrResumeListener(new OnStartOrResumeListener() {
+                        @Override
+                        public void onStartOrResume() {
+
+                        }
+                    })
+                    .setOnPauseListener(new OnPauseListener() {
+                        @Override
+                        public void onPause() {
+
+                        }
+                    })
+                    .setOnCancelListener(new OnCancelListener() {
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    })
+                    .setOnProgressListener(new OnProgressListener() {
+                        @Override
+                        public void onProgress(Progress progress) {
+                            int prog = (int) ((progress.currentBytes * 100) / progress.totalBytes);
+//                            Functions.show_loading_progress(prog);
+                            n.setProgress(prog);
+
+                        }
+                    });
+
+            prDownloader.start(new OnDownloadListener() {
+                @Override
+                public void onDownloadComplete() {
+
+                    Functions.cancel_determinent_loader();
+                    Toast.makeText(context, "Video downloaded", Toast.LENGTH_SHORT).show();
+                    Notify.cancelAll(context);
+                    n.setTitle("Download Complete");
+                    n.show();
+
+                }
+
+                @Override
+                public void onError(Error error) {
+                    Notify.cancelAll(context);
+                    n.setTitle("Download Failed");
+                    n.show();
+                    Toast.makeText(context, "Downloading Error", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        } else {
+            new CodexPerms((Activity) context).requestPerms(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
+        }
 
     }
 

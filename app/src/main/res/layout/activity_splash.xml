@@ -18,6 +18,7 @@
             app:srcCompat="@drawable/splash_img" />-->
 
     <pl.droidsonroids.gif.GifImageView
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/splash_new"

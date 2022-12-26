@@ -74,6 +74,7 @@
                 android:textStyle="bold"
                 tools:text="Baljeet Singh" />
             <TextView
+                android:visibility="gone"
                 android:id="@+id/follow_btn"
                 android:layout_weight="1"
                 android:layout_margin="@dimen/_10dp"
@@ -173,19 +174,17 @@
                     app:strokeWidth="1dp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_marginTop="@dimen/_5dp"
+                    android:layout_marginTop="7dp"
                     android:visibility="visible"
                     android:id="@+id/image_view_follow_option"
                     android:padding="1dp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/image_view_profile_pic"
                     app:shapeAppearance="@style/RoundedImageViewShape"
-                    app:srcCompat="@drawable/ic_user"
-                    app:strokeColor="@color/colorWhite"
-                    app:strokeWidth="1dp" />
+                    app:srcCompat="@drawable/follow_layer" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

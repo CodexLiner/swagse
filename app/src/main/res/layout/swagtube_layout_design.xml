@@ -257,7 +257,7 @@
                 android:id="@+id/hashtag"
                 android:textStyle="bold"
                 android:gravity="start|center"
-                android:textColor="@color/blue"
+                android:textColor="#025fa4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="#trending"
