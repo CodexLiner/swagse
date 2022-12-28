@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_5dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:padding="@dimen/_10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_user" />
+            <TextView
+                android:inputType="textCapSentences"
+                android:id="@+id/users_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gopal Meena"
+                android:textColor="@color/black"
+                android:textFontWeight="@integer/m3_sys_motion_duration_400"
+                android:layout_margin="@dimen/_10dp"
+                tools:ignore="TextViewEdits" />
+        </LinearLayout>
+        <View
+            android:layout_marginTop="@dimen/_5dp"
+            android:layout_marginBottom="@dimen/_5dp"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+        <TextView
+            android:id="@+id/askedQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What is Programing Language"
+            android:textColor="@color/black"
+            android:textFontWeight="@integer/m3_sys_motion_duration_400"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="@dimen/_10dp"/>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10dp"
+            android:orientation="vertical">
+            <RadioGroup
+                android:id="@+id/RadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </RadioGroup>
+
+        </LinearLayout>
+        <LinearLayout
+            android:background="@drawable/poll_input_bg"
+            android:paddingEnd="@dimen/_5dp"
+            android:paddingStart="@dimen/_5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Votes 25"
+                android:textColor="@color/black"
+                android:textFontWeight="@integer/m3_sys_motion_duration_400"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="@dimen/_10dp"/>
+            <View
+                android:layout_gravity="center"
+                android:background="@color/black"
+                android:layout_width="8dp"
+                android:layout_height="8dp"/>
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 Days Left"
+                android:textColor="@color/black"
+                android:textFontWeight="@integer/m3_sys_motion_duration_400"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="@dimen/_10dp"/>
+            <LinearLayout
+                android:layout_gravity="center"
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/Vote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vote"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

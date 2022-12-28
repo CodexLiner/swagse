@@ -50,11 +50,12 @@
     <string name="camera_record_mode_photo">Photo</string>
 
 
+    <string name="notify_channel_id" translatable="false">MyDefaultChannelID</string>
 
-    <string translatable="false" name="notify_channel_id">MyDefaultChannelID</string>
+    <string name="notify_channel_name" translatable="false">MyDefaultChannelName</string>
 
-    <string translatable="false" name="notify_channel_name">MyDefaultChannelName</string>
-
-    <string translatable="false" name="notify_channel_description">MyDefaultChannelDescription</string>
+    <string name="notify_channel_description" translatable="false">MyDefaultChannelDescription</string>
     <string name="loading">Loading...</string>
+    <string name="add_another_option">Add poll option</string>
+    <string name="create_poll_now">Create Poll Now</string>
 </resources>

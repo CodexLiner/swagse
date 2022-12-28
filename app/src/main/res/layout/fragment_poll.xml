@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".polls.PollFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout"
+            android:weightSum="1"
+            android:layout_margin="@dimen/_10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_margin="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_user" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/users_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gopal Meena"
+                    android:textColor="@color/black"
+                    android:textFontWeight="@integer/m3_sys_motion_duration_400"
+                    android:layout_margin="@dimen/_10dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray"/>
+            <EditText
+                android:padding="@dimen/_10dp"
+                android:hint="Ask to your community"
+                android:background="@null"
+                android:id="@+id/poll_decription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="10"
+                android:minLines="5"
+                android:gravity="top|left"
+                android:maxLines="15"
+                tools:ignore="RtlHardcoded" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_marginStart="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_10dp"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:elevation="@dimen/interaction_interest_padding_2"
+            android:gravity="center"
+            android:layout_margin="@dimen/_10dp"
+            android:layout_weight="1"
+            android:padding="@dimen/_10dp"
+            android:background="@drawable/poll_input_bg"
+            android:layout_gravity="center"
+            android:id="@+id/another_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_another_option"
+            android:textColor="#3F51B5"
+            android:textAllCaps="true"
+            android:textFontWeight="900" />
+        <Button
+            android:id="@+id/create_poll"
+            android:layout_margin="@dimen/_10dp"
+            android:layout_weight="1"
+            android:padding="@dimen/_10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_poll_now"/>
+    </LinearLayout>
+
+</FrameLayout>

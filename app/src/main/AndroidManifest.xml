@@ -24,18 +24,25 @@
         android:xlargeScreens="true" />
 
     <application
-        android:requestLegacyExternalStorage="true"
         android:name="com.app.swagse.controller.App"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SwagSe"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".SwagTubeDetailsActivityNew"
+            android:name=".polls.PollsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activity.SwagTubeDetailsActivityNew"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -187,9 +194,9 @@
         <activity android:name=".activity.CategoryActivity" />
         <activity android:name=".activity.CategoryListActivity" />
         <activity
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:name=".activity.SearchActivity"
-            android:theme="@style/Theme.SwagSe.NoActionBar" />
+            android:theme="@style/Theme.SwagSe.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activity.menu.ProfileActivity" />
         <activity
             android:name=".activity.menu.NavVideosActivity"
@@ -246,9 +253,7 @@
             android:name=".activity.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.SwagSe.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.SwagSe.NoActionBar"></activity>
         <activity
             android:name=".activity.ShowPhoneNumberActivity"
             android:theme="@style/Theme.SwagSe.NoActionBar" />

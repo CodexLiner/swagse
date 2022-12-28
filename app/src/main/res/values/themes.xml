@@ -124,6 +124,7 @@
     <style name="CustomIntegrationAppTheme" parent="VideoCreationTheme">
 
         <!-- Camera screen styles -->
+        <item name="cameraTimeIntervalButtonStyle">@style/CustomCameraTimeIntervalButtonStyle</item>
         <item name="cameraOverlayStyle">@style/CustomCameraOverlayStyle</item>
         <item name="cameraActionButtonStyle">@style/CustomCameraActionButtonStyle</item>
         <item name="cameraMusicTopIconStyle">@style/CustomCameraMusicTopIconStyle</item>
@@ -1361,7 +1362,17 @@
         <item name="android:background">@color/egg_blue</item>
     </style>
     <!---->
-
+    <style name="CustomCameraTimeIntervalButtonStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:background">@drawable/bg_camera_time_interval</item>
+        <item name="android:layout_marginBottom">20dp</item>
+    </style>
 
     <!-- Hands Free -->
     <style name="CustomHandsFreeBottomSheetStyle" parent="HandsFreeBottomSheetStyle">
@@ -1470,6 +1481,7 @@
         <item name="android:background">@color/violet_red_20</item>
     </style>
     <!---->
+
 </resources>
 
 

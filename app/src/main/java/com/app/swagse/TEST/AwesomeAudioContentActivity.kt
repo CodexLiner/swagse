@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -128,6 +129,7 @@ class AwesomeAudioContentActivity : AppCompatActivity() {
             override fun onFailure(request: Request?, e: IOException?) {
                 GlobalScope.launch {
                     withContext(Dispatchers.Main) {
+                        Toast.makeText(applicationContext , "Please Try Again ", Toast.LENGTH_LONG).show()
                         progress_bar?.setVisibility(View.GONE)
 
                     }

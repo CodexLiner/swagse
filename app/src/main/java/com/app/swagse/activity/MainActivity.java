@@ -38,6 +38,8 @@ import com.app.swagse.model.userDetails.UserDetailResponse;
 import com.app.swagse.model.userDetails.Userdata;
 import com.app.swagse.network.Api;
 import com.app.swagse.network.RetrofitClient;
+import com.app.swagse.polls.PollFragment;
+import com.app.swagse.polls.PollsActivity;
 import com.app.swagse.sharedpreferences.PrefConnect;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "onCreate: " + token);
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Swag Tube"));
+        tabLayout.addTab(tabLayout.newTab().setText("SwagTube"));
         tabLayout.addTab(tabLayout.newTab().setText("Swagger"));
         tabLayout.addTab(tabLayout.newTab().setText("Trending"));
 
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ft.commit();
 
         // perform setOnTabSelectedListener event on TabLayout
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Fragment fragment = null;
@@ -238,6 +240,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_subscription: {
                 startActivity(new Intent(MainActivity.this, NavSubscriptionActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+            }
+            case R.id.show_poll: {
+                startActivity(new Intent(MainActivity.this, PollsActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+            }
+            case R.id.create_poll: {
+                startActivity(new Intent(MainActivity.this, PollsActivity.class).putExtra("create" , true));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             }
