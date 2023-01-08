@@ -2,6 +2,7 @@ package com.app.swagse.polls
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,26 +46,15 @@ class ShowPollsFragment : Fragment() {
 
         polls_Rec = view.findViewById<RecyclerView>(R.id.polls_Rec);
         polls_Rec.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val x = listOf<String>("sdsd", "dsdsdsds", "dsdsd", "dsdsds")
-        val list = mutableListOf<PollModel>()
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
-        list.add(PollModel("tilele elleleelel", x as MutableList<String>))
+
         getPollDetails()
 
         return view;
     }
 
     private fun getPollDetails() {
+        Log.d("TAG", "onResponse: getPolls ")
+
         val progressDialog = ProgressDialog(context)
         progressDialog.setMessage("Please wait...")
         progressDialog.show()
@@ -75,10 +65,16 @@ class ShowPollsFragment : Fragment() {
                 call: Call<ShowPollsResponse>,
                 response: Response<ShowPollsResponse>
             ) {
+                Log.d("TAG", "onResponse: before reponse ")
                 if (response.code() == 200) {
+                    Log.d("TAG", "onResponse: 200 reponse ")
                     progressDialog.dismiss()
+                    Log.d("TAG", "onResponse: body reponse ${response.body().toString()}")
+
                     if (response.body()!!.success == "true") {
                         val polldataitems = response.body()!!.dataItems
+                        Log.d("TAG", "onResponse: ${response.body()!!.dataItems.toString()}")
+
                         if (polldataitems.size != 0) {
                             val adapter = PollAdapter(response.body()!!);
                             adapter.setHasStableIds(true)
@@ -89,6 +85,7 @@ class ShowPollsFragment : Fragment() {
                 }
             }
             override fun onFailure(call: Call<ShowPollsResponse>, t: Throwable) {
+                Log.d("TAG", "onResponse: failed ${t.message} ")
                 progressDialog.dismiss()
             }
         })

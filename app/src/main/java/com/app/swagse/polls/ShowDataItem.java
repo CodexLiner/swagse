@@ -1,13 +1,47 @@
 package com.app.swagse.polls;
 
+import com.app.swagse.model.userDetails.Userdata;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ShowDataItem {
+
     @SerializedName("question")
     private String question;
 
     @SerializedName("votes_count")
     private String votes_count;
+
+    @SerializedName("options")
+    private List<String> options;
+
+    @SerializedName("id")
+    private String id;
+
+    @SerializedName("user")
+    private Userdata userdata;
+
+    @SerializedName("status")
+    private String status;
+
+    @SerializedName("deadline")
+    private String deadline;
+
+    @SerializedName("votes")
+    private List<String> votes;
+
+    public Userdata getUserdata() {
+        return userdata;
+    }
+
+    public void setUserdata(Userdata userdata) {
+        this.userdata = userdata;
+    }
+
+
+
+
 
     public String getQuestion() {
         return question;
@@ -41,11 +75,41 @@ public class ShowDataItem {
         this.deadline = deadline;
     }
 
-    @SerializedName("status")
-    private String status;
+    @Override
+    public String toString() {
+        return "ShowDataItem{" +
+                "question='" + question + '\'' +
+                ", votes_count='" + votes_count + '\'' +
+                ", options='" + options + '\'' +
+                ", id='" + id + '\'' +
+                ", userdata=" + userdata +
+                ", status='" + status + '\'' +
+                ", deadline='" + deadline + '\'' +
+                ", votes=" + votes +
+                '}';
+    }
 
-    @SerializedName("deadline")
-    private String deadline;
+    public List<String> getOptions() {
+        return options;
+    }
 
+    public void setOptions(List<String> options) {
+        this.options = options;
+    }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<String> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<String> votes) {
+        this.votes = votes;
+    }
 }

@@ -4,7 +4,9 @@ import com.app.swagse.model.GetOTPResponse;
 import com.app.swagse.model.category.CategoryResponse;
 import com.app.swagse.model.userDetails.UserDetailResponse;
 import com.app.swagse.polls.ShowPollsResponse;
+import com.google.gson.JsonArray;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -21,7 +23,7 @@ public interface NewApi {
 
     @FormUrlEncoded
     @POST("polling_detail")
-    Call<ShowPollsResponse> getPolls(String user_id);
+    Call<ShowPollsResponse> getPolls(@Field("user_id") String user_id);
 
     @FormUrlEncoded
     @POST("votes")
@@ -29,6 +31,6 @@ public interface NewApi {
 
     @FormUrlEncoded
     @POST("polling")
-    Call<NewApiResponse> addPoll (@Field("user_id") String userId , @Field("question") String question , @Field("options") JSONObject options , @Field("end_date") String end_date , @Field("status") String status);
+    Call<NewApiResponse> addPoll (@Field("user_id") String userId , @Field("question") String question , @Field("options") JSONArray options , @Field("end_date") String end_date);
 
 }

@@ -10,16 +10,6 @@ public class ShowPollsResponse {
     @SerializedName("data")
     private List<ShowDataItem> dataItems;
 
-    public Userdata getUserdata() {
-        return userdata;
-    }
-
-    public void setUserdata(Userdata userdata) {
-        this.userdata = userdata;
-    }
-
-    @SerializedName("userdata")
-    private Userdata userdata;
 
     public List<ShowDataItem> getDataItems() {
         return dataItems;
@@ -40,4 +30,11 @@ public class ShowPollsResponse {
     @SerializedName("success")
     private String success;
 
+    @Override
+    public String toString() {
+        return "ShowPollsResponse{" +
+                "dataItems=" + dataItems +
+                ", success='" + success + '\'' +
+                '}';
+    }
 }

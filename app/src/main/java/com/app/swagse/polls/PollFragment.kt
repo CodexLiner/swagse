@@ -85,13 +85,12 @@ class PollFragment : Fragment() {
         progressDialog.show()
         val apiInterface = NewRetrofitClient.getInstance().api
         val jsonObject: JSONObject = JSONObject().put("options", map)
-
+        Log.d("TAG", "addPoll: ${JSONArray(map)},")
         val responseCall = apiInterface.addPoll(
             PrefConnect.readString(context, Constants.USERID, ""),
             text,
-            jsonObject,
-            getDaysAgo(5).toString(),
-            "1"
+            JSONArray(map),
+            getDaysAgo(5).toString()
         )
         responseCall.enqueue(object : retrofit2.Callback<NewApiResponse> {
             override fun onResponse(
