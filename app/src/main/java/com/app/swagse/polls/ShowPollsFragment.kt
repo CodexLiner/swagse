@@ -53,7 +53,6 @@ class ShowPollsFragment : Fragment() {
     }
 
     private fun getPollDetails() {
-        Log.d("TAG", "onResponse: getPolls ")
 
         val progressDialog = ProgressDialog(context)
         progressDialog.setMessage("Please wait...")
@@ -65,15 +64,11 @@ class ShowPollsFragment : Fragment() {
                 call: Call<ShowPollsResponse>,
                 response: Response<ShowPollsResponse>
             ) {
-                Log.d("TAG", "onResponse: before reponse ")
                 if (response.code() == 200) {
-                    Log.d("TAG", "onResponse: 200 reponse ")
                     progressDialog.dismiss()
-                    Log.d("TAG", "onResponse: body reponse ${response.body().toString()}")
 
                     if (response.body()!!.success == "true") {
                         val polldataitems = response.body()!!.dataItems
-                        Log.d("TAG", "onResponse: ${response.body()!!.dataItems.toString()}")
 
                         if (polldataitems.size != 0) {
                             val adapter = PollAdapter(response.body()!!);
@@ -85,7 +80,6 @@ class ShowPollsFragment : Fragment() {
                 }
             }
             override fun onFailure(call: Call<ShowPollsResponse>, t: Throwable) {
-                Log.d("TAG", "onResponse: failed ${t.message} ")
                 progressDialog.dismiss()
             }
         })

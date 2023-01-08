@@ -42,16 +42,23 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
         holder.total_vote.text = list.dataItems[position]?.votes_count
         holder.time_left.text = list.dataItems[position]?.deadline
         holder.userName.text = list.dataItems[position].userdata.userName.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(
-                    Locale.getDefault()
-                ) else it.toString()
-            }
+            if (it.isLowerCase()) it.titlecase(
+                Locale.getDefault()
+            ) else it.toString()
+        }
         Glide.with(holder.userImage).load(list!!.dataItems.get(position).userdata.img)
             .into(holder.userImage)
 
         for (i in list.dataItems.get(position).options!!) {
-            Log.d("TAG", "radiobutton : ${position}")
             val button = RadioButton(holder.RadioGroup.context)
+            if (list.dataItems.get(position).votes!=null){
+                if (list.dataItems.get(position).votes.answer.equals(i)){
+                    button.isEnabled = false
+                    button.isChecked = true
+//                    holder.Vote.text = "voted"
+                    holder.Vote.isEnabled = false
+                }
+            }
             button.text = i
             holder.RadioGroup.addView(button)
         }
@@ -68,11 +75,11 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
                 list.dataItems.get(position).id,
                 rb.text as String?
             )
+            Log.d("TAG", "onBindViewHolder: ${ rb.text as String? } ${list.dataItems.get(position).id}")
             responseCall.enqueue(object : retrofit2.Callback<NewApiResponse> {
                 override fun onResponse(
                     call: Call<NewApiResponse>, response: Response<NewApiResponse>
                 ) {
-//                    TODO("Not yet implemented")
                     progressDialog.dismiss()
                     Toast.makeText(
                         holder.Vote.context, "Vote Added Successfully ", Toast.LENGTH_SHORT
@@ -80,7 +87,6 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
                 }
 
                 override fun onFailure(call: Call<NewApiResponse>, t: Throwable) {
-//                    TODO("Not yet implemented")
                     progressDialog.dismiss()
                     Toast.makeText(holder.Vote.context, " Failed to Vote", Toast.LENGTH_SHORT)
                         .show()

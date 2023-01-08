@@ -84,29 +84,32 @@ class PollFragment : Fragment() {
         progressDialog.setMessage("Please wait...")
         progressDialog.show()
         val apiInterface = NewRetrofitClient.getInstance().api
-        val jsonObject: JSONObject = JSONObject().put("options", map)
-        Log.d("TAG", "addPoll: ${JSONArray(map)},")
-        val responseCall = apiInterface.addPoll(
+        val jsonObject: JSONObject = JSONObject()
+
+        jsonObject.put("user_id", PrefConnect.readString(context, Constants.USERID, ""))
+        jsonObject.put("question", text)
+        jsonObject.put("options", map)
+        jsonObject.put("end_date", getDaysAgo(5).toString())
+
+        val pollModel = pollModel(
             PrefConnect.readString(context, Constants.USERID, ""),
             text,
-            JSONArray(map),
-            getDaysAgo(5).toString()
+            getDaysAgo(5).toString(),
+            map
         )
-        responseCall.enqueue(object : retrofit2.Callback<NewApiResponse> {
-            override fun onResponse(
-                call: Call<NewApiResponse>, response: Response<NewApiResponse>
-            ) {
+        val responseCall = apiInterface.createPoll(pollModel)
+
+        responseCall.enqueue(object  : retrofit2.Callback<pollModel>{
+            override fun onResponse(call: Call<pollModel>, response: Response<pollModel>) {
                 progressDialog.dismiss()
-                Log.d("TAG", "onResponse: ${response.body().toString()}")
                 Toast.makeText(context, "Poll Added Successfully", Toast.LENGTH_SHORT).show()
             }
-
-            override fun onFailure(call: Call<NewApiResponse>, t: Throwable) {
+            override fun onFailure(call: Call<pollModel>, t: Throwable) {
                 progressDialog.dismiss()
                 Toast.makeText(context, "Failed to add poll", Toast.LENGTH_SHORT).show()
             }
-
         })
+
     }
 
     fun getDaysAgo(daysAgo: Int): String? {
@@ -124,7 +127,7 @@ class PollFragment : Fragment() {
 
         val edit = new_edit.findViewById(R.id.edit_poll) as EditText
         edit.id = 1212 + list.size
-//        edit.setText("random" + edit.hashCode())
+//      edit.setText("random" + edit.hashCode())
 
         list.add(edit)
 

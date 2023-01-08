@@ -29,7 +29,7 @@ public class ShowDataItem {
     private String deadline;
 
     @SerializedName("votes")
-    private List<String> votes;
+    private votes votes;
 
     public Userdata getUserdata() {
         return userdata;
@@ -105,11 +105,11 @@ public class ShowDataItem {
         this.id = id;
     }
 
-    public List<String> getVotes() {
+    public com.app.swagse.polls.votes getVotes() {
         return votes;
     }
 
-    public void setVotes(List<String> votes) {
+    public void setVotes(com.app.swagse.polls.votes votes) {
         this.votes = votes;
     }
 }
