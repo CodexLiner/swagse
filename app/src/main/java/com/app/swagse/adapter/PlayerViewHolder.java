@@ -128,6 +128,11 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
             swagTube_like.setTextColor(Color.parseColor("#000000"));
             swagTube_like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.like, 0, 0, 0);
         }
+        Log.d("TAG", "onBindTAGS : "+mediaObjectsData.get(getBindingAdapterPosition()).getTags());
+        if (mediaObjectsData.get(getBindingAdapterPosition()).getTags()!=null){
+            Log.d("TAG", "onBindTAGS : "+mediaObjectsData.get(getBindingAdapterPosition()).getTags());
+            this.hashtag.setText(mediaObjectsData.get(getBindingAdapterPosition()).getTags());
+        }
 
 //        if (mediaObjectsData.get(getAdapterPosition()).getCommentcount() != 0 || mediaObjectsData.get(getAdapterPosition()).getLikecount() != 0) {
 //            swagTubeCommentCount.setText("" + mediaObjectsData.get(getAdapterPosition()).getCommentcount() + " Comment");
@@ -151,6 +156,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
         } else {
             swagTubeOptions.setVisibility(View.VISIBLE);
         }
+
         this.hashtag.setOnClickListener(v->{
             Intent intent = new Intent(hashtag.getContext() , SearchActivity.class);
             intent.putExtra("hashtag" , "this");

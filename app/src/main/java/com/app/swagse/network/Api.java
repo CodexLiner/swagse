@@ -82,7 +82,7 @@ public interface Api {
     //GET OTP
     @FormUrlEncoded
     @POST("Swagtubeapi/search_video")
-    Call<SwagTubeResponse> searchVideo(@Field("user_id") String countryId,@Field("keyword") String stateId);
+    Call<SwagTubeResponse> searchVideo(@Field("user_id") String countryId,@Field("keyword") String stateId , @Field("tag") int tag);
 
     //UploadSwagTube Video
     @Multipart

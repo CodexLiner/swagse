@@ -89,7 +89,7 @@ public class SubscriberUserProfileActivity extends AppCompatActivity {
         if (intent.hasExtra(PlayerViewHolder.class.getSimpleName())) {
             userId = intent.getExtras().getString(PlayerViewHolder.class.getSimpleName());
         }
-        Log.d("TAG", "profilede: "+userId);
+        Log.d("TAG", "profilede: " + userId);
 
         getSwagTubeData();
         getuserprofile();
@@ -123,9 +123,7 @@ public class SubscriberUserProfileActivity extends AppCompatActivity {
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(SubscriberUserProfileActivity.this, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 

@@ -137,6 +137,7 @@ public class SwagTubeFragment extends Fragment {
                             if (swagTubeDataList.size() != 0 && swagTubeDataList != null && !swagTubeDataList.isEmpty()) {
                                 //set data object
                                 mRecyclerView.setMediaObjects(swagTubeDataList);
+                                Log.d("TAG", "onBindTAGSADAPTER: "+response.body().getSwagtubedata().toString());
                                 mAdapter = new MediaRecyclerAdapter(swagTubeDataList, initGlide());
                                 //Set Adapter
                                 mRecyclerView.setAdapter(mAdapter);

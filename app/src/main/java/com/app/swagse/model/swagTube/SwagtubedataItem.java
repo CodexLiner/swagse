@@ -40,6 +40,9 @@ public class SwagtubedataItem implements Serializable {
     @SerializedName("timeago")
     private String timeago;
 
+   @SerializedName("tags")
+    private String tags;
+
     @SerializedName("videourl")
     private String videourl;
 
@@ -183,6 +186,14 @@ public class SwagtubedataItem implements Serializable {
         this.viewscount = viewscount;
     }
 
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     @Override
     public String toString() {
         return "SwagtubedataItem{" +
@@ -197,6 +208,7 @@ public class SwagtubedataItem implements Serializable {
                 ", commentcount=" + commentcount +
                 ", viewscount=" + viewscount +
                 ", timeago='" + timeago + '\'' +
+                ", tags='" + tags + '\'' +
                 ", videourl='" + videourl + '\'' +
                 ", name='" + name + '\'' +
                 ", id='" + id + '\'' +

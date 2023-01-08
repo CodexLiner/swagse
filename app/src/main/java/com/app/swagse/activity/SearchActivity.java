@@ -53,6 +53,7 @@ public class SearchActivity extends AppCompatActivity {
     private AppCompatImageView back_icon;
     private AppCompatEditText place_search;
     Activity activity ;
+    int hash = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,7 @@ public class SearchActivity extends AppCompatActivity {
         String hashtag = getIntent().getStringExtra("hashtag");
         if (hashtag!=null){
             place_search.setText(hashtag);
+            hash = 1;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { place_search.setFocusedByDefault(false); }
             getSearchData(hashtag);
         }else {
@@ -124,7 +126,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public void getSearchData(String searchData) {
         if (App.isOnline()) {
-            Call<SwagTubeResponse> userResponseCall = apiInterface.searchVideo(PrefConnect.readString(SearchActivity.this, Constants.USERID, ""), searchData);
+            Call<SwagTubeResponse> userResponseCall = apiInterface.searchVideo(PrefConnect.readString(SearchActivity.this, Constants.USERID, ""), searchData , hash);
             userResponseCall.enqueue(new Callback<SwagTubeResponse>() {
                 @Override
                 public void onResponse(Call<SwagTubeResponse> call, Response<SwagTubeResponse> response) {
@@ -161,5 +163,11 @@ public class SearchActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        hash = 0;
     }
 }

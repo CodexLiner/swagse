@@ -1,27 +1,28 @@
 package com.app.swagse.polls
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.fragment.app.Fragment
 import com.app.swagse.R
 import com.app.swagse.constants.Constants
+import com.app.swagse.network.NewApiResponse
+import com.app.swagse.network.NewRetrofitClient
 import com.app.swagse.sharedpreferences.PrefConnect
 import com.bumptech.glide.Glide
+import org.json.JSONArray
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Response
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.HashMap
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
@@ -31,7 +32,7 @@ class PollFragment : Fragment() {
     private var param2: String? = null
     lateinit var add_option: TextView
     lateinit var createPoll: Button
-    lateinit var list : MutableList<EditText>
+    lateinit var list: MutableList<EditText>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +44,9 @@ class PollFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view : View =  inflater.inflate(R.layout.fragment_poll, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_poll, container, false)
 
         view.findViewById<TextView>(R.id.users_name).text =
             PrefConnect.readString(context, Constants.USERNAME, "")
@@ -61,40 +61,84 @@ class PollFragment : Fragment() {
         }
         createPoll = view.findViewById(R.id.create_poll)
         createPoll.setOnClickListener {
-            if (list.size == 0){
-                Toast.makeText(context , "Please Add Poll Option" , Toast.LENGTH_SHORT).show()
+            if (list.size == 0) {
+                Toast.makeText(context, "Please Add Poll Option", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val map = HashMap<String , String>()
-            for ( text in list){ map[text.toString()] = text.text.toString() }
-            Log.d("TAG", "hashmap value: ${map.values}")
+            val map = mutableListOf<String>()
+            for (text in list) {
+                map.add(text.text.toString())
+            }
+            addPoll(map, view.findViewById<TextView>(R.id.poll_decription).text.toString())
+
         }
 
         return view;
     }
 
+    private fun addPoll(map: MutableList<String>, text: String) {
+        if (text.isEmpty() || map.isEmpty()) {
+            return
+        }
+        val progressDialog = ProgressDialog(context)
+        progressDialog.setMessage("Please wait...")
+        progressDialog.show()
+        val apiInterface = NewRetrofitClient.getInstance().api
+        val jsonObject: JSONObject = JSONObject().put("options", map)
+
+        val responseCall = apiInterface.addPoll(
+            PrefConnect.readString(context, Constants.USERID, ""),
+            text,
+            jsonObject,
+            getDaysAgo(5).toString(),
+            "1"
+        )
+        responseCall.enqueue(object : retrofit2.Callback<NewApiResponse> {
+            override fun onResponse(
+                call: Call<NewApiResponse>, response: Response<NewApiResponse>
+            ) {
+                progressDialog.dismiss()
+                Log.d("TAG", "onResponse: ${response.body().toString()}")
+                Toast.makeText(context, "Poll Added Successfully", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onFailure(call: Call<NewApiResponse>, t: Throwable) {
+                progressDialog.dismiss()
+                Toast.makeText(context, "Failed to add poll", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    fun getDaysAgo(daysAgo: Int): String? {
+
+        val ldt = LocalDateTime.now().plusDays(5)
+        val formmat1 = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
+        return formmat1.format(ldt)
+    }
+
     private fun addView(view: View) {
-        val layout : LayoutInflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout: LayoutInflater =
+            activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val group = view.findViewById(R.id.layout) as ViewGroup
-        val new_edit =  layout.inflate(R.layout.poll_edittext , group)
+        val new_edit = layout.inflate(R.layout.poll_edittext, group)
 
         val edit = new_edit.findViewById(R.id.edit_poll) as EditText
-        edit.id = 1212+list.size
-        edit.setText("random"+edit.hashCode())
+        edit.id = 1212 + list.size
+//        edit.setText("random" + edit.hashCode())
 
         list.add(edit)
 
-        new_edit.findViewById<TextView>(R.id.title_poll).setText("Option "+list.size)
+        new_edit.findViewById<TextView>(R.id.title_poll).setText("Option " + list.size)
         new_edit.findViewById<TextView>(R.id.title_poll).id = list.size
     }
 
     companion object {
-        fun newInstance(param1: String, param2: String) =
-            PollFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        fun newInstance(param1: String, param2: String) = PollFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_PARAM1, param1)
+                putString(ARG_PARAM2, param2)
             }
+        }
     }
 }

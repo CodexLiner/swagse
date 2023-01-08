@@ -539,9 +539,7 @@ public class ProfileActivity extends BaseActivity {
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
                             toast(ProfileActivity.this, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
                     } else if (response.code() == Constants.UNAUTHORIZED) {
