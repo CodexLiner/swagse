@@ -27,6 +27,16 @@ public class votes {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "votes{" +
+                "answer='" + answer + '\'' +
+                ", polling_id='" + polling_id + '\'' +
+                ", id='" + id + '\'' +
+                ", user_id='" + user_id + '\'' +
+                '}';
+    }
+
     public String getUser_id() {
         return user_id;
     }

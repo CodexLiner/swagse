@@ -110,11 +110,9 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
         }
 
         if (list.dataItems[position].likes != null) {
-            if (list.dataItems[position].likes.polling_id.equals(list.dataItems[position].id)) {
-                list.dataItems.get(position).likes.id = "1";
-                Glide.with(holder.like_button)
-                    .load(holder.like_button.resources.getDrawable(R.drawable.ic_unlike))
-            }
+            list.dataItems.get(position).likes.id = "1";
+            Glide.with(holder.like_button)
+                .load(holder.like_button.resources.getDrawable(R.drawable.ic_unlike)).into(holder.like_button)
         }
 
         holder.like_button.setOnClickListener {
@@ -165,11 +163,11 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
         val responseCall = apiInterface.like(readString, id)
         responseCall.enqueue(object : retrofit2.Callback<votes> {
             override fun onResponse(call: Call<votes>, response: Response<votes>) {
-
+                progressDialog.dismiss()
             }
 
             override fun onFailure(call: Call<votes>, t: Throwable) {
-
+                progressDialog.dismiss()
             }
         })
     }

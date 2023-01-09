@@ -102,6 +102,9 @@ class PollFragment : Fragment() {
         responseCall.enqueue(object  : retrofit2.Callback<pollModel>{
             override fun onResponse(call: Call<pollModel>, response: Response<pollModel>) {
                 progressDialog.dismiss()
+                val group = view?.findViewById(R.id.layout) as ViewGroup
+                group.removeAllViews()
+                view!!.findViewById<TextView>(R.id.poll_decription).text = ""
                 Toast.makeText(context, "Poll Added Successfully", Toast.LENGTH_SHORT).show()
             }
             override fun onFailure(call: Call<pollModel>, t: Throwable) {
@@ -126,8 +129,8 @@ class PollFragment : Fragment() {
         val new_edit = layout.inflate(R.layout.poll_edittext, group)
 
         val edit = new_edit.findViewById(R.id.edit_poll) as EditText
+        edit.requestFocus()
         edit.id = 1212 + list.size
-//      edit.setText("random" + edit.hashCode())
 
         list.add(edit)
 

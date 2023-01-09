@@ -9,14 +9,6 @@
         android:checkableBehavior="single">
 
         <item
-            android:icon="@drawable/ic_baseline_poll_24"
-            android:id="@+id/show_poll"
-            android:title="Show Live Polls" />
-        <item
-            android:icon="@drawable/ic_baseline_addpoll"
-            android:id="@+id/create_poll"
-            android:title="Create New Poll" />
-        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_24dp"
             android:iconTint="@color/gray_color"
@@ -78,6 +70,15 @@
             android:icon="@drawable/like"
             android:iconTint="@color/gray_color"
             android:title="Like Videos" />
+
+        <item
+            android:icon="@drawable/ic_baseline_poll_24"
+            android:id="@+id/show_poll"
+            android:title="Show Live Polls" />
+        <item
+            android:icon="@drawable/ic_baseline_addpoll"
+            android:id="@+id/create_poll"
+            android:title="Create New Poll" />
 
     </group>
 
