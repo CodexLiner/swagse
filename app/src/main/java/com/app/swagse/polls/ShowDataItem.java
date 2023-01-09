@@ -31,6 +31,17 @@ public class ShowDataItem {
     @SerializedName("votes")
     private votes votes;
 
+    public com.app.swagse.polls.votes getLikes() {
+        return likes;
+    }
+
+    public void setLikes(com.app.swagse.polls.votes likes) {
+        this.likes = likes;
+    }
+
+    @SerializedName("likes")
+    private votes likes;
+
     public Userdata getUserdata() {
         return userdata;
     }

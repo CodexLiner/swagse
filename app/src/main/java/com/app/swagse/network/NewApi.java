@@ -5,6 +5,7 @@ import com.app.swagse.model.category.CategoryResponse;
 import com.app.swagse.model.userDetails.UserDetailResponse;
 import com.app.swagse.polls.ShowPollsResponse;
 import com.app.swagse.polls.pollModel;
+import com.app.swagse.polls.votes;
 import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
@@ -38,5 +39,10 @@ public interface NewApi {
 
     @POST("polling")
     Call<pollModel> createPoll(@Body pollModel dataModal);
+
+
+    @FormUrlEncoded
+    @POST("likes")
+    Call<votes> like (@Field("user_id") String userId , @Field("polling_id") String polling_id);
 
 }

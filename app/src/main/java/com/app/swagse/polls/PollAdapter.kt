@@ -2,6 +2,8 @@ package com.app.swagse.polls
 
 
 import android.app.ProgressDialog
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,14 +17,17 @@ import com.app.swagse.network.NewRetrofitClient
 import com.app.swagse.sharedpreferences.PrefConnect
 import com.bumptech.glide.Glide
 import okhttp3.Callback
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
+import kotlin.math.log
 
 class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapter.Holder>() {
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val userImage: ImageView = itemView.findViewById<ImageView>(R.id.userImage)
+        val like_button: ImageView = itemView.findViewById<ImageView>(R.id.like_button)
         val userName: TextView = itemView.findViewById<TextView>(R.id.users_name)
         val Question: TextView = itemView.findViewById<TextView>(R.id.askedQuestion)
         val total_vote: TextView = itemView.findViewById<TextView>(R.id.total_vote)
@@ -59,8 +64,30 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
                     holder.Vote.isEnabled = false
                 }
             }
+
             button.text = i
             holder.RadioGroup.addView(button)
+        }
+
+        if (list.dataItems[position].likes!=null){
+            if (list.dataItems[position].likes.polling_id.equals(list.dataItems[position].id)){
+                Glide.with(holder.like_button).load(holder.like_button.resources.getDrawable(R.drawable.ic_like_filled))
+            }
+        }
+
+        holder.like_button.setOnClickListener{
+            likePoll(PrefConnect.readString(holder.Vote.context , Constants.USERID , "") , list.dataItems.get(position).id , holder.like_button.context)
+            if (list.dataItems.get(position).likes==null || list.dataItems.get(position).likes.id == "1"){
+                if (list.dataItems.get(position).likes == null){
+                    list.dataItems.get(position).likes = com.app.swagse.polls.votes()
+                }
+                list.dataItems.get(position).likes.id = "0";
+                Glide.with(holder.like_button).load(holder.like_button.resources.getDrawable(R.drawable.ic_like_filled)).into(holder.like_button)
+
+            }else{
+                list.dataItems.get(position).likes.id = "1";
+                Glide.with(holder.like_button).load(holder.like_button.resources.getDrawable(R.drawable.like)).into(holder.like_button)
+            }
         }
 
         holder.Vote.setOnClickListener {
@@ -97,6 +124,21 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
         }
     }
 
+    private fun likePoll(readString: String?, id: String? , context: Context) {
+        val progressDialog = ProgressDialog(context)
+        progressDialog.setMessage("Please wait...")
+        progressDialog.show()
+        val apiInterface = NewRetrofitClient.getInstance().api
+        val responseCall = apiInterface.like(readString , id)
+        responseCall.enqueue(object : retrofit2.Callback<votes>{
+            override fun onResponse(call: Call<votes>, response: Response<votes>) {
+
+            }
+            override fun onFailure(call: Call<votes>, t: Throwable) {
+
+            }
+        })
+    }
 
     override fun getItemCount(): Int {
         return list.dataItems.size ?: 0
