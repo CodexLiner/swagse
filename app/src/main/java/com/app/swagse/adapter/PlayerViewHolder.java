@@ -341,9 +341,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
 //                            toast(context, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 
@@ -375,9 +373,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
                         try {
                             JSONObject jObjError = new JSONObject(response.errorBody().string());
 //                            toast(context, jObjError.getString("response_msg"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
 

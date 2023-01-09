@@ -89,6 +89,7 @@
     <color name="violet_red">#FA3E76</color>
     <color name="violet_red_20">#33FA3E76</color>
     <color name="catskill_white">#E3E9F1</color>
+    <color name="poll_bg">#BDCBD5</color>
 
 
     <array name="progress_gradient_colors">
