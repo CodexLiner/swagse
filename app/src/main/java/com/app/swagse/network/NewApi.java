@@ -4,6 +4,7 @@ import com.app.swagse.model.GetOTPResponse;
 import com.app.swagse.model.category.CategoryResponse;
 import com.app.swagse.model.userDetails.UserDetailResponse;
 import com.app.swagse.polls.ShowPollsResponse;
+import com.app.swagse.polls.comments.comments;
 import com.app.swagse.polls.pollModel;
 import com.app.swagse.polls.votes;
 import com.google.gson.JsonArray;
@@ -30,11 +31,19 @@ public interface NewApi {
     Call<ShowPollsResponse> getPolls(@Field("user_id") String user_id);
 
     @FormUrlEncoded
+    @POST("polling_result")
+    Call<ShowPollsResponse> getResult(@Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("comments")
+    Call<comments> postComment(@Field("user_id") String user_id, @Field("comment") String comment, @Field("polling_id") String polling_id);
+
+    @FormUrlEncoded
     @POST("votes")
-    Call<NewApiResponse> vote (@Field("user_id") String userId , @Field("polling_id") String polling_id , @Field("answer") String answer);
+    Call<NewApiResponse> vote(@Field("user_id") String userId, @Field("polling_id") String polling_id, @Field("answer") String answer);
 
     @POST("polling")
-    Call<NewApiResponse> addPoll (@Body JSONObject options);
+    Call<NewApiResponse> addPoll(@Body JSONObject options);
 
 
     @POST("polling")
@@ -43,6 +52,6 @@ public interface NewApi {
 
     @FormUrlEncoded
     @POST("likes")
-    Call<votes> like (@Field("user_id") String userId , @Field("polling_id") String polling_id);
+    Call<votes> like(@Field("user_id") String userId, @Field("polling_id") String polling_id);
 
 }

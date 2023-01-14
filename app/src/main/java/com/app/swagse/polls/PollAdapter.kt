@@ -8,11 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.app.swagse.R
 import com.app.swagse.constants.Constants
 import com.app.swagse.network.NewApiResponse
 import com.app.swagse.network.NewRetrofitClient
+import com.app.swagse.polls.comments.PollComments
 import com.app.swagse.sharedpreferences.PrefConnect
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.poll_list_layout.view.*
@@ -32,6 +36,8 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
         val Question: TextView = itemView.findViewById<TextView>(R.id.askedQuestion)
         val total_vote: TextView = itemView.findViewById<TextView>(R.id.total_vote)
         val time_left: TextView = itemView.findViewById<TextView>(R.id.time_left)
+        val likes_count: TextView = itemView.findViewById<TextView>(R.id.likes_count)
+        val comments_count: TextView = itemView.findViewById<TextView>(R.id.comments_count)
         val RadioGroup: RadioGroup = itemView.findViewById<RadioGroup>(R.id.RadioGroup)
     }
 
@@ -47,7 +53,12 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
                 Locale.getDefault()
             ) else it.toString()
         }
-        holder.total_vote.text = list.dataItems[position]?.votes_count
+        if (list.dataItems[position].votes_count != null) {
+            holder.total_vote.text = list.dataItems[position]?.votes_count + " votes"
+        }
+        holder.time_left.text = list.dataItems[position]?.deadline
+        holder.likes_count.text = list.dataItems[position]?.likes_count.toString()
+        holder.comments_count.text = list.dataItems[position]?.comments_count.toString()
         holder.time_left.text = list.dataItems[position]?.deadline
         holder.userName.text = list.dataItems[position].userdata.userName.replaceFirstChar {
             if (it.isLowerCase()) it.titlecase(
@@ -57,16 +68,39 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
         Glide.with(holder.userImage).load(list!!.dataItems.get(position).userdata.img)
             .into(holder.userImage)
 
-        for (i in list.dataItems.get(position).options!!) {
+        for (i in list.dataItems[position].options.indices!!) {
 
             val view: View = LayoutInflater.from(holder.mainLayout_options.context)
                 .inflate(R.layout.poll_list_layout, null)
-            view.progressView1.labelText = i
+            view.progressView1.labelText = list.dataItems[position].options[i]
             holder.mainLayout_options.addView(view)
-            if (list.dataItems.get(position).votes != null) {
-                if (list.dataItems[position].votes.answer.equals(i)) {
+
+            if (list.dataItems[position].votes != null) {
+                if (list.dataItems[position].votes.answer.equals(list.dataItems[position].options[i])) {
                     view.progressView1.colorBackground = R.color.black
                 }
+                changeViewState(holder.mainLayout_options)
+            }
+
+            if (list.dataItems[position].result_count != null && list.dataItems[position].result_count.isNotEmpty()) {
+                if (list.dataItems[position].result_count.sum() > 0) {
+                    val devide: Double =
+                        (list.dataItems[position].result_count[i].toDouble() / list.dataItems[position].result_count.sum()
+                            .toDouble()).toDouble()
+                    val percentage = devide * 100
+                    view.progressView1.progress = percentage.toFloat()
+                    view.progressView1.labelText =
+                        list.dataItems[position].options[i] + " (" + percentage.toInt() + "%)"
+                    if (isHighest(percentage, list.dataItems[position].result_count)) {
+                        view.progressView1.colorBackground = R.color.blue
+                    }
+                } else {
+                    view.progressView1.labelText =
+                        list.dataItems[position].options[i] + " (" + 0 + "%)"
+                }
+
+
+
                 changeViewState(holder.mainLayout_options)
             }
 
@@ -99,8 +133,7 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
 
                     override fun onFailure(call: Call<NewApiResponse>, t: Throwable) {
                         progressDialog.dismiss()
-                        Toast.makeText(view.context, " Failed to Vote", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(view.context, " Failed to Vote", Toast.LENGTH_SHORT).show()
                     }
 
                 })
@@ -112,7 +145,8 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
         if (list.dataItems[position].likes != null) {
             list.dataItems.get(position).likes.id = "1";
             Glide.with(holder.like_button)
-                .load(holder.like_button.resources.getDrawable(R.drawable.ic_unlike)).into(holder.like_button)
+                .load(holder.like_button.resources.getDrawable(R.drawable.ic_unlike))
+                .into(holder.like_button)
         }
 
         holder.like_button.setOnClickListener {
@@ -139,12 +173,55 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
         }
 
         holder.comment.setOnClickListener {
+            if (list.dataItems.get(position).comments != null) {
+                val fm: FragmentManager =
+                    (holder.comment.context as AppCompatActivity).supportFragmentManager
+                val ft = fm.beginTransaction()
+                ft.replace(
+                    R.id.frame_poll,
+                    PollComments(
+                        list.dataItems[position]?.comments!!,
+                        list.dataItems.get(position).id
+                    )
+                )
+                    .addToBackStack("adapter")
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                ft.commit()
+            }
+
+        }
+    }
+
+
+    private fun isHighest(value: Double, resultCount: IntArray?): Boolean {
+        println(resultCount?.sum())
+        if (resultCount != null) {
+            var highest = -1.0;
+            for (i in resultCount) {
+                val devide: Double = (i.toDouble() / resultCount.sum().toDouble()).toDouble()
+                val percentage = devide * 100
+                if (percentage > highest) {
+                    highest = percentage.toDouble()
+                }
+            }
+            return value > highest
+        }
+        return false
+    }
+
+    private fun publishResult(results: IntArray?, position: Int) {
+        if (results != null) {
+            var highestIndex = -1;
+            results.forEach { i ->
+                var percentage = ((((i / results.sum()) * 100)));
+            }
+
 
         }
     }
 
     private fun changeViewState(linearLayout: LinearLayout) {
-        val childCount: Int = linearLayout.getChildCount()
+        val childCount: Int = linearLayout.childCount
         for (i in 0 until childCount) {
             val v: View = linearLayout.getChildAt(i)
             v.isEnabled = false;

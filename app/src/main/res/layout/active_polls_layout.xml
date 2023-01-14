@@ -101,7 +101,6 @@
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Votes 25"
                 android:textColor="@color/black"
                 android:textFontWeight="@integer/m3_sys_motion_duration_400"
                 android:layout_marginStart="10dp"
@@ -113,6 +112,13 @@
                 android:gravity="end"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:id="@+id/comments_count"/>
                 <ImageView
                     android:layout_marginTop="2dp"
                     android:id="@+id/comment"
@@ -122,6 +128,13 @@
                     android:layout_marginEnd="20dp"
                     android:src="@drawable/ic_color_comment"
                     app:tint="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:id="@+id/likes_count"/>
                 <ImageView
                     android:layout_gravity="center"
                     android:id="@+id/like_button"

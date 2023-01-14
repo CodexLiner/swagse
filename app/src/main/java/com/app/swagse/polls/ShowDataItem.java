@@ -1,6 +1,9 @@
 package com.app.swagse.polls;
 
+import android.content.Intent;
+
 import com.app.swagse.model.userDetails.Userdata;
+import com.app.swagse.polls.comments.comments;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -15,6 +18,9 @@ public class ShowDataItem {
 
     @SerializedName("options")
     private List<String> options;
+
+    @SerializedName("comments")
+    private List<comments> comments;
 
     @SerializedName("id")
     private String id;
@@ -31,6 +37,12 @@ public class ShowDataItem {
     @SerializedName("votes")
     private votes votes;
 
+    @SerializedName("likes_count")
+    private int likes_count;
+
+    @SerializedName("comments_count")
+    private int comments_count;
+
     public com.app.swagse.polls.votes getLikes() {
         return likes;
     }
@@ -42,6 +54,17 @@ public class ShowDataItem {
     @SerializedName("likes")
     private votes likes;
 
+    @SerializedName("result_count")
+    private int[] result_count;
+
+    public int[] getResult_count() {
+        return result_count;
+    }
+
+    public void setResult_count(int[] result_count) {
+        this.result_count = result_count;
+    }
+
     public Userdata getUserdata() {
         return userdata;
     }
@@ -51,8 +74,13 @@ public class ShowDataItem {
     }
 
 
+    public List<com.app.swagse.polls.comments.comments> getComments() {
+        return comments;
+    }
 
-
+    public void setComments(List<com.app.swagse.polls.comments.comments> comments) {
+        this.comments = comments;
+    }
 
     public String getQuestion() {
         return question;
@@ -91,13 +119,31 @@ public class ShowDataItem {
         return "ShowDataItem{" +
                 "question='" + question + '\'' +
                 ", votes_count='" + votes_count + '\'' +
-                ", options='" + options + '\'' +
+                ", options=" + options +
+                ", comments=" + comments +
                 ", id='" + id + '\'' +
                 ", userdata=" + userdata +
                 ", status='" + status + '\'' +
                 ", deadline='" + deadline + '\'' +
                 ", votes=" + votes +
+                ", likes=" + likes +
                 '}';
+    }
+
+    public int getLikes_count() {
+        return likes_count;
+    }
+
+    public void setLikes_count(int likes_count) {
+        this.likes_count = likes_count;
+    }
+
+    public int getComments_count() {
+        return comments_count;
+    }
+
+    public void setComments_count(int comments_count) {
+        this.comments_count = comments_count;
     }
 
     public List<String> getOptions() {

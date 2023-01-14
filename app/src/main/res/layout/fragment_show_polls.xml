@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#74A3A2A2"
+    android:orientation="vertical"
     tools:context=".polls.ShowPollsFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
+    <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/polls_Rec"/>
+        android:id="@+id/tab_layout"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/frame_poll"/>
 
-</FrameLayout>
+</LinearLayout>

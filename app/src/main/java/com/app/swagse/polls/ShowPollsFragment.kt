@@ -7,12 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.swagse.R
 import com.app.swagse.constants.Constants
+import com.app.swagse.fragment.SwagTubeFragment
+import com.app.swagse.fragment.SwaggerNewFragment
+import com.app.swagse.fragment.TrendingFragment
 import com.app.swagse.network.NewRetrofitClient
+import com.app.swagse.polls.polls.ResultFragment
+import com.app.swagse.polls.polls.ShowFragment
 import com.app.swagse.sharedpreferences.PrefConnect
+import com.google.android.material.tabs.TabLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +34,7 @@ class ShowPollsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var polls_Rec : RecyclerView
+    lateinit var Tab : TabLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,50 +48,43 @@ class ShowPollsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_show_polls, container, false)
+        Tab = view.findViewById(R.id.tab_layout)
 
-        polls_Rec = view.findViewById<RecyclerView>(R.id.polls_Rec);
-        polls_Rec.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        Tab.addTab(Tab.newTab().setText("Active"))
+        Tab.addTab(Tab.newTab().setText("Result"))
 
-        getPollDetails()
+        val fm: FragmentManager? = activity?.supportFragmentManager
+        val ft = fm?.beginTransaction()
+        ft?.replace(R.id.frame_poll, ShowFragment())
+        ft?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        ft?.commit()
 
-        return view;
-    }
-
-    private fun getPollDetails() {
-
-        val progressDialog = ProgressDialog(context)
-        progressDialog.setMessage("Please wait...")
-        progressDialog.show()
-        val apiInterface = NewRetrofitClient.getInstance().api
-        val responseCall = apiInterface.getPolls(PrefConnect.readString(context , Constants.USERID , ""))
-        responseCall.enqueue(object : Callback<ShowPollsResponse> {
-            override fun onResponse(
-                call: Call<ShowPollsResponse>,
-                response: Response<ShowPollsResponse>
-            ) {
-                if (response.code() == 200) {
-                    progressDialog.dismiss()
-
-                    if (response.body()!!.success == "true") {
-                        val polldataitems = response.body()!!.dataItems
-
-                        if (polldataitems.size != 0) {
-                            val adapter = PollAdapter(response.body()!!);
-                            adapter.setHasStableIds(true)
-                            polls_Rec.adapter = adapter
-                            adapter.notifyDataSetChanged()
-                        }
-                    }
+        Tab.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                var fragment: Fragment? = null
+                when (tab!!.position) {
+                    0 -> fragment = ShowFragment()
+                    1 -> fragment = ResultFragment()
                 }
+                val fm: FragmentManager? = activity?.supportFragmentManager
+                val ft = fm?.beginTransaction()
+                ft?.replace(R.id.frame_poll, fragment!!)
+                ft?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                ft?.commit()
             }
-            override fun onFailure(call: Call<ShowPollsResponse>, t: Throwable) {
-                progressDialog.dismiss()
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
             }
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
         })
 
+        return view;
     }
 
     companion object {

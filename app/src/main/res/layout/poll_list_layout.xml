@@ -10,7 +10,7 @@
         android:layout_height="35dp"
         app:progressView_autoAnimate="false"
         app:progressView_colorBackground="@color/poll_bg"
-        app:progressView_colorProgress="#32BAACAC"
+        app:progressView_colorProgress="#5C6BC0"
         app:progressView_labelColorInner="@color/white"
         app:progressView_labelColorOuter="@color/black"
         app:progressView_labelSize="13sp"

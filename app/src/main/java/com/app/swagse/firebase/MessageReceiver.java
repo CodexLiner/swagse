@@ -113,7 +113,7 @@ public class MessageReceiver extends FirebaseMessagingService {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationCompat.Builder builder;
-            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent;
             int importance = NotificationManager.IMPORTANCE_HIGH;
             if (mChannel == null) {
@@ -220,6 +220,7 @@ public class MessageReceiver extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = null;
             pendingIntent = PendingIntent.getActivity(this, 1251, intent, PendingIntent.FLAG_ONE_SHOT);
+
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                     .setContentTitle(title)
@@ -248,8 +249,7 @@ public class MessageReceiver extends FirebaseMessagingService {
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
-            Bitmap bitmap = BitmapFactory.decodeStream(input);
-            return bitmap;
+            return BitmapFactory.decodeStream(input);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

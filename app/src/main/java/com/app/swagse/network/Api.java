@@ -251,7 +251,7 @@ public interface Api {
     Call<PackageResponse> getSubscriptionPackage();
 
     //GET Songs List
-    @GET("beautindia/api/songs")
+    @GET("beautindia/api/songs") 
     Call<SongsResponse> getSongs();
 
     //REQUEST FOR SUBSCRIPTION PACKAGES
