@@ -35,6 +35,7 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
         val userName: TextView = itemView.findViewById<TextView>(R.id.users_name)
         val Question: TextView = itemView.findViewById<TextView>(R.id.askedQuestion)
         val total_vote: TextView = itemView.findViewById<TextView>(R.id.total_vote)
+        val start_data: TextView = itemView.findViewById<TextView>(R.id.start_data)
         val time_left: TextView = itemView.findViewById<TextView>(R.id.time_left)
         val likes_count: TextView = itemView.findViewById<TextView>(R.id.likes_count)
         val comments_count: TextView = itemView.findViewById<TextView>(R.id.comments_count)
@@ -68,6 +69,9 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
         Glide.with(holder.userImage).load(list!!.dataItems.get(position).userdata.img)
             .into(holder.userImage)
 
+        if (list.dataItems[position].start_date!=null){
+            holder.start_data.text = list.dataItems[position].start_date.split(" ")[0]
+        }
         for (i in list.dataItems[position].options.indices!!) {
 
             val view: View = LayoutInflater.from(holder.mainLayout_options.context)
@@ -155,20 +159,21 @@ class PollAdapter(val list: ShowPollsResponse) : RecyclerView.Adapter<PollAdapte
                 list.dataItems.get(position).id,
                 holder.like_button.context
             )
-            if (list.dataItems.get(position).likes == null || list.dataItems.get(position).likes.id == "1") {
+            if (list.dataItems.get(position).likes == null) {
+
                 if (list.dataItems.get(position).likes == null) {
                     list.dataItems.get(position).likes = com.app.swagse.polls.votes()
                 }
-                list.dataItems.get(position).likes.id = "0";
+
+                list.dataItems[position].likes.id = "1";
                 Glide.with(holder.like_button)
                     .load(holder.like_button.resources.getDrawable(R.drawable.ic_unlike))
                     .into(holder.like_button)
 
-            } else {
-                list.dataItems.get(position).likes.id = "1";
-                Glide.with(holder.like_button)
-                    .load(holder.like_button.resources.getDrawable(R.drawable.like))
-                    .into(holder.like_button)
+                list.dataItems[position]?.likes_count = list.dataItems[position]?.likes_count?.plus(
+                    1
+                )!!
+                holder.likes_count.text = list.dataItems[position]?.likes_count.toString()
             }
         }
 

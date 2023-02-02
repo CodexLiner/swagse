@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -82,7 +83,7 @@ public class SubcriptionPackageActivity extends AppCompatActivity implements Pay
         responseCall.enqueue(new Callback<PackageResponse>() {
             @Override
             public void onResponse(Call<PackageResponse> call, Response<PackageResponse> response) {
-                Log.d(TAG, "Subscription : "+response.toString());
+                Log.d(TAG, "Subscription : " + response.toString());
                 progress_bar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     if (response.body().getStatus().equals("1")) {
@@ -118,7 +119,7 @@ public class SubcriptionPackageActivity extends AppCompatActivity implements Pay
         return super.onOptionsItemSelected(item);
     }
 
-    public void openPaymentGetWay(String id, String price) {
+    public void openPaymentGetWay(String id, String price) throws JSONException {
         final Activity activity = this;
         packageId = id;
         String razorpayKey = "rzp_test_7RZ08DDcF4rQ5k"; //Generate your razorpay key from Settings-> API Keys-> copy Key Id
@@ -129,7 +130,8 @@ public class SubcriptionPackageActivity extends AppCompatActivity implements Pay
             options.put("name", PrefConnect.readString(SubcriptionPackageActivity.this, Constants.USERNAME, ""));
             options.put("description", "Razorpay Payment Test");
             options.put("currency", "INR");
-            options.put("amount", price);
+            int mPrice = Integer.parseInt(price) * 10;
+            options.put("amount",mPrice);
 
             JSONObject preFill = new JSONObject();
             preFill.put("email", PrefConnect.readString(SubcriptionPackageActivity.this, Constants.EMAIL, ""));
@@ -138,7 +140,8 @@ public class SubcriptionPackageActivity extends AppCompatActivity implements Pay
 
             chackout.open(activity, options);
         } catch (Exception e) {
-            Toast.makeText(SubcriptionPackageActivity.this, "Error in payment: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            JSONObject jsonObject = new JSONObject(Objects.requireNonNull(e.getMessage()));
+            Toast.makeText(SubcriptionPackageActivity.this, "Error in payment: " + jsonObject.getString("description"), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
@@ -147,14 +150,22 @@ public class SubcriptionPackageActivity extends AppCompatActivity implements Pay
     public void onPaymentSuccess(String razorpayPaymentID) {
         // After successful payment Razorpay send back a unique id
         Log.d(TAG, "onPaymentSuccess: " + razorpayPaymentID);
-        Toast.makeText(SubcriptionPackageActivity.this, "Transaction Successful: " + razorpayPaymentID, Toast.LENGTH_LONG).show();
+        Toast.makeText(SubcriptionPackageActivity.this, "Transaction Successful: " , Toast.LENGTH_LONG).show();
         requestForPackage(razorpayPaymentID, packageId);
     }
 
     @Override
     public void onPaymentError(int i, String error) {
         // Error message
-        Toast.makeText(SubcriptionPackageActivity.this, "Transaction unsuccessful: " + error, Toast.LENGTH_LONG).show();
+        try {
+            JSONObject jsonObject = new JSONObject(Objects.requireNonNull(error));
+            JSONObject n = new JSONObject(jsonObject.getString("error"));
+            Log.d(TAG, "onPaymentError: "+n.toString());
+            Toast.makeText(SubcriptionPackageActivity.this, n.getString("description"), Toast.LENGTH_LONG).show();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void requestForPackage(String razorpayPaymentID, String packageId) {

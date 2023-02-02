@@ -43,6 +43,9 @@ public class ShowDataItem {
     @SerializedName("comments_count")
     private int comments_count;
 
+    @SerializedName("start_date")
+    private String start_date;
+
     public com.app.swagse.polls.votes getLikes() {
         return likes;
     }
@@ -168,5 +171,13 @@ public class ShowDataItem {
 
     public void setVotes(com.app.swagse.polls.votes votes) {
         this.votes = votes;
+    }
+
+    public String getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
     }
 }

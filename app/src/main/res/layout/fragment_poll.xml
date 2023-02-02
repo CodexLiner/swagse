@@ -47,7 +47,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/gray" />
-
+            <EditText
+                android:id="@+id/deadline"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="Deadline in Days"
+                android:lines="10"
+                android:maxLines="1"
+                android:inputType="number"
+                android:padding="@dimen/_10dp"
+                tools:ignore="RtlHardcoded" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray" />
             <EditText
                 android:id="@+id/poll_decription"
                 android:layout_width="match_parent"

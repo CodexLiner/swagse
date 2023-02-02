@@ -83,7 +83,11 @@ public class PackageRecyclerViewAdapter extends RecyclerView.Adapter<PackageRecy
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        ((SubcriptionPackageActivity) context).openPaymentGetWay(packageList.get(position).getId(),subscriptionItem.getPrice());
+                        try {
+                            ((SubcriptionPackageActivity) context).openPaymentGetWay(packageList.get(position).getId(),subscriptionItem.getPrice());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 //                        requestForPackage(packageList.get(position).getId());
                     }
                 });

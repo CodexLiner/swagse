@@ -15,6 +15,7 @@ import com.app.swagse.network.NewApiResponse
 import com.app.swagse.network.NewRetrofitClient
 import com.app.swagse.sharedpreferences.PrefConnect
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.fragment_poll.*
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -54,6 +55,8 @@ class PollFragment : Fragment() {
         val image = view.findViewById(R.id.userImage) as ImageView
         Glide.with(image).load(PrefConnect.readString(context, Constants.USERPIC, "")).into(image)
 
+        val deadline = view.findViewById<TextView>(R.id.deadline)
+
         list = mutableListOf<EditText>()
         add_option = view.findViewById(R.id.another_option)
         add_option.setOnClickListener {
@@ -61,6 +64,11 @@ class PollFragment : Fragment() {
         }
         createPoll = view.findViewById(R.id.create_poll)
         createPoll.setOnClickListener {
+            if (deadline.text.isEmpty()){
+                Toast.makeText(context, "Please Add Deadline", Toast.LENGTH_SHORT).show()
+                deadline.requestFocus()
+                return@setOnClickListener
+            }
             if (list.size == 0) {
                 Toast.makeText(context, "Please Add Poll Option", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -90,11 +98,10 @@ class PollFragment : Fragment() {
         jsonObject.put("question", text)
         jsonObject.put("options", map)
         jsonObject.put("end_date", getDaysAgo(5).toString())
-
         val pollModel = pollModel(
             PrefConnect.readString(context, Constants.USERID, ""),
             text,
-            getDaysAgo(5).toString(),
+            getDaysAgo( deadline.text.toString().toInt()).toString(),
             map
         )
         val responseCall = apiInterface.createPoll(pollModel)
