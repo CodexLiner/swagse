@@ -35,6 +35,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.app.swagse.CreateVideoSwagger;
 import com.app.swagse.LoginActivity;
 import com.app.swagse.R;
 import com.app.swagse.SimpleClasses.Functions;
@@ -186,7 +187,9 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
                 mBottomSheetDialog.setCancelable(true);
                 mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                mBottomSheetDialog.getWindow().getAttributes().horizontalMargin = 10;
                 mBottomSheetDialog.show();
+
 
                 Download.setOnClickListener(v->{
                     downloadVideo(mVideoItems.get(position).getVideourl());
@@ -611,16 +614,15 @@ public class VideoAdapterNew extends RecyclerView.Adapter<VideoAdapterNew.VideoV
                 @Override
                 public void onClick(View view) {
                     Activity activity = (Activity) context;
-                    if (new CodexPerms(activity).hasPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})) {
-                        Uri[] list = new Uri[0];
-                        Intent videoCreationIntent = new Intent(
-                                VideoCreationActivity.startFromCamera(context,
-                                        new PipConfig(Uri.EMPTY, false, 0.9F), null, null));
-                        context.startActivity(videoCreationIntent);
-                    } else {
-                        new CodexPerms(activity).requestPerms(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
-                    }
-
+                    activity.startActivity(new Intent(context , CreateVideoSwagger.class));
+//                    if (new CodexPerms(activity).hasPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE})) {
+//                        Uri[] list = new Uri[0];
+//                        Intent videoCreationIntent = new Intent(
+//                                VideoCreationActivity.startFromCamera(context, new PipConfig(Uri.EMPTY, false, 0.9F), null, null));
+//                        context.startActivity(videoCreationIntent);
+//                    } else {
+//                        new CodexPerms(activity).requestPerms(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
+//                    }
                 }
             });
 

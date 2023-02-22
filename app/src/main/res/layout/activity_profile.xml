@@ -141,6 +141,7 @@
                 android:background="@drawable/input_field_background">
 
                 <androidx.appcompat.widget.AppCompatSpinner
+                    android:layout_marginVertical="10dp"
                     android:id="@+id/gender_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -156,9 +157,10 @@
                 android:background="@drawable/input_field_background">
 
                 <Spinner
+                    android:layout_marginVertical="10dp"
                     android:id="@+id/countrySpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="10dp" />
             </RelativeLayout>
 
@@ -169,9 +171,10 @@
                 android:background="@drawable/input_field_background">
 
                 <Spinner
+                    android:layout_marginVertical="10dp"
                     android:id="@+id/stateSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="10dp" />
             </RelativeLayout>
 
@@ -181,9 +184,10 @@
                 android:background="@drawable/input_field_background">
 
                 <Spinner
+                    android:layout_marginVertical="10dp"
                     android:id="@+id/citySpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="10dp" />
             </RelativeLayout>
 

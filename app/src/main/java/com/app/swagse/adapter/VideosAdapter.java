@@ -104,20 +104,20 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewH
             }
         });
 
-        holder.album_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                View view = getLayoutInflater().inflate(R.layout.swagger_menu_layout, null);
-//                ListView weightListView = view.findViewById(R.id.weight_listView);
-//                AppCompatButton selectWeight = view.findViewById(R.id.selectWeight);
-//                final Dialog mBottomSheetDialog = new Dialog(context, R.style.MaterialDialogSheet);
-//                mBottomSheetDialog.setContentView(view);
-//                mBottomSheetDialog.setCancelable(true);
-//                mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//                mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
-//                mBottomSheetDialog.show();
-            }
-        });
+//        holder.album_view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                View view = getLayoutInflater().inflate(R.layout.swagger_menu_layout, null);
+////                ListView weightListView = view.findViewById(R.id.weight_listView);
+////                AppCompatButton selectWeight = view.findViewById(R.id.selectWeight);
+////                final Dialog mBottomSheetDialog = new Dialog(context, R.style.MaterialDialogSheet);
+////                mBottomSheetDialog.setContentView(view);
+////                mBottomSheetDialog.setCancelable(true);
+////                mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+////                mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+////                mBottomSheetDialog.show();
+//            }
+//        });
     }
 
     @Override
@@ -151,7 +151,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewH
             image_view_option_like = itemView.findViewById(R.id.image_view_option_like);
             image_view_option_comment_title = itemView.findViewById(R.id.image_view_option_comment_title);
             image_view_option_share_title = itemView.findViewById(R.id.image_view_option_share_title);
-            album_view = itemView.findViewById(R.id.album_view);
+//            album_view = itemView.findViewById(R.id.album_view);
             follow_btn = itemView.findViewById(R.id.follow_btn);
         }
 

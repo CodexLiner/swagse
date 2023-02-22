@@ -85,6 +85,7 @@ public class SwaggerNewFragment extends Fragment {
 //                                mAdapter = new MediaRecyclerAdapter(swagTubeDataList, initGlide());
 //                                //Set Adapter
 //                                mRecyclerView.setAdapter(mAdapter);
+                                swaggerdataItemList.removeIf(swaggerdataItem -> swaggerdataItem.getVideourl().isEmpty());
                                 videosViewPager.setAdapter(new VideoAdapterNew(getActivity(), swaggerdataItemList));
                             }
                         }

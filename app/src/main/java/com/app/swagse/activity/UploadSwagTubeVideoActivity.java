@@ -1,5 +1,6 @@
 package com.app.swagse.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -316,11 +317,11 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
             Call<UserDetailResponse> call = apiInterface.uploadSwagTubeVideo(stringRequestBodyMap, img);
             call.enqueue(new Callback<UserDetailResponse>() {
                 @Override
-                public void onResponse(Call<UserDetailResponse> call, Response<UserDetailResponse> response) {
+                public void onResponse(Call<UserDetailResponse> call, @NonNull Response<UserDetailResponse> response) {
 //                    progressDialog.dismiss();
                     Log.d(TAG, "onResponse: " + response.errorBody());
                     if (response.code() == Constants.SUCCESS) {
-                        Toast.makeText(UploadSwagTubeVideoActivity.this, "Uploaded Sucessfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UploadSwagTubeVideoActivity.this, "Uploaded Successfully", Toast.LENGTH_SHORT).show();
                         finish();
                     } else if (response.code() == Constants.FAILED) {
                         try {
@@ -482,7 +483,7 @@ public class UploadSwagTubeVideoActivity extends BaseActivity implements Progres
 
     public long durationTime() throws IOException {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-//use one of overloaded setDataSource() functions to set your data source
+//       use one of overloaded setDataSource() functions to set your data source
         retriever.setDataSource(UploadSwagTubeVideoActivity.this, Uri.fromFile(new File(selectedVideoPath)));
         String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         long timeInMillisec = Long.parseLong(time);

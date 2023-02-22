@@ -135,4 +135,5 @@ public class Variables {
 
     public static final String downloadWtVideo = api_domain + "downloadwatermakervid";
 
+    public static boolean CreateButton = false;
 }

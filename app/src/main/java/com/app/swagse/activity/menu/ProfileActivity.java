@@ -227,7 +227,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void getuserprofile(String userId) {
-        if (App.getInstance().isOnline()) {
+        if (App.isOnline()) {
             progressBar.setVisibility(View.VISIBLE);
             Call<UserDetailResponse> userResponseCall = apiInterface.getUserProfile(userId);
             userResponseCall.enqueue(new Callback<UserDetailResponse>() {

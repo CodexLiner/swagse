@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SwagTubeFragment swagTubeFragment = new SwagTubeFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.simpleFrameLayout, swagTubeFragment);
+        ft.replace(R.id.simpleFrameLayout, new SwaggerNewFragment());
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
 
@@ -320,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void getUserProfile(String userId) {
-        if (App.getInstance().isOnline()) {
+        if (App.isOnline()) {
             Call<UserDetailResponse> userResponseCall = apiInterface.getUserProfile(userId);
             userResponseCall.enqueue(new Callback<UserDetailResponse>() {
                 @Override

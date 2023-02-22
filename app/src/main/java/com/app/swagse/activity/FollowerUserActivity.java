@@ -102,6 +102,7 @@ public class FollowerUserActivity extends AppCompatActivity {
             userResponseCall.enqueue(new Callback<SwagTubeResponse>() {
                 @Override
                 public void onResponse(Call<SwagTubeResponse> call, Response<SwagTubeResponse> response) {
+                    progress_bar.setVisibility(View.GONE);
                     if (response.code() == Constants.SUCCESS) {
                         if (response.body().getStatus().equals("1")) {
                             List<SwagtubedataItem> swagTubeDataList = response.body().getSwagtubedata();

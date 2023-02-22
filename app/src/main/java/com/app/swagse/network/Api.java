@@ -49,7 +49,7 @@ public interface Api {
     //Social Login
     @FormUrlEncoded
     @POST("Apiutil/sociallogin")
-    Call<UserDetailResponse> socialLogin(@Field("user_name") String name, @Field("email") String emailID, @Field("picurl") String pic, @Field("logintype") String loginType,@Field("device_id") String device_id, @Field("fcm_token") String fcmToken);
+    Call<UserDetailResponse> socialLogin(@Field("user_name") String name, @Field("email") String emailID, @Field("picurl") String pic, @Field("logintype") String loginType, @Field("device_id") String device_id, @Field("fcm_token") String fcmToken);
 
     //SignUp
     @Multipart
@@ -59,6 +59,7 @@ public interface Api {
     //GET State
     @GET("Apiutil/getcountrydata")
     Call<CountryResponse> getCountry();
+
     //GET State
     @FormUrlEncoded
     @POST("Apiutil/getstatedata")
@@ -74,7 +75,7 @@ public interface Api {
     @POST("Swagtubeapi/getnotifications")
     Call<NotificationResponse> getnotifications(@Field("user_id") String userId);
 
-     //GET OTP
+    //GET OTP
     @FormUrlEncoded
     @POST("Swagtubeapi/changenotistatus")
     Call<NotificationResponse> changeNotificationStatus(@Field("noti_id") String notificationID);
@@ -82,12 +83,16 @@ public interface Api {
     //GET OTP
     @FormUrlEncoded
     @POST("Swagtubeapi/search_video")
-    Call<SwagTubeResponse> searchVideo(@Field("user_id") String countryId,@Field("keyword") String stateId , @Field("tag") int tag);
+    Call<SwagTubeResponse> searchVideo(@Field("user_id") String countryId, @Field("keyword") String stateId, @Field("tag") int tag);
 
     //UploadSwagTube Video
     @Multipart
     @POST("Swagtubeapi/postswagtubevideo")
     Call<UserDetailResponse> uploadSwagTubeVideo(@PartMap Map<String, RequestBody> stringRequestBodyMap, @Part MultipartBody.Part img);
+
+    @Multipart
+    @POST("Swaggerapi/postswagtubevideo")
+    Call<UserDetailResponse> uploadSwaggerVideo(@PartMap Map<String, RequestBody> stringRequestBodyMap, @Part MultipartBody.Part img);
 
     //Get SwagTube Data
     @FormUrlEncoded
@@ -199,7 +204,7 @@ public interface Api {
     //Get Swagger Data
     @FormUrlEncoded
     @POST("Swaggerapi/getpostvideo")
-    Call<SwaggerResponse> getSwaggerData(@Field("user_id") String userId);
+    Call<SwaggerResponse> getSwaggerData(@Field("") String userId);
 
     //Swagger Like Data
     @FormUrlEncoded
@@ -251,13 +256,13 @@ public interface Api {
     Call<PackageResponse> getSubscriptionPackage();
 
     //GET Songs List
-    @GET("beautindia/api/songs") 
+    @GET("beautindia/api/songs")
     Call<SongsResponse> getSongs();
 
     //REQUEST FOR SUBSCRIPTION PACKAGES
     @FormUrlEncoded
     @POST("apiutil/reqforpack")
-    Call<SubPackageResponse> subscribePackages(@Field("razorpayPaymentID") String razorpayPaymentID,@Field("pack_id") String postId, @Field("user_id") String userId);
+    Call<SubPackageResponse> subscribePackages(@Field("razorpayPaymentID") String razorpayPaymentID, @Field("pack_id") String postId, @Field("user_id") String userId);
 
     @FormUrlEncoded
     @POST("apiutil/submit_feedback")

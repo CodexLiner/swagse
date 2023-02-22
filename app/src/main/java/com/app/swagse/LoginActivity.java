@@ -8,8 +8,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.app.swagse.activity.MainActivity;
 import com.app.swagse.activity.ShowPhoneNumberActivity;
@@ -79,6 +81,9 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait...");
 
+        TextView linkTextView = findViewById(R.id.terms_condition);
+        linkTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -126,25 +131,25 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             }
             case R.id.skipLogin: {
-                PrefConnect.writeBoolean(LoginActivity.this, Constants.USER_LOGGED, true);
-                PrefConnect.writeBoolean(LoginActivity.this, Constants.GUEST_USER, false);
-                PrefConnect.writeString(LoginActivity.this, Constants.USERID, "GUEST_id");
-                PrefConnect.writeString(LoginActivity.this, Constants.USERNAME, "GUEST_Name");
-                PrefConnect.writeString(LoginActivity.this, Constants.USERPIC, "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
-                PrefConnect.writeString(LoginActivity.this, Constants.CHANNEL_NAME, "GUEST_Channel");
-                PrefConnect.writeString(LoginActivity.this, Constants.VIDEO_DURATION, "2000");
-                PrefConnect.writeString(LoginActivity.this, Constants.VIDEO_SIZE, "10000");
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finishAffinity();
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-//                Todo:old code
 //                PrefConnect.writeBoolean(LoginActivity.this, Constants.USER_LOGGED, true);
-//                PrefConnect.writeBoolean(LoginActivity.this, Constants.GUEST_USER, true);
-//                PrefConnect.writeString(LoginActivity.this, Constants.USERNAME, "Guest User");
+//                PrefConnect.writeBoolean(LoginActivity.this, Constants.GUEST_USER, false);
+//                PrefConnect.writeString(LoginActivity.this, Constants.USERID, "GUEST_id");
+//                PrefConnect.writeString(LoginActivity.this, Constants.USERNAME, "GUEST_Name");
+//                PrefConnect.writeString(LoginActivity.this, Constants.USERPIC, "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+//                PrefConnect.writeString(LoginActivity.this, Constants.CHANNEL_NAME, "GUEST_Channel");
+//                PrefConnect.writeString(LoginActivity.this, Constants.VIDEO_DURATION, "2000");
+//                PrefConnect.writeString(LoginActivity.this, Constants.VIDEO_SIZE, "10000");
 //                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                finish();
+//                finishAffinity();
 //                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+//                Todo:original code
+                PrefConnect.writeBoolean(LoginActivity.this, Constants.USER_LOGGED, true);
+                PrefConnect.writeBoolean(LoginActivity.this, Constants.GUEST_USER, true);
+                PrefConnect.writeString(LoginActivity.this, Constants.USERNAME, "Guest User");
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             }
         }
@@ -219,7 +224,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "onActivityResult: if true");
         callbackManager.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             Log.d(TAG, "onActivityResult: if true");
@@ -242,7 +247,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUI(GoogleSignInAccount account) {
+    private void updateUI(GoogleSignInAccount account) throws NullPointerException {
         Log.d(TAG, "updateUI: this is update ui function");
         Log.d(TAG, "updateUI: " + account);
         String name = account.getDisplayName();

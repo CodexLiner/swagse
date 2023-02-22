@@ -52,40 +52,42 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_width="0dp"
             app:layout_constraintBottom_toTopOf="@+id/txtDesc"
             app:layout_constraintEnd_toStartOf="@+id/recycler_view_options"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_height="50dp">
+            app:layout_constraintStart_toStartOf="parent">
+
             <androidx.appcompat.widget.AppCompatTextView
-                android:gravity="center|start"
-                android:layout_gravity="center"
                 android:id="@+id/txtTitle"
                 android:layout_width="0dp"
-                android:layout_weight="5"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="5"
+                android:gravity="center|start"
                 android:textColor="@color/colorStoryUserName"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 tools:text="Baljeet Singh" />
+
             <TextView
-                android:visibility="gone"
                 android:id="@+id/follow_btn"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/_10dp"
-                android:gravity="center"
-                android:layout_gravity="center"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:textSize="17sp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_10dp"
+                android:layout_weight="1"
+                android:background="@drawable/follow_btn_bg"
+                android:gravity="center"
                 android:text="Follow"
                 android:textColor="@color/blue"
-                android:background="@drawable/follow_btn_bg"/>
+                android:textSize="17sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -174,12 +176,12 @@
                     app:strokeWidth="1dp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_marginTop="7dp"
-                    android:visibility="visible"
                     android:id="@+id/image_view_follow_option"
-                    android:padding="1dp"
                     android:layout_width="38dp"
                     android:layout_height="38dp"
+                    android:layout_marginTop="7dp"
+                    android:padding="1dp"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/image_view_profile_pic"
