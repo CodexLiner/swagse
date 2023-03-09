@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SwagTubeFragment swagTubeFragment = new SwagTubeFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.simpleFrameLayout, new SwaggerNewFragment());
+        ft.replace(R.id.simpleFrameLayout, swagTubeFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
 
